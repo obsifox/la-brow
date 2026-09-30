@@ -1,0 +1,13 @@
+{
+  "scanner": "branding",
+  "repo": "/home/user/la-brow",
+  "product_name": "LA Brow",
+  "organization_identifiers": [
+    "obsifox"
+  ],
+  "violations": [],
+  "scanned_files": 24,
+  "skipped_allowed_locations": [],
+  "violation_count": 0,
+  "status": "PASS"
+}

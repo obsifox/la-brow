@@ -1,0 +1,39 @@
+{
+  "scanner": "english",
+  "repo": "/home/user/la-brow",
+  "violations": [],
+  "exempted_files": [
+    {
+      "path": "tools/eng-orchestrator/CHANGELOG.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 33
+    },
+    {
+      "path": "tools/eng-orchestrator/README.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 19
+    },
+    {
+      "path": "tools/eng-orchestrator/SKILL.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 40
+    },
+    {
+      "path": "tools/eng-orchestrator/config/arena.yaml",
+      "exemption": "vendored-engineering-skill",
+      "count": 33
+    },
+    {
+      "path": "tools/eng-orchestrator/docs/arena/overview.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 33
+    },
+    {
+      "path": "tools/eng-orchestrator/references/report-template.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 30
+    }
+  ],
+  "violation_count": 0,
+  "status": "PASS"
+}

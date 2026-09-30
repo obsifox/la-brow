@@ -6,17 +6,17 @@ stages:
     command: python3 tools/license/render_manifest.py --repo . --check
     note: generated documents must match their data source
   - id: static_analysis
-    command: python3 -m compileall -q geo timezone locale_engine locale profiles policy privacy webrtc diagnostics environment gecko browser application tools tests
+    command: python3 -m compileall -q geo timezone locale_engine locale profiles policy privacy webrtc diagnostics environment gecko browser application api tools tests
   - id: dependency_and_license_audit
     command: python3 tools/license/verify_manifest.py --repo .
   - id: branding_scan
-    command: python3 tools/scanners/branding_scan.py --repo .
+    command: python3 tools/scanners/branding_scan.py --repo . --json-out .eng/artifacts/branding_scan.json
   - id: emoji_scan
-    command: python3 tools/scanners/emoji_scan.py --repo .
+    command: python3 tools/scanners/emoji_scan.py --repo . --json-out .eng/artifacts/emoji_scan.json
   - id: comment_scan
-    command: python3 tools/scanners/comment_scan.py --repo .
+    command: python3 tools/scanners/comment_scan.py --repo . --json-out .eng/artifacts/comment_scan.json
   - id: english_scan
-    command: python3 tools/scanners/english_scan.py --repo .
+    command: python3 tools/scanners/english_scan.py --repo . --json-out .eng/artifacts/english_scan.json
   - id: android_validation
     command: python3 tools/android/validate_scaffold.py --repo .
   - id: skill_integrity
@@ -29,6 +29,8 @@ stages:
     command: python3 -m pytest tests/network -q
   - id: security_tests
     command: python3 -m pytest tests/security -q
+  - id: interface_tests
+    command: python3 -m pytest tests/api -q
   - id: integration_tests
     command: python3 -m pytest tests/integration -q
   - id: android_tests

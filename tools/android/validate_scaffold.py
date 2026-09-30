@@ -9,6 +9,10 @@ import sys
 import xml.etree.ElementTree as ElementTree
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from tools.scanners.comment_scan import block_token_findings, slash_findings
+
 ANDROID_NAMESPACE = "{http://schemas.android.com/apk/res/android}"
 REQUIRED_FILES = (
     "settings.gradle.kts",
@@ -35,7 +39,11 @@ REQUIRED_FILES = (
     "app/src/main/java/com/labrow/browser/core/ProfileRepository.kt",
     "app/src/main/java/com/labrow/browser/core/DnsRepository.kt",
     "app/src/main/java/com/labrow/browser/core/GeckoRuntimeHolder.kt",
+    "app/src/main/java/com/labrow/browser/core/ApiClient.kt",
+    "app/src/main/java/com/labrow/browser/core/EnvironmentMapper.kt",
+    "app/src/main/java/com/labrow/browser/core/SyncController.kt",
     "app/src/main/java/com/labrow/browser/ui/ControlCenterScreen.kt",
+    "app/src/debug/res/xml/network_security_config.xml",
 )
 ALLOWED_PERMISSIONS = {
     "android.permission.INTERNET",
@@ -43,6 +51,8 @@ ALLOWED_PERMISSIONS = {
 }
 REQUIRED_STRINGS = (
     "app_name",
+    "action_sync",
+    "label_server",
     "notice_no_anonymity_guarantee",
     "notice_no_system_dns_change",
     "notice_virtual_mode_no_fallback",
@@ -130,14 +140,15 @@ def validate(repo: Path) -> dict:
         record("adaptive-icon-layers", {"background", "foreground", "monochrome"} <= children, ", ".join(sorted(children)))
 
     kotlin_files = sorted((android_root / "app/src/main/java").rglob("*.kt"))
-    record("kotlin-file-count", len(kotlin_files) >= 6, str(len(kotlin_files)))
+    record("kotlin-file-count", len(kotlin_files) >= 9, str(len(kotlin_files)))
     comment_violations = []
     package_violations = []
     for path in kotlin_files:
-        text = path.read_text(encoding="utf-8")
-        if SLASH * 2 in text or SLASH + STAR in text:
-            comment_violations.append(str(path.relative_to(android_root)))
-        if REQUIRED_KOTLIN_PACKAGE not in text.splitlines()[0]:
+        source = path.read_text(encoding="utf-8")
+        findings = slash_findings(source, "generic-slash") + block_token_findings(source, "generic-slash")
+        if findings:
+            comment_violations.append(str(path.relative_to(android_root)) + " " + str(findings[0]))
+        if REQUIRED_KOTLIN_PACKAGE not in source.splitlines()[0]:
             package_violations.append(str(path.relative_to(android_root)))
     record("kotlin-no-comments", not comment_violations, ", ".join(comment_violations))
     record("kotlin-package-declarations", not package_violations, ", ".join(package_violations))
@@ -151,6 +162,17 @@ def validate(repo: Path) -> dict:
     provider_ids = {entry["id"] for entry in resolver_payload.get("providers", [])}
     record("resolver-profiles-bundled", {"system", "cloudflare-doh", "quad9-dot"} <= provider_ids, ", ".join(sorted(provider_ids)))
     record("resolver-policy", resolver_payload.get("policy", {}).get("os_wide_changes") == "forbidden")
+
+    debug_config = parse_xml(android_root / "app/src/debug/res/xml/network_security_config.xml", problems)
+    if debug_config is not None:
+        base = debug_config.find("base-config")
+        record("debug-cleartext-restricted", base is not None and base.get("cleartextTrafficPermitted") == "false")
+        domains = [entry.text for entry in debug_config.iter("domain")]
+        record("debug-cleartext-hosts-limited", set(domains) <= {"10.0.2.2", "127.0.0.1", "localhost"}, ", ".join(domains))
+
+    client_source = (android_root / "app/src/main/java/com/labrow/browser/core/ApiClient.kt").read_text(encoding="utf-8")
+    record("interface-client-timeouts", "CONNECT_TIMEOUT_MS" in client_source and "READ_TIMEOUT_MS" in client_source)
+    record("interface-client-error-handling", "ApiException" in client_source and "status !in 200..299" in client_source)
 
     storage_source = (android_root / "app/src/main/java/com/labrow/browser/core/StorageLayout.kt").read_text(encoding="utf-8")
     record("storage-layout-directories", all(token in storage_source for token in ('"profiles"', '"settings"', '"diagnostics"', '"cache"')))

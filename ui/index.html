@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LA Brow</title>
+<link rel="stylesheet" href="/ui/styles.css">
+<link rel="icon" type="image/svg+xml" href="/assets/identity/icon-symbol.svg">
+</head>
+<body>
+<header class="topbar">
+  <img class="mark" src="/assets/identity/icon-symbol.svg" alt="Product mark">
+  <div class="identity">
+    <strong>LA Brow</strong>
+    <span id="health-line">connecting to application server</span>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-view="environment">Environment</button>
+    <button class="tab" data-view="profiles">Profiles</button>
+    <button class="tab" data-view="dns">DNS</button>
+    <button class="tab" data-view="diagnostics">Diagnostics</button>
+    <button class="tab" data-view="settings">Settings</button>
+    <button class="tab" data-view="platform">Platform</button>
+  </nav>
+  <div class="status" id="status-line">idle</div>
+</header>
+
+<main>
+  <section class="view active" id="view-environment">
+    <div class="panel">
+      <h2>Environment resolution</h2>
+      <p class="muted">Every request runs the same ordered pipeline and reports one status per stage.</p>
+      <div class="form-grid">
+        <label>Address
+          <input id="env-url" type="text" value="https://example.com/">
+        </label>
+        <label>Profile
+          <select id="env-profile"></select>
+        </label>
+        <label>Resolver
+          <select id="env-resolver"></select>
+        </label>
+        <label>Privacy preset
+          <select id="env-privacy">
+            <option value="balanced">balanced</option>
+            <option value="strict">strict</option>
+            <option value="development">development</option>
+          </select>
+        </label>
+        <label class="check">Private browsing
+          <input id="env-private" type="checkbox">
+        </label>
+        <button class="primary" id="env-run">Resolve environment</button>
+      </div>
+      <div id="env-summary" class="summary"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Pipeline</h3>
+      <div class="pipeline" id="env-pipeline"></div>
+    </div>
+
+    <div class="grid">
+      <div class="panel"><h3>Location</h3><div class="kv" id="env-location"></div></div>
+      <div class="panel"><h3>Timezone</h3><div class="kv" id="env-timezone"></div></div>
+      <div class="panel"><h3>Locale surfaces</h3><div class="kv" id="env-locale"></div></div>
+      <div class="panel"><h3>Resolver state</h3><div class="kv" id="env-dns"></div></div>
+      <div class="panel"><h3>Site policy</h3><div class="kv" id="env-policy"></div></div>
+      <div class="panel"><h3>Invariants</h3><div class="kv" id="env-invariants"></div></div>
+    </div>
+
+    <div class="panel">
+      <h3>Consistency diagnostics</h3>
+      <div id="env-consistency"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Structured events</h3>
+      <div id="env-events" class="event-log"></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-profiles">
+    <div class="panel">
+      <h2>Profiles</h2>
+      <p class="muted">Versioned documents with validation, migration, integrity and rollback.</p>
+      <div class="row">
+        <select id="profile-select"></select>
+        <button id="profile-load">Load</button>
+        <button id="profile-new">New</button>
+        <button class="danger" id="profile-delete">Delete</button>
+        <button id="profile-export">Export</button>
+        <button id="profile-validate">Validate</button>
+        <button class="primary" id="profile-save">Save</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>Editor</h3>
+        <div class="form-grid">
+          <label>Name<input id="pf-name" type="text"></label>
+          <label>Mode
+            <select id="pf-mode">
+              <option value="manual">manual</option>
+              <option value="automatic">automatic</option>
+              <option value="hybrid">hybrid</option>
+              <option value="disabled">disabled</option>
+            </select>
+          </label>
+          <label>Country code<input id="pf-country" type="text" maxlength="2"></label>
+          <label>Region<input id="pf-region" type="text"></label>
+          <label>City<input id="pf-city" type="text"></label>
+          <label>Latitude<input id="pf-latitude" type="text"></label>
+          <label>Longitude<input id="pf-longitude" type="text"></label>
+          <label>Radius meters<input id="pf-radius" type="text"></label>
+          <label>Randomization
+            <select id="pf-randomization">
+              <option value="none">none</option>
+              <option value="per_query">per_query</option>
+              <option value="per_session">per_session</option>
+              <option value="per_profile">per_profile</option>
+            </select>
+          </label>
+          <label>Randomization seed<input id="pf-seed" type="text"></label>
+          <label>Timezone<input id="pf-timezone" type="text"></label>
+          <label>Locale<input id="pf-locale" type="text"></label>
+          <label>Languages, comma separated<input id="pf-languages" type="text"></label>
+          <label>WebRTC policy
+            <select id="pf-webrtc">
+              <option value="default">default</option>
+              <option value="privacy_enhanced">privacy_enhanced</option>
+              <option value="disable_local_candidates">disable_local_candidates</option>
+              <option value="custom">custom</option>
+            </select>
+          </label>
+        </div>
+        <div id="profile-result" class="result"></div>
+      </div>
+      <div class="panel">
+        <h3>Import and export</h3>
+        <p class="muted">Imported payloads are validated and migrated before activation.</p>
+        <div class="row">
+          <label class="check">Dry run only<input id="import-dry" type="checkbox" checked></label>
+          <button id="import-run">Import payload</button>
+        </div>
+        <textarea id="import-payload" rows="14" spellcheck="false" placeholder="Paste an exported profile document"></textarea>
+        <div id="import-result" class="result"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-dns">
+    <div class="panel">
+      <h2>Resolver</h2>
+      <p class="muted">Resolver selection is browser scoped. The system resolver configuration is read and hashed, never written.</p>
+      <div class="form-grid">
+        <label>Resolver<select id="dns-resolver"></select></label>
+        <label>Query name<input id="dns-name" type="text" value="example.com"></label>
+        <label>Record type
+          <select id="dns-type">
+            <option>A</option><option>AAAA</option><option>CNAME</option><option>MX</option><option>TXT</option><option>NS</option>
+          </select>
+        </label>
+        <button class="primary" id="dns-probe">Run probe</button>
+      </div>
+      <div id="dns-result" class="result"></div>
+    </div>
+    <div class="panel"><h3>Declared resolver profiles</h3><div id="dns-profiles"></div></div>
+    <div class="panel"><h3>Operating system isolation</h3><div class="kv" id="dns-integrity"></div></div>
+  </section>
+
+  <section class="view" id="view-diagnostics">
+    <div class="panel">
+      <h2>Diagnostics</h2>
+      <p class="muted">Diagnostic export is redacted by default. Tokens are removed at every level.</p>
+      <div class="row">
+        <select id="diag-level">
+          <option value="redacted">redacted</option>
+          <option value="minimal">minimal</option>
+          <option value="full">full</option>
+        </select>
+        <button class="primary" id="diag-run">Generate report</button>
+        <button id="diag-consistency">Check consistency</button>
+        <button id="diag-scans">Policy scan state</button>
+        <button id="diag-requests">Recent requests</button>
+      </div>
+      <div id="diag-result" class="result"></div>
+    </div>
+    <div class="panel"><h3>Report</h3><pre id="diag-json" class="json">no report generated yet</pre></div>
+  </section>
+
+  <section class="view" id="view-settings">
+    <div class="panel">
+      <h2>Settings</h2>
+      <p class="muted">Settings are stored server side in the application data directory with restricted permissions.</p>
+      <div class="form-grid">
+        <label>Default address<input id="st-url" type="text"></label>
+        <label>Active profile<input id="st-profile" type="text"></label>
+        <label>Resolver profile<input id="st-resolver" type="text"></label>
+        <label>Privacy preset<input id="st-privacy" type="text"></label>
+        <label>Diagnostics level<input id="st-level" type="text"></label>
+        <label class="check">Private browsing default<input id="st-private" type="checkbox"></label>
+        <button class="primary" id="st-save">Save settings</button>
+        <button id="st-reload">Reload</button>
+      </div>
+      <div id="st-result" class="result"></div>
+    </div>
+    <div class="panel"><h3>WebRTC policies</h3><div id="st-webrtc"></div></div>
+  </section>
+
+  <section class="view" id="view-platform">
+    <div class="panel">
+      <h2>Platform</h2>
+      <p class="muted">Identity system, policy compliance state and application programming interface surface.</p>
+      <div class="grid">
+        <div class="identity-tile"><img src="/assets/identity/icon.svg" alt="Primary identity mark"><span>icon.svg</span></div>
+        <div class="identity-tile"><img src="/assets/identity/icon-symbol.svg" alt="Symbol variant"><span>icon-symbol.svg</span></div>
+        <div class="identity-tile dark"><img src="/assets/identity/icon-dark.svg" alt="Dark surface variant"><span>icon-dark.svg</span></div>
+        <div class="identity-tile"><img src="/assets/identity/icon-mask.svg" alt="Mask variant"><span>icon-mask.svg</span></div>
+        <div class="identity-tile"><img src="/assets/identity/icon-monochrome.svg" alt="Monochrome variant"><span>icon-monochrome.svg</span></div>
+      </div>
+    </div>
+    <div class="panel"><h3>Legibility validation</h3><div id="platform-legibility"></div></div>
+    <div class="panel"><h3>Policy scan state</h3><div id="platform-scans"></div></div>
+    <div class="panel"><h3>Interface endpoints</h3><div id="platform-endpoints"></div></div>
+    <div class="panel">
+      <h3>Statements</h3>
+      <ul class="muted">
+        <li>Environment controls do not guarantee anonymity and do not change the public address observed by websites.</li>
+        <li>Resolver configuration never modifies device or network settings.</li>
+        <li>While virtual location mode is active the browser never falls back to the device location provider.</li>
+        <li>Timezone control covers JavaScript and formatting surfaces inside the browser only.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script src="/ui/app.js"></script>
+</body>
+</html>

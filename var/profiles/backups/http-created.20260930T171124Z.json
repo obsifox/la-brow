@@ -1,0 +1,28 @@
+{
+  "integrity": {
+    "algorithm": "sha256",
+    "checksum": "a425d6906f001a06a88b925de3ee9f6d8856cbd4d06bd8642c35b63833e7dc3f"
+  },
+  "profile": {
+    "block_physical_fallback": true,
+    "city": "Amsterdam",
+    "conflict_detection": true,
+    "country": "NL",
+    "geolocation_mode": "manual",
+    "languages": [
+      "nl-NL",
+      "en-US"
+    ],
+    "latitude": 52.3676,
+    "locale": "nl-NL",
+    "longitude": 4.9041,
+    "name": "http-created",
+    "profile_version": 2,
+    "radius": 4000,
+    "randomization": "per_session",
+    "randomization_seed": 11,
+    "timezone": "Europe/Amsterdam",
+    "webrtc_policy": "privacy_enhanced"
+  },
+  "updated_at": "2026-09-30T17:11:24Z"
+}

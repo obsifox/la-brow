@@ -1,0 +1,94 @@
+{
+  "scanner": "emoji",
+  "repo": "/home/user/la-brow",
+  "violations": [],
+  "exempted_files": [
+    {
+      "path": "tools/eng-orchestrator/README.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 13
+    },
+    {
+      "path": "tools/eng-orchestrator/docs/architecture/project-profile.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 9
+    },
+    {
+      "path": "tools/eng-orchestrator/docs/recovery/recovery.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 5
+    },
+    {
+      "path": "tools/eng-orchestrator/docs/security/permissions.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 11
+    },
+    {
+      "path": "tools/eng-orchestrator/evals/results/S1-tiny-fix-with.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 6
+    },
+    {
+      "path": "tools/eng-orchestrator/evals/results/S2-cli-calculator-with.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 7
+    },
+    {
+      "path": "tools/eng-orchestrator/evals/results/S8-no-test-runner-with.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 4
+    },
+    {
+      "path": "tools/eng-orchestrator/evals/results/S9-no-subagent-with.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 5
+    },
+    {
+      "path": "tools/eng-orchestrator/skills/arena/ARENA_SKILL.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 4
+    },
+    {
+      "path": "tools/eng-orchestrator/skills/arena/SKILL.md",
+      "exemption": "vendored-engineering-skill",
+      "count": 4
+    },
+    {
+      "path": "tools/eng-orchestrator/tests/dep_audit.test.sh",
+      "exemption": "vendored-engineering-skill",
+      "count": 4
+    },
+    {
+      "path": "tools/eng-orchestrator/tests/gates.test.sh",
+      "exemption": "vendored-engineering-skill",
+      "count": 4
+    },
+    {
+      "path": "tools/eng-orchestrator/tests/permissions.test.sh",
+      "exemption": "vendored-engineering-skill",
+      "count": 4
+    },
+    {
+      "path": "tools/eng-orchestrator/tests/playbook.test.sh",
+      "exemption": "vendored-engineering-skill",
+      "count": 14
+    },
+    {
+      "path": "tools/eng-orchestrator/tests/project_profile.test.sh",
+      "exemption": "vendored-engineering-skill",
+      "count": 2
+    },
+    {
+      "path": "tools/eng-orchestrator/tests/recovery.test.sh",
+      "exemption": "vendored-engineering-skill",
+      "count": 16
+    },
+    {
+      "path": "tools/eng-orchestrator/tests/state_machine.test.sh",
+      "exemption": "vendored-engineering-skill",
+      "count": 4
+    }
+  ],
+  "status": "PASS",
+  "violation_count": 0
+}

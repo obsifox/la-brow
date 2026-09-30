@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-30T14:52:01Z",
-  "duration_seconds": 5.83,
+  "generated_at": "2026-09-30T17:12:51Z",
+  "duration_seconds": 10.22,
   "status": "PASS",
   "stages": [
     {
@@ -15,7 +15,7 @@
     },
     {
       "id": "static_analysis",
-      "command": "python3 -m compileall -q geo timezone locale_engine locale profiles policy privacy webrtc diagnostics environment gecko browser application tools tests",
+      "command": "python3 -m compileall -q geo timezone locale_engine locale profiles policy privacy webrtc diagnostics environment gecko browser application api tools tests",
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [],
@@ -33,17 +33,17 @@
     },
     {
       "id": "branding_scan",
-      "command": "python3 tools/scanners/branding_scan.py --repo .",
+      "command": "python3 tools/scanners/branding_scan.py --repo . --json-out .eng/artifacts/branding_scan.json",
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "branding_scan status=PASS scanned=21 violations=0"
+        "branding_scan status=PASS scanned=24 violations=0"
       ],
       "stderr_tail": []
     },
     {
       "id": "emoji_scan",
-      "command": "python3 tools/scanners/emoji_scan.py --repo .",
+      "command": "python3 tools/scanners/emoji_scan.py --repo . --json-out .eng/artifacts/emoji_scan.json",
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
@@ -53,17 +53,17 @@
     },
     {
       "id": "comment_scan",
-      "command": "python3 tools/scanners/comment_scan.py --repo .",
+      "command": "python3 tools/scanners/comment_scan.py --repo . --json-out .eng/artifacts/comment_scan.json",
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "comment_scan status=PASS scanned=242 violations=0 exempted_files=45"
+        "comment_scan status=PASS scanned=254 violations=0 exempted_files=45"
       ],
       "stderr_tail": []
     },
     {
       "id": "english_scan",
-      "command": "python3 tools/scanners/english_scan.py --repo .",
+      "command": "python3 tools/scanners/english_scan.py --repo . --json-out .eng/artifacts/english_scan.json",
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
@@ -77,7 +77,7 @@
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "android_scaffold status=PASS checks=25 problems=0"
+        "android_scaffold status=PASS checks=29 problems=0"
       ],
       "stderr_tail": []
     },
@@ -110,7 +110,7 @@
         "........................................................................ [ 42%]",
         "........................................................................ [ 84%]",
         "..........................                                               [100%]",
-        "170 passed in 0.32s"
+        "170 passed in 0.41s"
       ],
       "stderr_tail": []
     },
@@ -121,7 +121,7 @@
       "status": "PASS",
       "stdout_tail": [
         "..................                                                       [100%]",
-        "18 passed in 2.23s"
+        "18 passed in 2.26s"
       ],
       "stderr_tail": []
     },
@@ -131,8 +131,19 @@
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "...................s                                                     [100%]",
-        "19 passed, 1 skipped in 0.06s"
+        "....................                                                     [100%]",
+        "20 passed in 0.08s"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "interface_tests",
+      "command": "python3 -m pytest tests/api -q",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "...................                                                      [100%]",
+        "19 passed in 2.55s"
       ],
       "stderr_tail": []
     },
@@ -143,7 +154,7 @@
       "status": "PASS",
       "stdout_tail": [
         "..........                                                               [100%]",
-        "10 passed in 0.18s"
+        "10 passed in 0.25s"
       ],
       "stderr_tail": []
     },
@@ -154,7 +165,7 @@
       "status": "PASS",
       "stdout_tail": [
         "......                                                                   [100%]",
-        "6 passed in 0.03s"
+        "6 passed in 0.13s"
       ],
       "stderr_tail": []
     },

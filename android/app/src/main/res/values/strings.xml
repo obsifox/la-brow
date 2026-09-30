@@ -23,6 +23,8 @@
     <string name="label_confidence">Confidence</string>
     <string name="label_source">Source</string>
     <string name="label_conflicts">Conflicts</string>
+    <string name="label_server">Application server</string>
+    <string name="action_sync">Sync environment</string>
     <string name="notice_no_anonymity_guarantee">Environment controls do not guarantee anonymity and do not change the public IP address observed by websites.</string>
     <string name="notice_no_system_dns_change">Browser DNS configuration never modifies device or network DNS settings.</string>
     <string name="notice_virtual_mode_no_fallback">When virtual location mode is active the browser never falls back to the device location provider.</string>

@@ -16,7 +16,7 @@ import com.labrow.browser.R
 import com.labrow.browser.core.EnvironmentDocument
 
 @Composable
-fun ControlCenterScreen(document: EnvironmentDocument?, modifier: Modifier = Modifier) {
+fun ControlCenterScreen(document: EnvironmentDocument?, statusLine: String = "", modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -24,6 +24,11 @@ fun ControlCenterScreen(document: EnvironmentDocument?, modifier: Modifier = Mod
             .padding(16.dp),
     ) {
         SectionTitle(stringResource(R.string.label_environment))
+        Card(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+            Column(modifier = Modifier.padding(12.dp)) {
+                BodyText(stringResource(R.string.label_server) + ": " + statusLine)
+            }
+        }
         if (document == null) {
             BodyText(stringResource(R.string.error_profile_invalid))
             return@Column

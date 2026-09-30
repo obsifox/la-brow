@@ -1,0 +1,28 @@
+{
+  "integrity": {
+    "algorithm": "sha256",
+    "checksum": "edf89b432be8155d9bfa833aec3811779acb719af34827909ae6687fde78d4db"
+  },
+  "profile": {
+    "block_physical_fallback": true,
+    "city": "Tokyo",
+    "conflict_detection": true,
+    "country": "JP",
+    "geolocation_mode": "manual",
+    "languages": [
+      "ja-JP",
+      "en-US"
+    ],
+    "latitude": 35.6762,
+    "locale": "ja-JP",
+    "longitude": 139.6503,
+    "name": "tokyo-live",
+    "profile_version": 2,
+    "radius": 6000,
+    "randomization": "per_query",
+    "randomization_seed": 99,
+    "timezone": "Asia/Tokyo",
+    "webrtc_policy": "privacy_enhanced"
+  },
+  "updated_at": "2026-09-30T17:12:37Z"
+}

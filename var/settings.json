@@ -1,0 +1,11 @@
+{
+  "active_profile": "default",
+  "consistency_on_load": true,
+  "default_url": "https://example.com/",
+  "diagnostics_level": "redacted",
+  "privacy_preset": "balanced",
+  "private_browsing": false,
+  "resolver_profile": "system",
+  "schema_version": 1,
+  "updated_at": "2026-09-30T17:12:57Z"
+}

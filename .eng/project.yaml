@@ -2,7 +2,7 @@ name: la-brow
 kind: python-package
 
 commands:
-  build: python3 -m compileall -q geo timezone locale_engine locale profiles policy privacy webrtc diagnostics environment gecko browser application tools tests
+  build: python3 -m compileall -q geo timezone locale_engine locale profiles policy privacy webrtc diagnostics environment gecko browser application api tools tests
   test: python3 -m pytest tests -q -p no:cacheprovider
   lint: python3 tools/scanners/run_all_scans.py
 
