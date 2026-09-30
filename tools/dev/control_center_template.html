@@ -398,7 +398,10 @@ function panelDns() {
 function panelPrivacy() {
   const snapshot = scenario().snapshot;
   const privacy = snapshot.privacy;
-  const rows = Object.keys(privacy.policy).map(function (key) {
+  const rows = Object.keys(privacy.policy).filter(function (key) {
+    const value = privacy.policy[key];
+    return value === null || typeof value !== "object";
+  }).map(function (key) {
     return '<tr><td>' + escapeHtml(key) + '</td><td>' + escapeHtml(privacy.policy[key]) + '</td></tr>';
   }).join("");
   const prefs = Object.keys(privacy.preferences).slice(0, 10).map(function (key) {
