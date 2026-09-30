@@ -1,0 +1,122 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version without the leading v
+        required: true
+        default: "0.2.0"
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Install the java runtime
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install the python runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Prepare the gradle cache
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Install the validation dependencies
+        run: python3 -m pip install --quiet pyyaml pillow pytest
+
+      - name: Verify the repository policy gate
+        run: python3 tools/ci/run_gate.py --repo .
+
+      - name: Install the required android platform
+        run: |
+          CMDLINE_TOOLS="$(ls -d "${ANDROID_SDK_ROOT}"/cmdline-tools/*/bin | head -1)"
+          yes | "${CMDLINE_TOOLS}/sdkmanager" --licenses > /dev/null 2>&1 || true
+          "${CMDLINE_TOOLS}/sdkmanager" --install "platforms;android-36" "build-tools;36.0.0"
+
+      - name: Restore the release keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.LABROW_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "${KEYSTORE_BASE64}" ]; then
+            echo "the release keystore secret is not configured"
+            exit 1
+          fi
+          KEYSTORE_PATH="${RUNNER_TEMP}/la-brow-release.jks"
+          printf '%s' "${KEYSTORE_BASE64}" | base64 --decode > "${KEYSTORE_PATH}"
+          echo "LABROW_KEYSTORE_FILE=${KEYSTORE_PATH}" >> "${GITHUB_ENV}"
+
+      - name: Resolve the release version
+        id: version
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          else
+            VERSION="${{ inputs.version }}"
+          fi
+          echo "value=${VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "LABROW_VERSION_NAME=${VERSION}" >> "${GITHUB_ENV}"
+          echo "LABROW_VERSION_CODE=$(git rev-list --count HEAD)" >> "${GITHUB_ENV}"
+
+      - name: Assemble the signed release build
+        working-directory: android
+        env:
+          LABROW_KEYSTORE_PASSWORD: ${{ secrets.LABROW_KEYSTORE_PASSWORD }}
+          LABROW_KEY_ALIAS: ${{ secrets.LABROW_KEY_ALIAS }}
+          LABROW_KEY_PASSWORD: ${{ secrets.LABROW_KEY_PASSWORD }}
+        run: ./gradlew --no-daemon --stacktrace assembleRelease
+
+      - name: Verify the package signatures
+        run: |
+          APKSIGNER="$(ls -d "${ANDROID_SDK_ROOT}"/build-tools/*/apksigner | tail -1)"
+          for package in android/app/build/outputs/apk/release/*.apk; do
+            echo "verifying ${package}"
+            "${APKSIGNER}" verify --print-certs "${package}"
+          done
+
+      - name: Write the checksums
+        run: |
+          cd android/app/build/outputs/apk/release
+          sha256sum *.apk > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Select the release notes
+        run: |
+          NOTES="docs/releases/v${{ steps.version.outputs.value }}.md"
+          if [ ! -f "${NOTES}" ]; then
+            NOTES="docs/releases/compatibility-matrix.md"
+          fi
+          echo "LABROW_NOTES=${NOTES}" >> "${GITHUB_ENV}"
+
+      - name: Upload the release packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: la-brow-release
+          path: |
+            android/app/build/outputs/apk/release/*.apk
+            android/app/build/outputs/apk/release/SHA256SUMS.txt
+          if-no-files-found: error
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ steps.version.outputs.value }}" \
+            --title "LA Brow v${{ steps.version.outputs.value }}" \
+            --notes-file "${LABROW_NOTES}" \
+            android/app/build/outputs/apk/release/*.apk \
+            android/app/build/outputs/apk/release/SHA256SUMS.txt

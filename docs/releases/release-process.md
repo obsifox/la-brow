@@ -5,13 +5,18 @@
 | Channel | Purpose | Update Configuration |
 | --- | --- | --- |
 | Nightly | Continuous integration artifacts | Separate metadata, unsigned development builds are never distributed |
+| Stable | Supported release | Signed packages published by the release workflow on a version tag |
 | Development | Feature complete, not verified | Separate metadata |
 | Beta | Release candidate verification | Separate metadata, signed |
 | Stable | Supported release | Separate metadata, signed, rollback capable |
 
 ## Versioning
 
-Semantic versioning is used. The current library and scaffold version is `0.1.0`. A major version requires an architecture compatibility review recorded in the release notes.
+Semantic versioning is used. The current version is `0.2.0`, which is the first signed Android release. A major version requires an architecture compatibility review recorded in the release notes.
+
+## Release Automation
+
+The release workflow builds the signed packages when a tag matching `v` followed by the semantic version is pushed, and it can also be started manually with a version input. The workflow runs the repository policy gate, assembles the release variant, verifies every package with the Android build tools, writes checksums and publishes a GitHub release with the packages attached. The signing material is provided through repository secrets and is never stored in the repository.
 
 ## Release Checklist
 

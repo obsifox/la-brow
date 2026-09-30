@@ -4,6 +4,13 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+val releaseKeystoreFile = System.getenv("LABROW_KEYSTORE_FILE")
+val releaseKeystorePassword = System.getenv("LABROW_KEYSTORE_PASSWORD")
+val releaseKeyAlias = System.getenv("LABROW_KEY_ALIAS")
+val releaseKeyPassword = System.getenv("LABROW_KEY_PASSWORD")
+val releaseVersionName = System.getenv("LABROW_VERSION_NAME") ?: "0.2.0"
+val releaseVersionCode = (System.getenv("LABROW_VERSION_CODE") ?: "1").toInt()
+
 android {
     namespace = "com.labrow.browser"
     compileSdk = 36
@@ -12,14 +19,26 @@ android {
         applicationId = "com.labrow.browser"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.2.0"
+        versionCode = releaseVersionCode
+        versionName = releaseVersionName
+    }
+
+    signingConfigs {
+        if (releaseKeystoreFile != null && releaseKeystorePassword != null && releaseKeyAlias != null && releaseKeyPassword != null) {
+            create("release") {
+                storeFile = file(releaseKeystoreFile)
+                storePassword = releaseKeystorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("release")
         }
     }
 

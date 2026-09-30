@@ -8,7 +8,10 @@
 | Windows x86_64 | scaffolded, not built | Requires the engine toolchain |
 | macOS universal | scaffolded, not built | Requires the engine toolchain |
 | Android arm64-v8a debug | built | Assembles in continuous integration and is published as a build artifact |
+| Android arm64-v8a release | built | Signed and published as a release package |
 | Android x86_64 debug | built | Assembles in continuous integration and is published as a build artifact |
+| Android x86_64 release | built | Signed and published as a release package |
+| Android armeabi-v7a release | built | Signed and published as a release package |
 
 ## Library Compatibility
 
