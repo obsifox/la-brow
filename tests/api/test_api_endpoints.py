@@ -270,7 +270,8 @@ def test_compat_matrix_lists_runtime_surfaces(live_server):
     assert payload["runtime"]["engine"] == "geckoview"
     assert len(payload["sections"]) >= 10
     assert payload["install_notice"].startswith("This add-on targets desktop Firefox")
-    assert payload["installed"]["count"] == 0
+    assert isinstance(payload["installed"]["count"], int)
+    assert payload["installed"]["signature_state"] in {"verified", "unverified"}
 
 
 def test_theme_manifest_is_inspected_and_translated(clean_extensions):

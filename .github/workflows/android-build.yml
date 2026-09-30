@@ -26,11 +26,18 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Install android command line tools
-        uses: android-actions/setup-android@v3
+      - name: Inspect the installed android toolchain
+        run: |
+          java -version
+          gradle --version | head -6
+          echo "ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT:-unset}"
+          echo "ANDROID_HOME=${ANDROID_HOME:-unset}"
+          command -v sdkmanager
 
       - name: Install the required android platform
-        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+        run: |
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager --install "platforms;android-35" "build-tools;35.0.0"
 
       - name: Assemble the debug build
         working-directory: android

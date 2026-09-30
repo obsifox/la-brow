@@ -13,5 +13,6 @@ android/local.properties
 android/app/build/
 desktop/out/
 ui/generated/
+var/extensions/
 .eng/artifacts/*.log
 .eng/runs/*/checkpoints/
