@@ -60,6 +60,7 @@ data class EnvironmentDocument(
     val dns: EnvironmentDns?,
     val webrtcPolicy: String,
     val privacyPreset: String,
+    val privateBrowsing: Boolean,
     val conflicts: List<EnvironmentConflict>,
     val notices: List<String>,
 )

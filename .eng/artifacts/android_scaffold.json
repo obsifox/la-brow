@@ -1,0 +1,167 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "required-files",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "manifest-namespace",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "minimal-permissions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "backup-disabled",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "network-security-config",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "launcher-label-resource",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "adaptive-icon",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "single-activity",
+      "passed": true,
+      "detail": "1"
+    },
+    {
+      "check": "activity-exported",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "launcher-intent",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "browsable-intent",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "cleartext-forbidden",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "required-strings",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "english-strings",
+      "passed": true,
+      "detail": "{}"
+    },
+    {
+      "check": "adaptive-icon-layers",
+      "passed": true,
+      "detail": "background, foreground, monochrome"
+    },
+    {
+      "check": "kotlin-file-count",
+      "passed": true,
+      "detail": "11"
+    },
+    {
+      "check": "kotlin-no-comments",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "kotlin-package-declarations",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "geckoview-dependency",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "compose-enabled",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "release-minify",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "resolver-profiles-bundled",
+      "passed": true,
+      "detail": "cloudflare-doh, cloudflare-dot, quad9-doh, quad9-dot, system"
+    },
+    {
+      "check": "resolver-policy",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "debug-cleartext-restricted",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "debug-cleartext-hosts-limited",
+      "passed": true,
+      "detail": "10.0.2.2, 127.0.0.1, localhost"
+    },
+    {
+      "check": "interface-client-timeouts",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "interface-client-error-handling",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "client-reads-resolved-privacy-state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "client-no-hardcoded-preset",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "client-persists-environment",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "storage-layout-directories",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "storage-layout-identifier-pattern",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "problems": [],
+  "kotlin_files": 11
+}

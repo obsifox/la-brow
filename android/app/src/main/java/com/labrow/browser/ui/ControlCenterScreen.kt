@@ -97,6 +97,7 @@ fun ControlCenterScreen(document: EnvironmentDocument?, statusLine: String = "",
             Column(modifier = Modifier.padding(12.dp)) {
                 BodyText("webrtc policy: ${document.webrtcPolicy}")
                 BodyText("privacy preset: ${document.privacyPreset}")
+                BodyText("private browsing: ${if (document.privateBrowsing) "enabled" else "disabled"}")
             }
         }
         SectionTitle(stringResource(R.string.label_diagnostics))

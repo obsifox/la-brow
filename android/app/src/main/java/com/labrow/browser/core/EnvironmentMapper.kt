@@ -13,6 +13,7 @@ object EnvironmentMapper {
         val timezonePayload = snapshot.optJSONObject("timezone")
         val localePayload = snapshot.optJSONObject("locale")?.optJSONObject("surfaces")
         val dnsPayload = snapshot.optJSONObject("dns")
+        val privacyPayload = snapshot.optJSONObject("privacy")
         val consistency = snapshot.optJSONObject("consistency")
         val conflicts = mutableListOf<EnvironmentConflict>()
         consistency?.optJSONArray("findings")?.let { findings ->
@@ -79,8 +80,11 @@ object EnvironmentMapper {
                     systemResolverUnchanged = dns.optBoolean("system_resolver_unchanged", true),
                 )
             },
-            webrtcPolicy = profile.optString("webrtc_policy", "default"),
-            privacyPreset = "balanced",
+            webrtcPolicy = privacyPayload?.optJSONObject("policy")?.optString("webrtc_policy")
+                ?: profile.optString("webrtc_policy", "default"),
+            privacyPreset = privacyPayload?.optString("preset", "balanced") ?: "balanced",
+            privateBrowsing = privacyPayload?.optBoolean("private_browsing", false)
+                ?: snapshot.optBoolean("private_browsing", false),
             conflicts = conflicts,
             notices = listOf(
                 "Environment controls do not guarantee anonymity and do not change the public IP address observed by websites.",

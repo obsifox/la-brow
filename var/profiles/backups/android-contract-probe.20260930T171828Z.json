@@ -1,0 +1,23 @@
+{
+  "integrity": {
+    "algorithm": "sha256",
+    "checksum": "5f20f230d905c61dfc90997f50910deeea463509cea6f876425b2616b1f0ea43"
+  },
+  "profile": {
+    "block_physical_fallback": true,
+    "city": "Hamburg",
+    "conflict_detection": true,
+    "country": "DE",
+    "geolocation_mode": "manual",
+    "latitude": 53.55,
+    "locale": "de-DE",
+    "longitude": 9.99,
+    "name": "android-contract-probe",
+    "profile_version": 2,
+    "radius": 4000,
+    "randomization": "none",
+    "timezone": "Europe/Berlin",
+    "webrtc_policy": "default"
+  },
+  "updated_at": "2026-09-30T17:18:28Z"
+}

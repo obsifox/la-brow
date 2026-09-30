@@ -71,6 +71,11 @@ class SyncController(private val context: Context) {
         payload.put("active_profile", document.activeProfile)
         payload.put("webrtc_policy", document.webrtcPolicy)
         payload.put("privacy_preset", document.privacyPreset)
+        payload.put("private_browsing", document.privateBrowsing)
+        payload.put(
+            "privacy",
+            JSONObject().put("preset", document.privacyPreset).put("private_browsing", document.privateBrowsing),
+        )
         document.location?.let { location ->
             val locationPayload = JSONObject()
             locationPayload.put("mode", location.mode)

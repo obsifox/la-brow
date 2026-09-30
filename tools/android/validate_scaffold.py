@@ -174,6 +174,18 @@ def validate(repo: Path) -> dict:
     record("interface-client-timeouts", "CONNECT_TIMEOUT_MS" in client_source and "READ_TIMEOUT_MS" in client_source)
     record("interface-client-error-handling", "ApiException" in client_source and "status !in 200..299" in client_source)
 
+    mapper_source = (android_root / "app/src/main/java/com/labrow/browser/core/EnvironmentMapper.kt").read_text(encoding="utf-8")
+    record(
+        "client-reads-resolved-privacy-state",
+        'optJSONObject("privacy")' in mapper_source
+        and 'optString("preset", "balanced")' in mapper_source
+        and 'optBoolean("private_browsing"' in mapper_source,
+    )
+    record("client-no-hardcoded-preset", 'privacyPreset = "balanced"' not in mapper_source)
+
+    sync_source = (android_root / "app/src/main/java/com/labrow/browser/core/SyncController.kt").read_text(encoding="utf-8")
+    record("client-persists-environment", 'EnvironmentRepository.ENVIRONMENT_FILE' in sync_source and 'document.privateBrowsing' in sync_source)
+
     storage_source = (android_root / "app/src/main/java/com/labrow/browser/core/StorageLayout.kt").read_text(encoding="utf-8")
     record("storage-layout-directories", all(token in storage_source for token in ('"profiles"', '"settings"', '"diagnostics"', '"cache"')))
     record("storage-layout-identifier-pattern", bool(re.search(r"Regex\(", storage_source)))

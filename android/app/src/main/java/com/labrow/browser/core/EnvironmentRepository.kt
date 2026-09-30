@@ -84,7 +84,9 @@ class EnvironmentRepository(private val context: Context) {
                 )
             },
             webrtcPolicy = payload.optString("webrtc_policy", "default"),
-            privacyPreset = payload.optString("privacy_preset", "balanced"),
+            privacyPreset = payload.optJSONObject("privacy")?.optString("preset", "balanced")
+                ?: payload.optString("privacy_preset", "balanced"),
+            privateBrowsing = payload.optBoolean("private_browsing", false),
             conflicts = conflicts,
             notices = payload.optJSONArray("notices")?.let { array -> (0 until array.length()).map { index -> array.getString(index) } } ?: emptyList(),
         )

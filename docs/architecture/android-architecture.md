@@ -63,3 +63,35 @@ The manifest declares only `INTERNET` and `ACCESS_NETWORK_STATE`. The scaffold v
 ## Validator
 
 `tools/android/validate_scaffold.py` enforces twenty structural checks including required files, minimal permissions, cleartext prohibition, backup exclusion, single activity with launcher and browsable intents, English only user strings with the required notices, adaptive icon layers, absence of source comments in Kotlin files, engine dependency, Compose enablement, release minification, bundled resolver profiles, resolver policy, and the storage directory contract.
+
+## Application Interface Client
+
+The Android application does not resolve the environment on the device. It requests an environment snapshot from the application server and stores the result locally so the mobile control center and the desktop control center observe the same values.
+
+```text
+MainActivity
+   |
+SyncController
+   |
+ApiClient (connect timeout 8000 ms, read timeout 20000 ms)
+   |
+GET /api/environment with url, profile, resolver, privacy and private parameters
+   |
+EnvironmentMapper -> EnvironmentDocument
+   |
+EnvironmentRepository (files/settings/environment.json)
+```
+
+The default server address is the emulator loopback alias for the host machine followed by port 8000. The address can be replaced at runtime; the value is stored in files/settings/app.json under the key api_base_url.
+
+Cleartext traffic is permitted only in the debug variant, and only for the development hosts 10.0.2.2, 127.0.0.1 and localhost. The release variant keeps cleartext disabled and trusts system certificate authorities only.
+
+Profile editing uses PUT and DELETE on the profile route, validation uses POST on the validation route, and resolver probing uses POST on the probe route. Diagnostics export requests GET /api/diagnostics with an explicit level and writes the returned report to files/diagnostics/diagnostics-<level>.json.
+
+## Interface Contract Verification
+
+tests/android/test_client_contract.py reads the Kotlin sources for the endpoints the client calls and the payload fields the mapper reads, then exercises those endpoints against an in-process application server. The suite fails when the client calls an endpoint the server does not expose, when a field the mapper reads is absent from the payload, or when the storage repository reads a key that the sync layer never writes. The Android client therefore stays verifiable without an Android build toolchain.
+
+## Build Host Requirements
+
+A build host needs JDK 17, Android SDK platform 35 with build tools, and Gradle 8 with the Kotlin Android plugin. The GeckoView artifact is resolved from the Mozilla Maven repository. The repository does not vendor Gradle binaries; the build host provides them. android/build-debug.sh checks the toolchain and reports exactly what is missing before it runs a debug assembly.
