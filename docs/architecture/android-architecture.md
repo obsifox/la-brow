@@ -62,6 +62,8 @@ The manifest declares only `INTERNET` and `ACCESS_NETWORK_STATE`. The scaffold v
 
 ## Validator
 
+The merged manifest requests internet and network state from the application itself. The engine artifact contributes wake lock, audio settings and high sampling rate sensor permissions during manifest merging, which is recorded here so the merged permission set is never mistaken for an application decision.
+
 `tools/android/validate_scaffold.py` enforces thirty-eight structural checks including required files, minimal permissions, cleartext prohibition, backup exclusion, single activity with launcher and browsable intents, English only user strings with the required notices, adaptive icon layers, absence of source comments in Kotlin files, engine dependency, Compose enablement, release minification, bundled resolver profiles, resolver policy, and the storage directory contract.
 
 ## Application Interface Client
