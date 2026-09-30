@@ -1,0 +1,88 @@
+schema_version: 1
+project:
+  id: la-brow
+  name: LA Brow
+  kind: browser-platform
+  language_primary: English
+  repository_visibility: local
+  engine_baseline: gecko
+  target_platforms:
+    - linux
+    - windows
+    - macos
+    - android
+  english_only: true
+  emoji_allowed: false
+  source_comments_allowed: false
+  branding_restricted: true
+subsystems:
+  - id: environment-core
+    path: environment
+    role: deterministic environment resolution pipeline
+  - id: geo
+    path: geo
+    role: geo abstraction and providers
+  - id: timezone
+    path: timezone
+    role: browser scoped timezone control and diagnostics
+  - id: locale
+    path: locale
+    role: browser scoped locale and language preference control
+  - id: dns
+    path: dns
+    role: browser scoped resolver selection and diagnostics
+  - id: doh
+    path: doh
+    role: DNS over HTTPS transport
+  - id: dot
+    path: dot
+    role: DNS over TLS transport
+  - id: profiles
+    path: profiles
+    role: versioned profile storage import export migration
+  - id: policy
+    path: policy
+    role: per site environment policy resolution
+  - id: privacy
+    path: privacy
+    role: privacy policy engine
+  - id: webrtc
+    path: webrtc
+    role: WebRTC policy presets
+  - id: diagnostics
+    path: diagnostics
+    role: consistency diagnostics and redacted export
+  - id: gecko
+    path: gecko
+    role: Gecko integration descriptors and preference mapping
+  - id: browser-shell
+    path: browser
+    role: browser shell interface contracts
+  - id: android
+    path: android
+    role: Android application with GeckoView
+  - id: desktop
+    path: desktop
+    role: desktop packaging and update verification
+interfaces:
+  frozen_paths:
+    - config/engineering
+  change_control: interface contracts must be updated before implementation changes
+task_prefixes:
+  - ENV
+  - GEO
+  - TZ
+  - LOC
+  - DNS
+  - DOH
+  - DOT
+  - PRF
+  - POL
+  - PRV
+  - RTC
+  - DIA
+  - GKO
+  - AND
+  - DTP
+  - REL
+  - SEC

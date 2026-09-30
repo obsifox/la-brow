@@ -1,0 +1,25 @@
+# .eng - ignore generated but keep templates and knowledge structure
+.eng/artifacts/
+!.eng/artifacts/.gitkeep
+.eng/checkpoint/
+.eng/.persist_test_*
+.eng/runs/
+.eng/evidence.md
+.eng/state.json
+# Arena - ignore generated but keep skill source
+.arena/
+# Keep templates and knowledge README
+!.eng/templates/
+!.eng/templates/*
+!.eng/knowledge/
+!.eng/knowledge/**/*
+# OS
+.DS_Store
+# Node
+node_modules/
+# Python
+__pycache__/
+.venv/
+# Logs
+*.log
+!.eng/templates/*.md

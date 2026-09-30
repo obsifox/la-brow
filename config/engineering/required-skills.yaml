@@ -1,0 +1,53 @@
+schema_version: 1
+skill_root: tools/eng-orchestrator
+registry_state: .eng/bootstrap-state.json
+required_skills:
+  - id: engineering-orchestration
+    display_name: Engineering Orchestration Control Plane
+    repository: https://github.com/obsifox/eng-orchestrator
+    revision: fc3386149c49a9b2944438ae4d5a041866d512a4
+    revision_ref: refs/heads/main
+    version: 2.1.0
+    license: MIT
+    required: true
+    auto_install: true
+    verify_after_install: true
+    install_path: tools/eng-orchestrator
+    install_method: git-archive-at-revision
+    read_after_install:
+      - SKILL.md
+      - config/state_machine.yaml
+      - config/permissions.yaml
+      - .eng/templates/project.yaml
+    integration_points:
+      - .eng/project.yaml
+      - .eng/bootstrap-state.json
+      - tools/agent/bootstrap.sh
+      - config/engineering/project.yaml
+    verification:
+      required_files:
+        - SKILL.md
+        - config/state_machine.yaml
+        - config/permissions.yaml
+        - config/model_policy.yaml
+        - config/arena.yaml
+        - scripts/eng.sh
+        - scripts/run_manager.sh
+        - scripts/gate_check.sh
+        - scripts/state_machine.sh
+        - scripts/secret_scan.sh
+        - scripts/project_profile.sh
+        - agents/architect.yaml
+        - agents/worker.yaml
+        - agents/reviewer.yaml
+        - agents/security-reviewer.yaml
+        - agents/verifier.yaml
+        - agents/release-manager.yaml
+        - workflows/feature.yaml
+        - domains/android.yaml
+      manifest: tools/eng-orchestrator/INSTALL_MANIFEST.sha256
+      checksum_algorithm: sha256
+      min_skill_version: 2.1.0
+      compatibility_probe: scripts/eng.sh preview
+    substitution_policy: forbidden
+    substitution_policy_note: The orchestrator must not be replaced by another framework; a missing revision is a blocking failure reported to the human.

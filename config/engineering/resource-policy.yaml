@@ -1,0 +1,49 @@
+schema_version: 1
+preference_order:
+  - gecko_upstream_capability
+  - mozilla_documentation
+  - w3c_standard
+  - whatwg_standard
+  - ietf_rfc
+  - open_source_library
+  - public_git_repository
+  - free_dataset
+  - free_public_api
+  - public_domain_asset
+  - permissive_font
+  - permissive_icon_set
+  - free_developer_tooling
+  - custom_implementation
+prohibited_acquisition:
+  - pirated_software
+  - cracked_software
+  - paywall_circumvention
+  - leaked_proprietary_resource
+  - access_restriction_circumvention
+  - unlicensed_asset_copy
+  - incompatible_license_repackaging
+  - unclear_license_asset
+required_manifest: docs/licenses/THIRD_PARTY_RESOURCES.md
+required_record_fields:
+  - name
+  - source
+  - version
+  - license
+  - license_url
+  - purpose
+  - integration_location
+  - modification_status
+  - redistribution_requirements
+  - attribution_requirements
+  - checksum
+rejected_alternatives_log: docs/licenses/REJECTED_ALTERNATIVES.md
+accepted_license_families:
+  - MIT
+  - Apache-2.0
+  - BSD-2-Clause
+  - BSD-3-Clause
+  - MPL-2.0
+  - ISC
+  - CC0-1.0
+  - public-domain
+  - Unlicense

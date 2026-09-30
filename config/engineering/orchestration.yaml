@@ -1,0 +1,65 @@
+schema_version: 1
+control_plane:
+  run_manager: tools/eng-orchestrator/scripts/run_manager.sh
+  state_machine: tools/eng-orchestrator/scripts/state_machine.sh
+  event_log: tools/eng-orchestrator/scripts/event_log.sh
+  gate_check: tools/eng-orchestrator/scripts/gate_check.sh
+  playbook_engine: tools/eng-orchestrator/scripts/playbook_engine.sh
+  preview: tools/eng-orchestrator/scripts/preview.sh
+  receipt: tools/eng-orchestrator/scripts/receipt.sh
+  skill_registry: tools/eng-orchestrator/scripts/skill_registry.sh
+  secret_scan: tools/eng-orchestrator/scripts/secret_scan.sh
+  project_profile: tools/eng-orchestrator/scripts/project_profile.sh
+lifecycle:
+  - Research
+  - Architecture
+  - Specification
+  - Implementation
+  - StaticValidation
+  - UnitTests
+  - IntegrationTests
+  - SecurityValidation
+  - Review
+  - Acceptance
+  - Integration
+roles:
+  - system-architect
+  - gecko-engineer
+  - browser-platform-engineer
+  - networking-engineer
+  - dns-engineer
+  - privacy-engineer
+  - security-engineer
+  - ui-engineer
+  - ux-engineer
+  - android-engineer
+  - build-engineer
+  - qa-engineer
+  - test-automation-engineer
+  - performance-engineer
+  - release-engineer
+  - documentation-engineer
+  - dependency-and-license-auditor
+gates:
+  - Gate 0 Environment
+  - Gate 1 Architecture
+  - Gate 2 Gecko Foundation
+  - Gate 3 Browser Shell
+  - Gate 4 Geo Engine
+  - Gate 5 DNS Engine
+  - Gate 6 Privacy Engine
+  - Gate 7 Profile Engine
+  - Gate 8 Desktop
+  - Gate 9 Android
+  - Gate 10 Security
+  - Gate 11 Release
+task_required_fields:
+  - id
+  - owner
+  - dependencies
+  - inputs
+  - outputs
+  - acceptance
+  - validation
+  - risk
+  - security_impact

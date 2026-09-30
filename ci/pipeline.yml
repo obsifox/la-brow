@@ -1,0 +1,37 @@
+schema_version: 1
+name: la-brow-validation
+description: Validation stages executed locally and in continuous integration. Every stage fails the pipeline on violation.
+stages:
+  - id: format
+    command: python3 tools/license/render_manifest.py --repo . --check
+    note: generated documents must match their data source
+  - id: static_analysis
+    command: python3 -m compileall -q geo timezone locale_engine locale profiles policy privacy webrtc diagnostics environment gecko browser application tools tests
+  - id: dependency_and_license_audit
+    command: python3 tools/license/verify_manifest.py --repo .
+  - id: branding_scan
+    command: python3 tools/scanners/branding_scan.py --repo .
+  - id: emoji_scan
+    command: python3 tools/scanners/emoji_scan.py --repo .
+  - id: comment_scan
+    command: python3 tools/scanners/comment_scan.py --repo .
+  - id: english_scan
+    command: python3 tools/scanners/english_scan.py --repo .
+  - id: android_validation
+    command: python3 tools/android/validate_scaffold.py --repo .
+  - id: skill_integrity
+    command: python3 tools/agent/verify_skill.py --repo .
+  - id: architecture_check
+    command: python3 tools/agent/architecture_check.py --repo .
+  - id: unit_tests
+    command: python3 -m pytest tests/unit -q
+  - id: network_tests
+    command: python3 -m pytest tests/network -q
+  - id: security_tests
+    command: python3 -m pytest tests/security -q
+  - id: integration_tests
+    command: python3 -m pytest tests/integration -q
+  - id: android_tests
+    command: python3 -m pytest tests/android -q
+  - id: artifact_validation
+    command: python3 tools/identity/generate_identity.py --repo . --check

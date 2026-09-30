@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img">
+<title>Product identity monochrome</title>
+<path d="M96,72 L196,152 L256,128 L316,152 L416,72 L452,208 L438,320 L360,404 L256,464 L152,404 L74,320 L60,208 Z" fill="currentColor"/>
+<path d="M256,128 L196,152 L96,72 L60,208 L74,320 L152,404 L256,464 Z" fill="none" stroke="#000000" stroke-opacity="0.25" stroke-width="8"/>
+<circle cx="176" cy="244" r="44" fill="none" stroke="#000000" stroke-opacity="0.45" stroke-width="14"/>
+<circle cx="336" cy="244" r="44" fill="none" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="14"/>
+</svg>

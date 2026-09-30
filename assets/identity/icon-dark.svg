@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img">
+<title>Product identity for dark surfaces</title>
+<path d="M256,128 L196,152 L96,72 L60,208 L74,320 L152,404 L256,464 Z" fill="#FFFFFF"/>
+<path d="M256,128 L316,152 L416,72 L452,208 L438,320 L360,404 L256,464 Z" fill="#0B0C0E"/>
+<path d="M256,448 L226,396 L256,396 Z" fill="#0B0C0E"/>
+<path d="M256,448 L286,396 L256,396 Z" fill="#FFFFFF"/>
+<circle cx="176" cy="244" r="44" fill="#FF2D3F"/>
+<circle cx="336" cy="244" r="44" fill="#A855F7"/>
+<circle cx="188" cy="232" r="15" fill="#0B0C0E"/>
+<circle cx="324" cy="232" r="15" fill="#FFFFFF"/>
+<path d="M96,72 L196,152 L256,128 L316,152 L416,72 L452,208 L438,320 L360,404 L256,464 L152,404 L74,320 L60,208 Z" fill="none" stroke="#E6E8EC" stroke-width="10" stroke-linejoin="round"/>
+</svg>

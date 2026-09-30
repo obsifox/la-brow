@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "skills": [
+    {
+      "detected_version": "2.1.0",
+      "id": "engineering-orchestration",
+      "install_log": [],
+      "install_path": "tools/eng-orchestrator",
+      "manifest_entries": 158,
+      "read_after_install": [
+        "SKILL.md",
+        "config/state_machine.yaml",
+        "config/permissions.yaml",
+        ".eng/templates/project.yaml"
+      ],
+      "repository": "https://github.com/obsifox/eng-orchestrator",
+      "required_files_ok": true,
+      "revision": "fc3386149c49a9b2944438ae4d5a041866d512a4",
+      "status": "VERIFIED",
+      "verified_at": "2026-09-30T14:51:11Z"
+    }
+  ],
+  "updated_at": "2026-09-30T14:51:11Z"
+}

@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+build/out/
+build/dist/
+.idea/
+.vscode/
+*.iml
+.gradle/
+android/.gradle/
+android/local.properties
+android/app/build/
+desktop/out/
+ui/generated/
+.eng/artifacts/*.log
+.eng/runs/*/checkpoints/

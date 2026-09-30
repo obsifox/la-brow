@@ -1,0 +1,174 @@
+{
+  "agent_environment": {
+    "can_persist_files": true,
+    "can_run_code": true,
+    "has_git": true,
+    "has_subagents": false,
+    "has_test_runner": true
+  },
+  "android_environment_variables": {
+    "ANDROID_HOME": false,
+    "ANDROID_NDK_ROOT": false,
+    "ANDROID_SDK_ROOT": false,
+    "JAVA_HOME": false
+  },
+  "architecture": {
+    "machine": "x86_64",
+    "pointer_bits": 64,
+    "processor": ""
+  },
+  "collected_at": "2026-09-30T14:47:27Z",
+  "containers_and_virtualization": {
+    "cgroup_v2": true,
+    "docker_socket": false,
+    "kvm_device": false,
+    "podman_socket": false
+  },
+  "cpu": {
+    "logical_cores": 2,
+    "model": "Intel(R) Xeon(R) Processor @ 2.60GHz",
+    "os_cpu_count": 2
+  },
+  "graphics": {
+    "detail": "glxinfo is not installed; graphics stack not measurable in this environment",
+    "glxinfo": false
+  },
+  "memory": {
+    "available": "1529980 kB",
+    "swap_total": "0 kB",
+    "total": "2032608 kB"
+  },
+  "operating_system": {
+    "distribution": "Debian GNU/Linux 13 (trixie)",
+    "libc": [
+      "glibc",
+      "2.41"
+    ],
+    "release": "6.1.158+",
+    "system": "Linux",
+    "version": "#1 SMP PREEMPT_DYNAMIC Fri Jul 17 14:31:34 UTC 2026"
+  },
+  "python": {
+    "executable": "/usr/local/bin/python3",
+    "modules": {
+      "PIL": "12.3.0",
+      "cryptography": null,
+      "jsonschema": "4.26.0",
+      "pytest": "9.0.3",
+      "yaml": "6.0.3"
+    },
+    "version": "3.13.14"
+  },
+  "storage": [
+    {
+      "free_bytes": 21203406848,
+      "mount": "/",
+      "total_bytes": 25860014080,
+      "used_percent": 16.8
+    },
+    {
+      "free_bytes": 21203406848,
+      "mount": "/home/user",
+      "total_bytes": 25860014080,
+      "used_percent": 16.8
+    },
+    {
+      "free_bytes": 1039011840,
+      "mount": "/tmp",
+      "total_bytes": 1040695296,
+      "used_percent": 0.2
+    }
+  ],
+  "tools": {
+    "cargo": {
+      "first_line": null,
+      "path": null,
+      "present": false
+    },
+    "clang": {
+      "first_line": null,
+      "path": null,
+      "present": false
+    },
+    "cmake": {
+      "first_line": null,
+      "path": null,
+      "present": false
+    },
+    "docker": {
+      "first_line": null,
+      "path": null,
+      "present": false
+    },
+    "g++": {
+      "first_line": "g++ (Debian 14.2.0-19) 14.2.0",
+      "path": "/usr/bin/g++",
+      "present": true
+    },
+    "gcc": {
+      "first_line": "gcc (Debian 14.2.0-19) 14.2.0",
+      "path": "/usr/bin/gcc",
+      "present": true
+    },
+    "git": {
+      "first_line": "git version 2.47.3",
+      "path": "/usr/bin/git",
+      "present": true
+    },
+    "gradle": {
+      "first_line": null,
+      "path": null,
+      "present": false
+    },
+    "hg": {
+      "first_line": "Mercurial Distributed SCM (version 7.0.1)",
+      "path": "/usr/bin/hg",
+      "present": true
+    },
+    "java": {
+      "first_line": "openjdk version \"11\" 2018-09-25",
+      "path": "/usr/bin/java",
+      "present": true
+    },
+    "make": {
+      "first_line": "GNU Make 4.4.1",
+      "path": "/usr/bin/make",
+      "present": true
+    },
+    "ninja": {
+      "first_line": null,
+      "path": null,
+      "present": false
+    },
+    "node": {
+      "first_line": "v20.20.2",
+      "path": "/usr/bin/node",
+      "present": true
+    },
+    "openssl": {
+      "first_line": "OpenSSL 3.5.6 7 Apr 2026 (Library: OpenSSL 3.5.6 7 Apr 2026)",
+      "path": "/usr/bin/openssl",
+      "present": true
+    },
+    "podman": {
+      "first_line": null,
+      "path": null,
+      "present": false
+    },
+    "python3": {
+      "first_line": "Python 3.13.14",
+      "path": "/usr/local/bin/python3",
+      "present": true
+    },
+    "qemu-system-x86_64": {
+      "first_line": null,
+      "path": null,
+      "present": false
+    },
+    "rustc": {
+      "first_line": null,
+      "path": null,
+      "present": false
+    }
+  }
+}

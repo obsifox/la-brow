@@ -1,0 +1,126 @@
+{
+  "eye_visibility": [
+    {
+      "eye_diameter_px": 2.75,
+      "eye_separation_px": 5.0,
+      "eyes_distinguishable": true,
+      "size": 16
+    },
+    {
+      "eye_diameter_px": 4.12,
+      "eye_separation_px": 7.5,
+      "eyes_distinguishable": true,
+      "size": 24
+    },
+    {
+      "eye_diameter_px": 5.5,
+      "eye_separation_px": 10.0,
+      "eyes_distinguishable": true,
+      "size": 32
+    },
+    {
+      "eye_diameter_px": 8.25,
+      "eye_separation_px": 15.0,
+      "eyes_distinguishable": true,
+      "size": 48
+    },
+    {
+      "eye_diameter_px": 11.0,
+      "eye_separation_px": 20.0,
+      "eyes_distinguishable": true,
+      "size": 64
+    },
+    {
+      "eye_diameter_px": 22.0,
+      "eye_separation_px": 40.0,
+      "eyes_distinguishable": true,
+      "size": 128
+    },
+    {
+      "eye_diameter_px": 44.0,
+      "eye_separation_px": 80.0,
+      "eyes_distinguishable": true,
+      "size": 256
+    },
+    {
+      "eye_diameter_px": 88.0,
+      "eye_separation_px": 160.0,
+      "eyes_distinguishable": true,
+      "size": 512
+    },
+    {
+      "eye_diameter_px": 176.0,
+      "eye_separation_px": 320.0,
+      "eyes_distinguishable": true,
+      "size": 1024
+    }
+  ],
+  "palette": {
+    "black": "#0B0C0E",
+    "purple": "#A855F7",
+    "red": "#FF2D3F",
+    "white": "#FFFFFF"
+  },
+  "policy": {
+    "contains_organization_name": false,
+    "contains_text": false,
+    "contains_watermark": false,
+    "svg_metadata_language": "English"
+  },
+  "rasters": [
+    {
+      "path": "assets/identity/generated/icon-16.png",
+      "sha256": "9a097cb3de20e26ea5d394b3692f5c11742f586674b74fb1c9cc966ef8d28d97",
+      "size": 16
+    },
+    {
+      "path": "assets/identity/generated/icon-24.png",
+      "sha256": "e7ac31499c192e4d36bd840e3dd69bbfb4ecf18ff0f030c2663ffe080b8cd273",
+      "size": 24
+    },
+    {
+      "path": "assets/identity/generated/icon-32.png",
+      "sha256": "59f4b4843a9e496fe5dfb653d00950f3bacca916200c109204119b7ebf438091",
+      "size": 32
+    },
+    {
+      "path": "assets/identity/generated/icon-48.png",
+      "sha256": "d3733dffe5ab246e5e49101df113c55006eb57e18c309c89ff665b8f029e9b3f",
+      "size": 48
+    },
+    {
+      "path": "assets/identity/generated/icon-64.png",
+      "sha256": "527e65e44f75231d6a985574d78d4b2a83049c766e1f35696e85ccca2edee62b",
+      "size": 64
+    },
+    {
+      "path": "assets/identity/generated/icon-128.png",
+      "sha256": "a67e6c49e99c739267a3b1bc255ad1a402f9d0e4c70b227d422b1818b329a951",
+      "size": 128
+    },
+    {
+      "path": "assets/identity/generated/icon-256.png",
+      "sha256": "cf1533004946972f49c9b1cdfd7d3ac5e2107eaef663684f8a3b69101a1193b5",
+      "size": 256
+    },
+    {
+      "path": "assets/identity/generated/icon-512.png",
+      "sha256": "06f4e6581d831b037329cabbf79ea078c71335f855ebdbe85b5afd833a23cc8a",
+      "size": 512
+    },
+    {
+      "path": "assets/identity/generated/icon-1024.png",
+      "sha256": "33af703df3046c25dc6e68c7e07ffe81440a3b4770e07ff22ff92a84b49322cf",
+      "size": 1024
+    }
+  ],
+  "svg_assets": [
+    "assets/identity/icon.svg",
+    "assets/identity/icon-symbol.svg",
+    "assets/identity/icon-mask.svg",
+    "assets/identity/icon-monochrome.svg",
+    "assets/identity/icon-dark.svg",
+    "assets/identity/icon-light.svg"
+  ],
+  "viewbox": 512
+}

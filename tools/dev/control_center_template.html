@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LA Brow Environment Control Center</title>
+<style>
+:root {
+  --surface: #0d1017;
+  --panel: #151a24;
+  --panel-soft: #1b2130;
+  --line: #262e3d;
+  --text: #e8ecf4;
+  --muted: #9aa6bd;
+  --accent: #7a3fd1;
+  --danger: #ff2d3f;
+  --ok: #24c47c;
+  --warn: #f0a92b;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--text);
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(120deg, #10141d 0%, #171c28 60%, #1b1526 100%);
+}
+header svg { width: 54px; height: 54px; flex: none; }
+.title-block h1 { margin: 0; font-size: 20px; letter-spacing: 0.2px; }
+.title-block p { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+.chips { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px; max-width: 60%; }
+.chip {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.chip strong { color: var(--text); font-weight: 600; }
+.chip.ok { border-color: rgba(36,196,124,0.5); }
+.chip.warn { border-color: rgba(240,169,43,0.5); }
+.chip.fail { border-color: rgba(255,45,63,0.6); }
+.layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 92px); }
+aside { border-right: 1px solid var(--line); padding: 16px 12px; background: #0f131b; }
+.scenario-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin: 4px 8px 8px; }
+.scenario {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.scenario:hover { background: var(--panel-soft); }
+.scenario.active { background: var(--panel-soft); border-color: var(--accent); }
+nav { margin-top: 18px; }
+nav button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  border-radius: 0 6px 6px 0;
+}
+nav button:hover { color: var(--text); background: var(--panel); }
+nav button.active { color: var(--text); border-left-color: var(--danger); background: var(--panel); }
+main { padding: 22px 26px 60px; }
+h2 { font-size: 16px; margin: 0 0 4px; }
+.sub { color: var(--muted); font-size: 12px; margin: 0 0 18px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.card h3 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 42% 58%; gap: 4px 10px; }
+.kv div { font-size: 13px; overflow-wrap: anywhere; }
+.kv .k { color: var(--muted); }
+.badge { display: inline-block; border-radius: 6px; padding: 1px 8px; font-size: 11px; border: 1px solid var(--line); }
+.badge.ok { color: var(--ok); border-color: rgba(36,196,124,0.5); }
+.badge.warn { color: var(--warn); border-color: rgba(240,169,43,0.5); }
+.badge.fail { color: var(--danger); border-color: rgba(255,45,63,0.6); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+code, pre { font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 12px; }
+pre {
+  background: #0b0f16;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  max-height: 360px;
+  overflow: auto;
+  color: #cfe3ff;
+}
+.pipeline { display: flex; flex-wrap: wrap; gap: 8px; }
+.stage { border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 12px; background: var(--panel-soft); }
+.stage.ok { border-color: rgba(36,196,124,0.45); }
+.stage.skipped { opacity: 0.55; }
+.stage.failed { border-color: rgba(255,45,63,0.6); }
+.pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+button.pill {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 5px 14px;
+  cursor: pointer;
+  font-size: 12px;
+}
+button.pill.active { border-color: var(--accent); background: var(--panel-soft); }
+.identity-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
+.identity-row figure { margin: 0; text-align: center; }
+.identity-row figure svg { width: 96px; height: 96px; }
+.identity-row figcaption { color: var(--muted); font-size: 11px; margin-top: 6px; }
+.mono-svg { color: #dfe5f2; }
+.footnote { color: var(--muted); font-size: 12px; margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+a { color: #9db8ff; }
+</style>
+</head>
+<body>
+<header>
+  <div id="brand"></div>
+  <div class="title-block">
+    <h1>Environment Control Center</h1>
+    <p id="subtitle">Deterministic browser environment resolution with observable stage output</p>
+  </div>
+  <div class="chips" id="chips"></div>
+</header>
+<div class="layout">
+  <aside>
+    <div class="scenario-label">Scenarios</div>
+    <div id="scenarios"></div>
+    <nav id="nav"></nav>
+  </aside>
+  <main id="main"></main>
+</div>
+<script type="application/json" id="demo-data">__DEMO_DATA__</script>
+<script>
+const DATA = JSON.parse(document.getElementById("demo-data").textContent);
+let scenarioIndex = 0;
+let panel = "overview";
+let diagnosticsLevel = "redacted";
+
+const PANELS = [
+  ["overview", "Overview and pipeline"],
+  ["location", "Location and radius"],
+  ["timezone", "Timezone"],
+  ["locale", "Locale and language"],
+  ["dns", "DNS and encrypted resolvers"],
+  ["privacy", "Privacy and WebRTC"],
+  ["profiles", "Profiles"],
+  ["diagnostics", "Diagnostics and redaction"],
+  ["identity", "Identity system"],
+  ["limits", "Limits and statements"],
+  ["roadmap", "Milestones"],
+  ["licenses", "Licenses and resources"]
+];
+
+function scenario() {
+  return DATA.scenarios[scenarioIndex];
+}
+
+function badgeClass(status) {
+  if (status === "OK" || status === "PASS" || status === "DONE" || status === "CONSISTENT") return "ok";
+  if (status === "FAIL" || status === "FAILED") return "fail";
+  return "warn";
+}
+
+function chip(label, value, status) {
+  return '<span class="chip ' + badgeClass(status) + '">' + label + ' <strong>' + value + '</strong></span>';
+}
+
+function kv(rows) {
+  return '<div class="kv">' + rows.map(function (row) {
+    return '<div class="k">' + row[0] + '</div><div>' + row[1] + '</div>';
+  }).join("") + '</div>';
+}
+
+function escapeHtml(value) {
+  return String(value === null || value === undefined ? "not available" : value)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function stripXmlDeclaration(svg) {
+  return svg.replace(/<\?xml[^>]*\?>/g, "").replace(/width="512" height="512"/, 'width="100%" height="100%"');
+}
+
+function renderHeader() {
+  const icon = stripXmlDeclaration(DATA.identity.symbol);
+  document.getElementById("brand").innerHTML = icon;
+  const scenarioChip = scenario();
+  const snapshot = scenarioChip.snapshot;
+  const scans = DATA.scans;
+  const scanFailed = Object.keys(scans).filter(function (key) { return scans[key].status !== "PASS"; });
+  document.getElementById("subtitle").textContent =
+    "Version " + DATA.application.version + " | generated " + DATA.generated_at + " | stage order fixed and asserted by tests";
+  document.getElementById("chips").innerHTML =
+    chip("pipeline", snapshot.status, snapshot.status) +
+    chip("state", snapshot.state.state, snapshot.state.state === "CONFLICT" ? "WARN" : "OK") +
+    chip("tests", DATA.tests.counts.passed + " passed", DATA.tests.status) +
+    chip("policy scans", scanFailed.length === 0 ? "all pass" : scanFailed.join(", "), scanFailed.length === 0 ? "PASS" : "FAIL") +
+    chip("geo source", snapshot.geo ? snapshot.geo.source : "not resolved", snapshot.geo ? "OK" : "WARN");
+}
+
+function renderScenarios() {
+  document.getElementById("scenarios").innerHTML = DATA.scenarios.map(function (item, index) {
+    return '<button class="scenario' + (index === scenarioIndex ? " active" : "") + '" data-index="' + index + '">' +
+      escapeHtml(item.label) + '</button>';
+  }).join("");
+  Array.prototype.forEach.call(document.querySelectorAll(".scenario"), function (element) {
+    element.addEventListener("click", function () {
+      scenarioIndex = Number(element.getAttribute("data-index"));
+      render();
+    });
+  });
+}
+
+function renderNav() {
+  document.getElementById("nav").innerHTML = PANELS.map(function (item) {
+    return '<button data-panel="' + item[0] + '" class="' + (panel === item[0] ? "active" : "") + '">' + item[1] + '</button>';
+  }).join("");
+  Array.prototype.forEach.call(document.querySelectorAll("#nav button"), function (element) {
+    element.addEventListener("click", function () {
+      panel = element.getAttribute("data-panel");
+      render();
+    });
+  });
+}
+
+function panelOverview() {
+  const snapshot = scenario().snapshot;
+  const stages = snapshot.stages.map(function (stage) {
+    const status = stage.status === "OK" ? "ok" : (stage.status === "SKIPPED" ? "skipped" : "failed");
+    return '<span class="stage ' + status + '">' + stage.stage + ' | ' + stage.status + '</span>';
+  }).join("");
+  const invariants = snapshot.stages.filter(function (stage) { return stage.stage === "web_content_ready"; })[0];
+  const invariantRows = invariants && invariants.output.invariants ? invariants.output.invariants.map(function (item) {
+    return '<tr><td>' + escapeHtml(item.id) + '</td><td><span class="badge ' + (item.satisfied ? "ok" : "fail") + '">' +
+      (item.satisfied ? "satisfied" : "violated") + '</span></td><td>' + escapeHtml(item.statement) + '</td></tr>';
+  }).join("") : "";
+  return '<h2>' + escapeHtml(scenario().label) + '</h2><p class="sub">' + escapeHtml(scenario().description) + '</p>' +
+    '<div class="card"><h3>Resolution pipeline</h3><div class="pipeline">' + stages + '</div>' +
+    '<div class="footnote">Duration ' + snapshot.duration_ms + ' ms | url ' + escapeHtml(snapshot.url) +
+    ' | private browsing ' + snapshot.private_browsing + '</div></div>' +
+    '<div class="grid" style="margin-top:14px">' +
+    '<div class="card"><h3>Active environment</h3>' + kv([
+      ["profile", escapeHtml(snapshot.effective_profile.name)],
+      ["geolocation mode", escapeHtml(snapshot.effective_profile.geolocation_mode)],
+      ["state machine", escapeHtml(snapshot.state.state)],
+      ["consistency", escapeHtml(snapshot.consistency.status)],
+      ["resolver", escapeHtml(snapshot.dns ? snapshot.dns.active_resolver : "browser default, not probed")],
+      ["webrtc policy", escapeHtml(snapshot.effective_profile.webrtc_policy)]
+    ]) + '</div>' +
+    '<div class="card"><h3>Site policy resolution</h3>' + kv([
+      ["matched rules", String(snapshot.policy.matched_rules.length)],
+      ["effective overrides", escapeHtml(JSON.stringify(snapshot.policy.effective_overrides))],
+      ["precedence", "origin over subdomain over domain over browsing mode over global"],
+      ["trace entries", String(snapshot.policy.trace.length)]
+    ]) + '</div></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Pipeline invariants</h3><table><thead><tr><th>Invariant</th><th>Result</th><th>Statement</th></tr></thead><tbody>' +
+    invariantRows + '</tbody></table></div>';
+}
+
+function panelLocation() {
+  const snapshot = scenario().snapshot;
+  const geo = snapshot.geo;
+  if (!geo) {
+    return '<h2>Location</h2><p class="sub">No geolocation fix was produced for this scenario.</p>';
+  }
+  const profile = snapshot.effective_profile;
+  const signals = geo.signals.map(function (signal) { return '<span class="stage">' + escapeHtml(signal) + '</span>'; }).join("");
+  const notes = geo.notes.map(function (note) { return '<li>' + escapeHtml(note) + '</li>'; }).join("");
+  return '<h2>Location and radius</h2><p class="sub">A location is a center plus a permitted radius. The resolved coordinate is sampled inside that radius and reported with its source and confidence.</p>' +
+    '<div class="grid">' +
+    '<div class="card"><h3>Resolved fix</h3>' + kv([
+      ["source", escapeHtml(geo.source)],
+      ["mode", escapeHtml(geo.mode)],
+      ["provider", escapeHtml(geo.provider_id)],
+      ["latitude", geo.coordinate.latitude.toFixed(6)],
+      ["longitude", geo.coordinate.longitude.toFixed(6)],
+      ["accuracy meters", geo.coordinate.accuracy_m],
+      ["confidence", geo.confidence],
+      ["seed", geo.seed === null ? "not applied" : String(geo.seed)],
+      ["timestamp", escapeHtml(geo.timestamp)]
+    ]) + '</div>' +
+    '<div class="card"><h3>Profile definition</h3>' + kv([
+      ["country", escapeHtml(profile.country)],
+      ["city", escapeHtml(profile.city)],
+      ["center latitude", profile.latitude],
+      ["center longitude", profile.longitude],
+      ["radius meters", profile.radius],
+      ["randomization scope", escapeHtml(profile.randomization)],
+      ["physical fallback blocked", String(profile.block_physical_fallback)]
+    ]) + '</div></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Decision signals</h3><div class="pipeline">' + signals + '</div>' +
+    '<ul style="margin:12px 0 0;color:var(--muted)">' + notes + '</ul></div>';
+}
+
+function panelTimezone() {
+  const snapshot = scenario().snapshot;
+  const zone = snapshot.timezone;
+  return '<h2>Timezone</h2><p class="sub">Browser scoped timezone control covers the surfaces the browser owns. It does not virtualize the operating system clock.</p>' +
+    '<div class="grid"><div class="card"><h3>Resolution</h3>' + kv([
+      ["zone", escapeHtml(zone.zone)],
+      ["mode", escapeHtml(zone.mode)],
+      ["offset minutes", zone.offset_minutes],
+      ["daylight saving active", String(zone.dst_active)],
+      ["abbreviation", escapeHtml(zone.abbreviation)],
+      ["confidence", zone.confidence],
+      ["source", escapeHtml(zone.source)]
+    ]) + '</div>' +
+    '<div class="card"><h3>Controlled and uncontrolled surfaces</h3>' +
+    '<p style="color:var(--muted);margin-top:0">Controlled inside the browser</p>' +
+    zone.controlled_surfaces.map(function (item) { return '<span class="stage ok" style="display:inline-block;margin:3px 4px 0 0">' + escapeHtml(item) + '</span>'; }).join("") +
+    '<p style="color:var(--muted);margin-top:12px">Not controlled</p>' +
+    zone.uncontrolled_surfaces.map(function (item) { return '<span class="stage" style="display:inline-block;margin:3px 4px 0 0">' + escapeHtml(item) + '</span>'; }).join("") +
+    '</div></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Notes</h3><ul style="margin:0;color:var(--muted)">' +
+    zone.notes.map(function (note) { return '<li>' + escapeHtml(note) + '</li>'; }).join("") + '</ul></div>';
+}
+
+function panelLocale() {
+  const snapshot = scenario().snapshot;
+  const locale = snapshot.locale;
+  const surfaces = locale.surfaces;
+  const rows = Object.keys(surfaces).map(function (key) {
+    return '<tr><td>' + escapeHtml(key) + '</td><td>' + escapeHtml(surfaces[key]) + '</td></tr>';
+  }).join("");
+  return '<h2>Locale and language</h2><p class="sub">Five locale surfaces are resolved separately because they are not automatically identical.</p>' +
+    '<div class="grid"><div class="card"><h3>Surfaces</h3><table><thead><tr><th>Surface</th><th>Value</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+    '<div class="card"><h3>Negotiation</h3>' + kv([
+      ["mode", escapeHtml(locale.mode)],
+      ["accepted languages", escapeHtml(locale.accepted_languages.join(", "))],
+      ["http language preference", escapeHtml(surfaces.http_language_preference)],
+      ["confidence", locale.confidence],
+      ["source", escapeHtml(locale.source)]
+    ]) + '</div></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Notes</h3><ul style="margin:0;color:var(--muted)">' +
+    locale.notes.map(function (note) { return '<li>' + escapeHtml(note) + '</li>'; }).join("") + '</ul></div>';
+}
+
+function panelDns() {
+  const snapshot = scenario().snapshot;
+  const rows = DATA.resolver_profiles.map(function (profile) {
+    return '<tr><td>' + escapeHtml(profile.id) + '</td><td>' + escapeHtml(profile.protocol) + '</td><td>' +
+      escapeHtml(profile.endpoint || profile.hostname || "system resolvers, read only") + '</td><td>' +
+      String(profile.verify_tls) + '</td><td>' + escapeHtml(profile.fallback_policy) + '</td></tr>';
+  }).join("");
+  let active = '<p class="sub">No resolver profile is active in this scenario, so browser default resolver behaviour applies and no probe is performed.</p>';
+  if (snapshot.dns) {
+    active = '<div class="grid"><div class="card"><h3>Active resolver state</h3>' + kv([
+      ["resolver", escapeHtml(snapshot.dns.active_resolver)],
+      ["protocol", escapeHtml(snapshot.dns.resolver_protocol)],
+      ["endpoint", escapeHtml(snapshot.dns.endpoint)],
+      ["connection status", escapeHtml(snapshot.dns.connection_status)],
+      ["tls status", escapeHtml(snapshot.dns.tls_status)],
+      ["average latency ms", snapshot.dns.dns_latency_ms],
+      ["fallback state", escapeHtml(snapshot.dns.fallback_state)],
+      ["cache entries", snapshot.dns.cache_entries],
+      ["system resolver unchanged", String(snapshot.dns.system_resolver_unchanged)]
+    ]) + '</div>' +
+    '<div class="card"><h3>Isolation statement</h3><p style="color:var(--muted)">The system resolver configuration file is read and hashed before and after use. A change raises a high severity consistency finding. Resolution itself is not performed against the public network from this preview, because the preview must stay offline capable and deterministic.</p></div></div>';
+  }
+  return '<h2>DNS and encrypted resolvers</h2><p class="sub">Resolver selection is browser scoped. Operating system and router configuration is never modified.</p>' + active +
+    '<div class="card" style="margin-top:14px"><h3>Declared resolver profiles</h3><table><thead><tr><th>Id</th><th>Protocol</th><th>Endpoint</th><th>Verifies TLS</th><th>Fallback policy</th></tr></thead><tbody>' +
+    rows + '</tbody></table></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Transport coverage proven by tests</h3><ul style="margin:0;color:var(--muted)">' +
+    '<li>UDP query, truncation detection and TCP retry against a local server</li>' +
+    '<li>DNS over TLS success and rejection of an untrusted certificate</li>' +
+    '<li>DNS over HTTPS success, wrong content type rejection, error status rejection and untrusted certificate rejection</li>' +
+    '<li>Fallback policy never reports failure without substitution; a configured secondary resolver is used and marked as a fallback</li>' +
+    '</ul></div>';
+}
+
+function panelPrivacy() {
+  const snapshot = scenario().snapshot;
+  const privacy = snapshot.privacy;
+  const rows = Object.keys(privacy.policy).map(function (key) {
+    return '<tr><td>' + escapeHtml(key) + '</td><td>' + escapeHtml(privacy.policy[key]) + '</td></tr>';
+  }).join("");
+  const prefs = Object.keys(privacy.preferences).slice(0, 10).map(function (key) {
+    return '<tr><td>' + escapeHtml(key) + '</td><td>' + escapeHtml(privacy.preferences[key]) + '</td></tr>';
+  }).join("");
+  return '<h2>Privacy and WebRTC</h2><p class="sub">Privacy controls are expressed as preferences and policies. Engine features are delegated rather than reimplemented.</p>' +
+    '<div class="grid"><div class="card"><h3>Policy</h3><table><thead><tr><th>Control</th><th>Value</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+    '<div class="card"><h3>Delegated to the engine</h3>' + privacy.delegated_to_gecko.map(function (item) {
+      return '<span class="stage" style="display:inline-block;margin:3px 4px 0 0">' + escapeHtml(item) + '</span>';
+    }).join("") + '</div></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Generated preferences</h3><table><thead><tr><th>Preference</th><th>Value</th></tr></thead><tbody>' + prefs + '</tbody></table></div>' +
+    '<div class="card" style="margin-top:14px"><h3>WebRTC limitation</h3><p style="color:var(--muted);margin:0">WebRTC policy presets reduce specific candidate exposure surfaces. They do not guarantee network anonymity and they do not change the public address observed by remote peers. Tested dimensions: STUN, TURN, IPv4, IPv6, proxy, virtual private network and DNS combinations.</p></div>';
+}
+
+function panelProfiles() {
+  const profiles = [
+    { name: "default", version: 2, mode: "manual", country: "Germany", city: "Berlin", radius: 5000, randomization: "per_session", timezone: "Europe/Berlin", locale: "en-US" },
+    { name: "tokyo", version: 2, mode: "manual", country: "Japan", city: "Tokyo", radius: 8000, randomization: "per_query", timezone: "Asia/Tokyo", locale: "ja-JP" },
+    { name: "hamburg", version: 2, mode: "hybrid", country: "Germany", city: "Hamburg", radius: 12000, randomization: "per_session", timezone: "Europe/Berlin", locale: "de-DE" }
+  ];
+  const rows = profiles.map(function (profile) {
+    return '<tr><td>' + escapeHtml(profile.name) + '</td><td>' + profile.version + '</td><td>' + escapeHtml(profile.mode) + '</td><td>' +
+      escapeHtml(profile.country) + '</td><td>' + escapeHtml(profile.city) + '</td><td>' + profile.radius + '</td><td>' +
+      escapeHtml(profile.randomization) + '</td><td>' + escapeHtml(profile.timezone) + '</td><td>' + escapeHtml(profile.locale) + '</td></tr>';
+  }).join("");
+  return '<h2>Profiles</h2><p class="sub">Profiles are versioned documents. Imported profiles are untrusted input until they pass validation and migration.</p>' +
+    '<div class="card"><h3>Version two profile set used by the scenarios</h3><table><thead><tr><th>Name</th><th>Version</th><th>Mode</th><th>Country</th><th>City</th><th>Radius m</th><th>Randomization</th><th>Timezone</th><th>Locale</th></tr></thead><tbody>' +
+    rows + '</tbody></table></div>' +
+    '<div class="grid" style="margin-top:14px">' +
+    '<div class="card"><h3>Lifecycle</h3><ul style="margin:0;color:var(--muted)"><li>Schema validation with unknown field rejection by default</li><li>Version migration with a recorded applied step list</li><li>Checksum envelope and optional keyed signature</li><li>Atomic writes with restricted permissions</li><li>Backup before overwrite and rollback to the last revision</li><li>Import supports a dry run that performs no write</li></ul></div>' +
+    '<div class="card"><h3>Migration path</h3>' + kv([["supported path", "version 1 to version 2"], ["boolean randomization", "converted to a named scope"], ["resolver field", "renamed with value preserved"], ["dns enabled flag", "converted to a named state"], ["newer version", "rejected with a structured error"]]) + '</div>' +
+    '</div>';
+}
+
+function panelDiagnostics() {
+  const item = scenario();
+  const document = diagnosticsLevel === "redacted" ? item.diagnostics_redacted : item.diagnostics_minimal;
+  const findings = item.snapshot.consistency.findings.map(function (finding) {
+    return '<tr><td>' + escapeHtml(finding.id) + '</td><td><span class="badge ' + (finding.severity === "HIGH" ? "fail" : "warn") + '">' +
+      escapeHtml(finding.severity) + '</span></td><td>' + escapeHtml(finding.message) + '</td><td>' + escapeHtml(finding.suggestion) + '</td></tr>';
+  }).join("");
+  return '<h2>Diagnostics and redaction</h2><p class="sub">' + escapeHtml(item.snapshot.consistency.statement) + '</p>' +
+    '<div class="card"><h3>Consistency findings</h3><table><thead><tr><th>Finding</th><th>Severity</th><th>Message</th><th>Suggestion</th></tr></thead><tbody>' +
+    (findings || '<tr><td colspan="4">No findings for this scenario.</td></tr>') + '</tbody></table></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Diagnostic export</h3>' +
+    '<div class="pill-row"><button class="pill ' + (diagnosticsLevel === "redacted" ? "active" : "") + '" data-level="redacted">Redacted (default)</button>' +
+    '<button class="pill ' + (diagnosticsLevel === "minimal" ? "active" : "") + '" data-level="minimal">Minimal</button></div>' +
+    '<pre>' + escapeHtml(JSON.stringify({
+      redaction: document.redaction,
+      application: document.application,
+      environment: {
+        status: document.environment.status,
+        geo: document.environment.geo,
+        timezone: document.environment.timezone,
+        locale: document.environment.locale,
+        dns: document.environment.dns,
+        consistency: document.environment.consistency
+      }
+    }, null, 2)) + '</pre>' +
+    '<div class="footnote">Tokens are removed at every level. Addresses are masked unless the full level is chosen explicitly. Coordinates are rounded at redacted level and removed at minimal level.</div></div>';
+}
+
+function panelIdentity() {
+  const identity = DATA.identity;
+  const figures = [
+    ["icon", "Primary mark", identity.icon],
+    ["symbol", "Symbol variant", identity.symbol],
+    ["mask", "Mask variant", identity.mask],
+    ["monochrome", "Monochrome fallback", identity.monochrome]
+  ].map(function (entry) {
+    return '<figure><div style="width:96px;height:96px">' + stripXmlDeclaration(entry[2]) + '</div><figcaption>' + entry[1] + '</figcaption></figure>';
+  }).join("");
+  const rows = identity.eye_visibility.map(function (entry) {
+    return '<tr><td>' + entry.size + ' px</td><td>' + entry.eye_diameter_px + '</td><td>' + entry.eye_separation_px + '</td><td><span class="badge ' +
+      (entry.eyes_distinguishable ? "ok" : "fail") + '">' + (entry.eyes_distinguishable ? "distinguishable" : "not distinguishable") + '</span></td></tr>';
+  }).join("");
+  const palette = Object.keys(identity.palette).map(function (key) {
+    return '<span class="stage" style="display:inline-block;margin:3px 6px 0 0"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:' +
+      identity.palette[key] + ';margin-right:6px"></span>' + key + ' ' + identity.palette[key] + '</span>';
+  }).join("");
+  return '<h2>Identity system</h2><p class="sub">Vector identity with a strong silhouette: fox head, left half white, right half black, one red eye, one purple eye. No text, no watermark, no organization name.</p>' +
+    '<div class="card"><div class="identity-row">' + figures + '</div>' +
+    '<div class="footnote">Palette ' + palette + '</div></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Legibility validation</h3><table><thead><tr><th>Size</th><th>Eye diameter px</th><th>Eye separation px</th><th>Result</th></tr></thead><tbody>' +
+    rows + '</tbody></table><div class="footnote">Raster outputs are generated for every listed size from the same vector definition, so the silhouette and eye colors remain consistent across favicon, toolbar, desktop and Android launcher surfaces.</div></div>';
+}
+
+function panelLimits() {
+  return '<h2>Limits and statements</h2><p class="sub">The platform reports what it controls and refuses to claim what it does not control.</p>' +
+    '<div class="grid">' +
+    '<div class="card"><h3>No anonymity claim</h3><p style="color:var(--muted);margin:0">Environment controls do not guarantee anonymity. Consistency diagnostics report mismatches between surfaces and do not provide fingerprint protection.</p></div>' +
+    '<div class="card"><h3>No public address change</h3><p style="color:var(--muted);margin:0">Virtual location changes what the browser exposes to content. It does not change network routing or the public address observed by remote services.</p></div>' +
+    '<div class="card"><h3>No silent fallback</h3><p style="color:var(--muted);margin:0">While virtual mode is active the browser never falls back to the device location provider. A failed resolution is reported as a failure.</p></div>' +
+    '<div class="card"><h3>No operating system DNS change</h3><p style="color:var(--muted);margin:0">Resolver selection is browser scoped. The system resolver configuration is read and hashed, never written, and a change raises a high severity finding.</p></div>' +
+    '<div class="card"><h3>No complete clock virtualization</h3><p style="color:var(--muted);margin:0">Timezone control covers JavaScript and formatting surfaces inside the browser. The operating system clock and other applications are unchanged.</p></div>' +
+    '<div class="card"><h3>Automatic detection is coarse</h3><p style="color:var(--muted);margin:0">Automatic proposals are country level, carry a capped confidence value and a signal list, and are explicitly not a measurement of the physical position.</p></div>' +
+    '</div>';
+}
+
+function panelRoadmap() {
+  const rows = DATA.roadmap.map(function (item) {
+    const status = item.status === "DONE" ? "ok" : (item.status === "PARTIAL" ? "warn" : "warn");
+    return '<tr><td>' + escapeHtml(item.milestone) + '</td><td><span class="badge ' + status + '">' + escapeHtml(item.status) +
+      '</span></td><td>' + escapeHtml(item.note) + '</td></tr>';
+  }).join("");
+  return '<h2>Milestones</h2><p class="sub">Status is written from what the repository can prove: executed tests and recorded evidence. Scaffolded work is never reported as complete.</p>' +
+    '<div class="card"><table><thead><tr><th>Milestone</th><th>Status</th><th>Note</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Why the engine build is not claimed</h3><p style="color:var(--muted);margin:0">The measured engineering environment records no Rust toolchain, no Clang, no CMake, no Ninja and no Android SDK. The repository therefore generates the preference and policy artifacts a Gecko build consumes, documents the patch surfaces, and reports the build status as scaffolded. See docs/architecture/environment-report.md.</p></div>';
+}
+
+function panelLicenses() {
+  const scans = Object.keys(DATA.scans).map(function (key) {
+    return '<tr><td>' + escapeHtml(key) + '</td><td><span class="badge ' + badgeClass(DATA.scans[key].status) + '">' + escapeHtml(DATA.scans[key].status) + '</span></td><td>' + escapeHtml(DATA.scans[key].summary) + '</td></tr>';
+  }).join("");
+  const escapeMarks = function (text) {
+    return escapeHtml(text).split("\n").join("<br>");
+  };
+  const licenseLines = DATA.licenses.split("\n").filter(function (line) { return line.indexOf("| Resource |") === 0 || line.indexOf("# ") === 0; });
+  return '<h2>Licenses and resources</h2><p class="sub">Every external resource is recorded with source, version, license, purpose and integration location.</p>' +
+    '<div class="card"><h3>Policy scanner results</h3><table><thead><tr><th>Scanner</th><th>Status</th><th>Summary</th></tr></thead><tbody>' + scans + '</tbody></table></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Recorded resources</h3><p style="color:var(--muted);margin:0 0 8px">' + licenseLines.length +
+    ' recorded resource entries in docs/licenses/THIRD_PARTY_RESOURCES.md, verified for required fields, accepted license and an existing integration location.</p>' +
+    '<div style="color:var(--muted)">' + escapeMarks(licenseLines.join("\n")) + '</div></div>' +
+    '<div class="card" style="margin-top:14px"><h3>Test summary</h3>' + kv([
+      ["suite status", escapeHtml(DATA.tests.status)],
+      ["summary", escapeHtml(DATA.tests.summary)],
+      ["passed", DATA.tests.counts.passed],
+      ["skipped", DATA.tests.counts.skipped],
+      ["failed", DATA.tests.counts.failed]
+    ]) + '</div>';
+}
+
+const RENDERERS = {
+  overview: panelOverview,
+  location: panelLocation,
+  timezone: panelTimezone,
+  locale: panelLocale,
+  dns: panelDns,
+  privacy: panelPrivacy,
+  profiles: panelProfiles,
+  diagnostics: panelDiagnostics,
+  identity: panelIdentity,
+  limits: panelLimits,
+  roadmap: panelRoadmap,
+  licenses: panelLicenses
+};
+
+function render() {
+  renderHeader();
+  renderScenarios();
+  renderNav();
+  document.getElementById("main").innerHTML = RENDERERS[panel]();
+  Array.prototype.forEach.call(document.querySelectorAll("button.pill"), function (element) {
+    element.addEventListener("click", function () {
+      diagnosticsLevel = element.getAttribute("data-level");
+      render();
+    });
+  });
+}
+
+render();
+</script>
+</body>
+</html>

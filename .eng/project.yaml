@@ -1,0 +1,40 @@
+name: la-brow
+kind: python-package
+
+commands:
+  build: python3 -m compileall -q geo timezone locale_engine locale profiles policy privacy webrtc diagnostics environment gecko browser application tools tests
+  test: python3 -m pytest tests -q -p no:cacheprovider
+  lint: python3 tools/scanners/run_all_scans.py
+
+gates:
+  extras:
+    - name: emoji_scan
+      command: python3 tools/scanners/emoji_scan.py --repo .
+      required: true
+    - name: comment_scan
+      command: python3 tools/scanners/comment_scan.py --repo .
+      required: true
+    - name: english_scan
+      command: python3 tools/scanners/english_scan.py --repo .
+      required: true
+    - name: branding_scan
+      command: python3 tools/scanners/branding_scan.py --repo .
+      required: true
+    - name: license_manifest
+      command: python3 tools/license/verify_manifest.py --repo .
+      required: true
+    - name: android_scaffold
+      command: python3 tools/android/validate_scaffold.py --repo .
+      required: true
+    - name: skill_integrity
+      command: python3 tools/agent/verify_skill.py --repo .
+      required: true
+    - name: architecture_check
+      command: python3 tools/agent/architecture_check.py --repo .
+      required: true
+    - name: identity_assets
+      command: python3 tools/identity/generate_identity.py --repo . --check
+      required: true
+
+secret_scan:
+  allow: .eng/secret_scan.allow

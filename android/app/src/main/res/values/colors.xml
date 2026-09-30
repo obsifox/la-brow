@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="surface_dark">#101114</color>
+    <color name="surface_light">#F4F5F7</color>
+    <color name="accent_red">#D81E3F</color>
+    <color name="accent_purple">#7A3FD1</color>
+</resources>

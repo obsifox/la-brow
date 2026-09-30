@@ -1,0 +1,20 @@
+schema_version: 1
+safe_defaults:
+  geo_mode: automatic
+  timezone_mode: automatic
+  locale_mode: browser_default
+  language_mode: browser_default
+  dns_mode: browser_default
+  doh_enabled: false
+  dot_enabled: false
+  fallback_policy: explicit_only
+  webrtc_policy: default
+  diagnostics_default_export: redacted
+  profile: default
+  virtual_mode_gps_fallback: forbidden
+  os_wide_dns_modification: forbidden
+invariants:
+  - virtual mode must never silently fall back to physical geolocation
+  - browser scoped dns must not modify operating system resolver configuration
+  - automatic decisions must always be visible in diagnostics
+  - manual profiles must not be overwritten by network state changes

@@ -1,0 +1,67 @@
+schema_version: 1
+policy:
+  comments:
+    default: forbidden
+    forbidden_tokens:
+      - line_comment_double_slash
+      - block_comment_open
+      - block_comment_close
+      - xml_comment
+      - hash_comment
+    documentation_mechanism:
+      - docstrings
+      - external documentation files
+      - explicit names
+      - structured error types
+    scanner: tools/scanners/comment_scan.py
+  emoji:
+    default: forbidden
+    scanner: tools/scanners/emoji_scan.py
+  language:
+    default: english_only
+    scanner: tools/scanners/english_scan.py
+  branding:
+    default: restricted
+    scanner: tools/scanners/branding_scan.py
+line_length_limit: 120
+naming:
+  python: snake_case
+  kotlin: camelCase
+  typescript: camelCase
+  resources: snake_case
+  files: kebab-case or snake_case
+  folders: lowercase_plural
+exemptions:
+  - id: vendored-engineering-templates
+    paths:
+      - .eng/templates/**
+    scanners:
+      - comment
+    reason: Template files are copies of the pinned engineering skill templates and are kept byte-identical for control plane compatibility.
+    modification_status: unmodified
+  - id: vendored-engineering-skill
+    paths:
+      - tools/eng-orchestrator/**
+    scanners:
+      - comment
+      - emoji
+      - language
+      - branding
+    reason: Vendored third party orchestration skill at pinned revision; unmodified upstream content is governed by its own style policy.
+    modification_status: unmodified
+  - id: internationalization-fixtures
+    paths:
+      - tests/data/i18n/**
+    scanners:
+      - language
+      - emoji
+    reason: Unicode and internationalization test fixtures required to verify locale and language surfaces.
+    modification_status: project-authored-test-data
+  - id: generated-identity-assets
+    paths:
+      - assets/identity/generated/**
+    scanners:
+      - comment
+    reason: Generated vector assets do not carry comments; the exemption exists to keep generated output stable.
+    modification_status: generated
+exception_process: new exemptions require a policy entry with id, paths, scanners, reason, and modification status

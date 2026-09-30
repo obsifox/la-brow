@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "provenance": {
+    "description": "Approximate geographic centroids per ISO 3166-1 alpha-2 country code used for low confidence automatic environment proposals.",
+    "authoring": "project-authored factual data",
+    "license": "public-domain",
+    "accuracy_note": "Values are rounded approximate centroids and must not be used for precise location claims."
+  },
+  "countries": {
+    "AT": {"name": "Austria", "latitude": 47.6, "longitude": 14.1, "timezone": "Europe/Vienna", "locales": ["de-AT"]},
+    "AU": {"name": "Australia", "latitude": -25.3, "longitude": 133.8, "timezone": "Australia/Sydney", "locales": ["en-AU"]},
+    "BR": {"name": "Brazil", "latitude": -10.8, "longitude": -52.9, "timezone": "America/Sao_Paulo", "locales": ["pt-BR"]},
+    "CA": {"name": "Canada", "latitude": 56.1, "longitude": -106.3, "timezone": "America/Toronto", "locales": ["en-CA", "fr-CA"]},
+    "CH": {"name": "Switzerland", "latitude": 46.8, "longitude": 8.2, "timezone": "Europe/Zurich", "locales": ["de-CH", "fr-CH", "it-CH"]},
+    "CN": {"name": "China", "latitude": 35.9, "longitude": 104.2, "timezone": "Asia/Shanghai", "locales": ["zh-CN"]},
+    "DE": {"name": "Germany", "latitude": 51.2, "longitude": 10.4, "timezone": "Europe/Berlin", "locales": ["de-DE"]},
+    "ES": {"name": "Spain", "latitude": 40.5, "longitude": -3.7, "timezone": "Europe/Madrid", "locales": ["es-ES"]},
+    "FR": {"name": "France", "latitude": 46.6, "longitude": 2.5, "timezone": "Europe/Paris", "locales": ["fr-FR"]},
+    "GB": {"name": "United Kingdom", "latitude": 54.0, "longitude": -2.0, "timezone": "Europe/London", "locales": ["en-GB"]},
+    "IN": {"name": "India", "latitude": 22.2, "longitude": 79.0, "timezone": "Asia/Kolkata", "locales": ["en-IN", "hi-IN"]},
+    "IT": {"name": "Italy", "latitude": 42.8, "longitude": 12.8, "timezone": "Europe/Rome", "locales": ["it-IT"]},
+    "JP": {"name": "Japan", "latitude": 36.2, "longitude": 138.3, "timezone": "Asia/Tokyo", "locales": ["ja-JP"]},
+    "NL": {"name": "Netherlands", "latitude": 52.2, "longitude": 5.3, "timezone": "Europe/Amsterdam", "locales": ["nl-NL"]},
+    "PL": {"name": "Poland", "latitude": 52.1, "longitude": 19.4, "timezone": "Europe/Warsaw", "locales": ["pl-PL"]},
+    "SE": {"name": "Sweden", "latitude": 62.2, "longitude": 15.3, "timezone": "Europe/Stockholm", "locales": ["sv-SE"]},
+    "TR": {"name": "Turkey", "latitude": 39.0, "longitude": 35.2, "timezone": "Europe/Istanbul", "locales": ["tr-TR"]},
+    "US": {"name": "United States", "latitude": 39.8, "longitude": -98.6, "timezone": "America/Chicago", "locales": ["en-US"]},
+    "ZA": {"name": "South Africa", "latitude": -29.0, "longitude": 24.7, "timezone": "Africa/Johannesburg", "locales": ["en-ZA"]}
+  }
+}

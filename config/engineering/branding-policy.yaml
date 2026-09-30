@@ -1,0 +1,28 @@
+schema_version: 1
+product_name: LA Brow
+product_name_scope:
+  - window title
+  - about panel
+  - installer display name
+  - android launcher label
+  - desktop launcher label
+organization_identifiers:
+  - id: obsifox
+    status: assumed_pending_confirmation
+    note: Repository owner identifier recovered from the configured skill repository; treated as the organization name until the human confirms otherwise.
+allowed_locations:
+  - docs/legal/**
+  - document.about
+  - document.about_us
+  - document.legal
+  - NOTICE
+  - LICENSE
+  - docs/licenses/**
+  - tools/eng-orchestrator/**
+user_facing_roots:
+  - ui
+  - browser
+  - android/app/src/main/res
+  - desktop
+  - assets
+scanner: tools/scanners/branding_scan.py

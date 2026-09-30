@@ -1,0 +1,177 @@
+{
+  "generated_at": "2026-09-30T14:50:13Z",
+  "duration_seconds": 5.62,
+  "status": "PASS",
+  "stages": [
+    {
+      "id": "format",
+      "command": "python3 tools/license/render_manifest.py --repo . --check",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "render_manifest status=PASS docs/licenses/THIRD_PARTY_RESOURCES.md is current with 7 resources"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "static_analysis",
+      "command": "python3 -m compileall -q geo timezone locale_engine locale profiles policy privacy webrtc diagnostics environment gecko browser application tools tests",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [],
+      "stderr_tail": []
+    },
+    {
+      "id": "dependency_and_license_audit",
+      "command": "python3 tools/license/verify_manifest.py --repo .",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "license_manifest status=PASS resources=7 problems=0"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "branding_scan",
+      "command": "python3 tools/scanners/branding_scan.py --repo .",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "branding_scan status=PASS scanned=21 violations=0"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "emoji_scan",
+      "command": "python3 tools/scanners/emoji_scan.py --repo .",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "emoji_scan status=PASS violations=0 exempted_files=17"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "comment_scan",
+      "command": "python3 tools/scanners/comment_scan.py --repo .",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "comment_scan status=PASS scanned=242 violations=0 exempted_files=45"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "english_scan",
+      "command": "python3 tools/scanners/english_scan.py --repo .",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "english_scan status=PASS violations=0 exempted_files=6"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "android_validation",
+      "command": "python3 tools/android/validate_scaffold.py --repo .",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "android_scaffold status=PASS checks=25 problems=0"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "skill_integrity",
+      "command": "python3 tools/agent/verify_skill.py --repo .",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "skill engineering-orchestration status=VERIFIED version=2.1.0"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "architecture_check",
+      "command": "python3 tools/agent/architecture_check.py --repo .",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "architecture_check status=PASS documents=25/25 modules=19/19 direction_violations=0"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "unit_tests",
+      "command": "python3 -m pytest tests/unit -q",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "........................................................................ [ 42%]",
+        "........................................................................ [ 84%]",
+        "..........................                                               [100%]",
+        "170 passed in 0.29s"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "network_tests",
+      "command": "python3 -m pytest tests/network -q",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "..................                                                       [100%]",
+        "18 passed in 2.21s"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "security_tests",
+      "command": "python3 -m pytest tests/security -q",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "...................s                                                     [100%]",
+        "19 passed, 1 skipped in 0.06s"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "integration_tests",
+      "command": "python3 -m pytest tests/integration -q",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "..........                                                               [100%]",
+        "10 passed in 0.15s"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "android_tests",
+      "command": "python3 -m pytest tests/android -q",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "......                                                                   [100%]",
+        "6 passed in 0.03s"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "id": "artifact_validation",
+      "command": "python3 tools/identity/generate_identity.py --repo . --check",
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout_tail": [
+        "    48px eye_diameter=8.25px separation=15.0px ok=True",
+        "    64px eye_diameter=11.0px separation=20.0px ok=True",
+        "   128px eye_diameter=22.0px separation=40.0px ok=True",
+        "   256px eye_diameter=44.0px separation=80.0px ok=True",
+        "   512px eye_diameter=88.0px separation=160.0px ok=True",
+        "  1024px eye_diameter=176.0px separation=320.0px ok=True"
+      ],
+      "stderr_tail": []
+    }
+  ]
+}

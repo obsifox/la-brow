@@ -1,0 +1,67 @@
+{
+  "default_fallback": {
+    "explicit_confirmation_required": true,
+    "on_doh_failure": "system",
+    "on_dot_failure": "system"
+  },
+  "policy": {
+    "os_wide_changes": "forbidden",
+    "telemetry": "none"
+  },
+  "providers": [
+    {
+      "description": "Uses the operating system resolver in read only mode without modifying it.",
+      "enabled_by_default": true,
+      "id": "system",
+      "name": "System Resolver",
+      "protocol": "system"
+    },
+    {
+      "bootstrap_addresses": [
+        "1.1.1.1",
+        "1.0.0.1"
+      ],
+      "enabled_by_default": false,
+      "endpoint": "https://cloudflare-dns.com/dns-query",
+      "id": "cloudflare-doh",
+      "name": "Cloudflare DNS over HTTPS",
+      "privacy_note": "Resolver operator can observe queried names.",
+      "protocol": "doh"
+    },
+    {
+      "bootstrap_addresses": [
+        "9.9.9.9",
+        "149.112.112.112"
+      ],
+      "enabled_by_default": false,
+      "endpoint": "https://dns.quad9.net/dns-query",
+      "id": "quad9-doh",
+      "name": "Quad9 DNS over HTTPS",
+      "privacy_note": "Resolver operator can observe queried names.",
+      "protocol": "doh"
+    },
+    {
+      "bootstrap_addresses": [
+        "1.1.1.1"
+      ],
+      "enabled_by_default": false,
+      "hostname": "one.one.one.one",
+      "id": "cloudflare-dot",
+      "name": "Cloudflare DNS over TLS",
+      "port": 853,
+      "protocol": "dot"
+    },
+    {
+      "bootstrap_addresses": [
+        "9.9.9.9"
+      ],
+      "enabled_by_default": false,
+      "hostname": "dns.quad9.net",
+      "id": "quad9-dot",
+      "name": "Quad9 DNS over TLS",
+      "port": 853,
+      "protocol": "dot"
+    }
+  ],
+  "schema_version": 1
+}

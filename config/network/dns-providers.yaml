@@ -1,0 +1,48 @@
+schema_version: 1
+providers:
+  - id: system
+    name: System Resolver
+    protocol: system
+    enabled_by_default: true
+    description: Uses the operating system resolver in read only mode without modifying it.
+  - id: cloudflare-doh
+    name: Cloudflare DNS over HTTPS
+    protocol: doh
+    endpoint: https://cloudflare-dns.com/dns-query
+    bootstrap_addresses:
+      - 1.1.1.1
+      - 1.0.0.1
+    privacy_note: Resolver operator can observe queried names.
+    enabled_by_default: false
+  - id: quad9-doh
+    name: Quad9 DNS over HTTPS
+    protocol: doh
+    endpoint: https://dns.quad9.net/dns-query
+    bootstrap_addresses:
+      - 9.9.9.9
+      - 149.112.112.112
+    privacy_note: Resolver operator can observe queried names.
+    enabled_by_default: false
+  - id: cloudflare-dot
+    name: Cloudflare DNS over TLS
+    protocol: dot
+    hostname: one.one.one.one
+    port: 853
+    bootstrap_addresses:
+      - 1.1.1.1
+    enabled_by_default: false
+  - id: quad9-dot
+    name: Quad9 DNS over TLS
+    protocol: dot
+    hostname: dns.quad9.net
+    port: 853
+    bootstrap_addresses:
+      - 9.9.9.9
+    enabled_by_default: false
+default_fallback:
+  on_doh_failure: system
+  on_dot_failure: system
+  explicit_confirmation_required: true
+policy:
+  os_wide_changes: forbidden
+  telemetry: none

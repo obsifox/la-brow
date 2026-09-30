@@ -1,0 +1,178 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "la-brow",
+    "type": "browser-platform",
+    "tier": "2",
+    "domains": [
+      "android",
+      "python",
+      "web"
+    ]
+  },
+  "environment": {
+    "has_git": true,
+    "has_test_runner": true,
+    "has_subagents": false,
+    "can_run_code": true,
+    "can_persist_files": true
+  },
+  "gates": {
+    "G0_Build": "PASS",
+    "G1_Tests": "PASS",
+    "G2_Lens": "PASS",
+    "G3_Security": "PASS",
+    "G4_Release": "NOT_APPLICABLE",
+    "G5_Project": "PASS"
+  },
+  "tasks": [
+    {
+      "id": "ENV-001",
+      "desc": "Environment resolution pipeline with stage status and invariants",
+      "owner_lens": "architecture",
+      "status": "DONE",
+      "evidence_ref": "tests/unit/test_environment_core.py"
+    },
+    {
+      "id": "GEO-001",
+      "desc": "Geo abstraction with manual, automatic, hybrid and disabled providers",
+      "owner_lens": "architecture",
+      "status": "DONE",
+      "evidence_ref": "tests/unit/test_randomization.py"
+    },
+    {
+      "id": "TZ-001",
+      "desc": "Timezone resolution with daylight saving transitions",
+      "owner_lens": "testing",
+      "status": "DONE",
+      "evidence_ref": "tests/unit/test_timezone_engine.py"
+    },
+    {
+      "id": "LOC-001",
+      "desc": "Locale engine with five separated surfaces",
+      "owner_lens": "testing",
+      "status": "DONE",
+      "evidence_ref": "tests/unit/test_locale_engine.py"
+    },
+    {
+      "id": "DNS-001",
+      "desc": "DNS codec and resolver engine with explicit fallback",
+      "owner_lens": "security",
+      "status": "DONE",
+      "evidence_ref": "tests/network/test_system_transport.py"
+    },
+    {
+      "id": "DOH-001",
+      "desc": "DNS over HTTPS client with TLS validation",
+      "owner_lens": "security",
+      "status": "DONE",
+      "evidence_ref": "tests/network/test_dot_and_doh_clients.py"
+    },
+    {
+      "id": "DOT-001",
+      "desc": "DNS over TLS client with strict validation",
+      "owner_lens": "security",
+      "status": "DONE",
+      "evidence_ref": "tests/network/test_dot_and_doh_clients.py"
+    },
+    {
+      "id": "PRF-001",
+      "desc": "Profile versioning, migration, integrity and rollback",
+      "owner_lens": "security",
+      "status": "DONE",
+      "evidence_ref": "tests/unit/test_profiles.py"
+    },
+    {
+      "id": "POL-001",
+      "desc": "Per site policy resolution with documented precedence",
+      "owner_lens": "architecture",
+      "status": "DONE",
+      "evidence_ref": "tests/unit/test_policy_engine.py"
+    },
+    {
+      "id": "SEC-001",
+      "desc": "Threat model, boundaries and policy scanners",
+      "owner_lens": "security",
+      "status": "DONE",
+      "evidence_ref": "tests/security/test_boundaries.py"
+    },
+    {
+      "id": "DTP-001",
+      "desc": "Desktop packaging plan with update security requirements",
+      "owner_lens": "release",
+      "status": "PLANNED",
+      "evidence_ref": "docs/architecture/desktop-architecture.md"
+    },
+    {
+      "id": "AND-001",
+      "desc": "Android scaffold with GeckoView integration and control center",
+      "owner_lens": "ux",
+      "status": "DONE",
+      "evidence_ref": "tests/android/test_android_scaffold.py"
+    },
+    {
+      "id": "GKO-001",
+      "desc": "Gecko build execution and geolocation provider patch",
+      "owner_lens": "architecture",
+      "status": "BLOCKED",
+      "evidence_ref": "docs/architecture/environment-report.md"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EV-001",
+      "kind": "test-run",
+      "reference": ".eng/artifacts/current_test.log",
+      "note": "full suite exit code zero"
+    },
+    {
+      "id": "EV-002",
+      "kind": "ci-report",
+      "reference": ".eng/artifacts/ci_report.json",
+      "note": "sixteen stage validation pipeline"
+    },
+    {
+      "id": "EV-003",
+      "kind": "review",
+      "reference": ".eng/artifacts/code_review.md",
+      "note": "independent review with severity list"
+    },
+    {
+      "id": "EV-004",
+      "kind": "security-scan",
+      "reference": ".eng/artifacts/secret_scan.log",
+      "note": "no secrets detected"
+    },
+    {
+      "id": "EV-005",
+      "kind": "dependency-audit",
+      "reference": ".eng/artifacts/dep_audit.log",
+      "note": "no runtime dependencies"
+    }
+  ],
+  "risks": [
+    {
+      "id": "R1",
+      "risk": "GeckoView preference API mismatch at build time",
+      "probability": "MEDIUM",
+      "impact": "HIGH",
+      "mitigation": "verify against the pinned artifact on a build host before the Android build milestone",
+      "status": "OPEN"
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "A1",
+      "assumption": "The configured skill repository remains authoritative for orchestration",
+      "risk": "LOW",
+      "reason": "pinned revision with integrity manifest",
+      "affects": "engineering process"
+    }
+  ],
+  "budget": {
+    "tokens_used_est": 0,
+    "token_budget": 150000,
+    "subagent_calls": 0,
+    "max_subagents": 0
+  }
+}

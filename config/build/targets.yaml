@@ -1,0 +1,22 @@
+schema_version: 1
+targets:
+  - id: linux-x86_64
+    status: scaffolded-not-built
+    artifact: la-brow-linux-x86_64.tar.zst
+  - id: windows-x86_64
+    status: scaffolded-not-built
+    artifact: la-brow-windows-x86_64-installer.exe
+  - id: macos-universal
+    status: scaffolded-not-built
+    artifact: la-brow-macos-universal.dmg
+  - id: android-arm64-v8a
+    status: scaffolded-not-built
+    artifact: la-brow-android-arm64.apk
+  - id: android-x86_64
+    status: scaffolded-not-built
+    artifact: la-brow-android-x86_64.apk
+verification:
+  reproducible_record: docs/releases/reproducible-builds.md
+  hash_manifest: build/artifacts.sha256
+  signing: required
+  unsigned_update_installation: forbidden

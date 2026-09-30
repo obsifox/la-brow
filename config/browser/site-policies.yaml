@@ -1,0 +1,37 @@
+schema_version: 1
+description: Example per site environment policies used by documented reference scenarios.
+rules:
+  - id: example-domain-policy
+    scope: domain
+    pattern: example.com
+    priority: 10
+    enabled: true
+    description: Domain wide environment policy for documentation and tests.
+    overrides:
+      timezone: Europe/Berlin
+      locale: en-GB
+  - id: example-origin-policy
+    scope: origin
+    pattern: https://example.com
+    priority: 5
+    enabled: true
+    description: Origin scope policy that overrides a single field from the domain policy.
+    overrides:
+      radius: 15000
+  - id: private-browsing-policy
+    scope: private_browsing
+    pattern: "*"
+    priority: 1
+    enabled: true
+    description: Private browsing sessions increase randomization scope.
+    overrides:
+      randomization: per_query
+  - id: strict-privacy-origin
+    scope: origin
+    pattern: https://secure.example.org
+    priority: 20
+    enabled: true
+    description: High security test origin.
+    overrides:
+      webrtc_policy: disable_local_candidates
+      privacy_preset: strict

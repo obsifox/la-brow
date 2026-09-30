@@ -1,0 +1,29 @@
+{
+  "integrity": {
+    "algorithm": "sha256",
+    "checksum": "7e9117a930a754a9742ddec92c0f32968c44061b8729a6852a3d46ce44f4494a"
+  },
+  "profile": {
+    "accuracy_m": 8000,
+    "block_physical_fallback": true,
+    "city": "Tokyo",
+    "conflict_detection": true,
+    "country": "JP",
+    "geolocation_mode": "manual",
+    "languages": [
+      "ja-JP",
+      "en-US"
+    ],
+    "latitude": 35.6762,
+    "locale": "ja-JP",
+    "longitude": 139.6503,
+    "name": "tokyo",
+    "profile_version": 2,
+    "radius": 8000,
+    "randomization": "per_query",
+    "randomization_seed": 20260214,
+    "timezone": "Asia/Tokyo",
+    "webrtc_policy": "disable_local_candidates"
+  },
+  "updated_at": "2026-09-30T14:49:48Z"
+}

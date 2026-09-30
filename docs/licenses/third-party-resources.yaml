@@ -1,0 +1,81 @@
+schema_version: 1
+resources:
+  - name: eng-orchestrator
+    source: https://github.com/obsifox/eng-orchestrator
+    version: 2.1.0
+    revision: fc3386149c49a9b2944438ae4d5a041866d512a4
+    license: MIT
+    license_url: https://github.com/obsifox/eng-orchestrator/blob/main/LICENSE
+    purpose: Engineering orchestration control plane used for run management, gates, receipts and policy scanning integration.
+    integration_location: tools/eng-orchestrator
+    modification_status: unmodified
+    redistribution_requirements: license text retained in the vendored tree
+    attribution_requirements: copyright notice retained in LICENSE
+    checksum_manifest: tools/eng-orchestrator/INSTALL_MANIFEST.sha256
+    acquisition_method: git-archive-at-revision
+  - name: mozilla-geckoview
+    source: https://maven.mozilla.org/maven2/org/mozilla/geckoview/
+    version: 130.0.20240904133848
+    license: MPL-2.0
+    license_url: https://www.mozilla.org/MPL/2.0/
+    purpose: Browser engine for the Android application.
+    integration_location: android/app/build.gradle.kts
+    modification_status: dependency-not-vendored
+    redistribution_requirements: MPL-2.0 notice retention for redistributed binaries
+    attribution_requirements: source availability statement in release notes
+    checksum_manifest: not-applicable-dependency-resolution
+  - name: gecko-platform-source
+    source: https://hg.mozilla.org/mozilla-central
+    version: to-be-pinned-at-build-time
+    license: MPL-2.0
+    license_url: https://www.mozilla.org/MPL/2.0/
+    purpose: Desktop browser engine baseline for the planned Gecko build integration.
+    integration_location: gecko
+    modification_status: not-yet-fetched
+    redistribution_requirements: MPL-2.0 source availability for modified files
+    attribution_requirements: license attribution in about and legal surfaces
+    checksum_manifest: not-applicable-until-fetch
+  - name: iana-time-zone-database
+    source: https://www.iana.org/time-zones
+    version: system-provided
+    license: public-domain
+    license_url: https://www.iana.org/time-zones
+    purpose: Timezone offsets, daylight saving transitions and zone validation.
+    integration_location: timezone/engine.py
+    modification_status: unmodified
+    redistribution_requirements: none
+    attribution_requirements: none
+    checksum_manifest: not-applicable-system-data
+  - name: python-standard-library
+    source: https://docs.python.org/3/library/
+    version: 3.13
+    license: PSF-2.0
+    license_url: https://docs.python.org/3/license.html
+    purpose: Runtime, network transport, TLS and test infrastructure for the environment core.
+    integration_location: repository-wide
+    modification_status: unmodified
+    redistribution_requirements: PSF license retention when redistributing the interpreter
+    attribution_requirements: PSF notice retention
+    checksum_manifest: not-applicable-runtime
+  - name: openssl-command-line
+    source: https://www.openssl.org/
+    version: 3.5.6
+    license: Apache-2.0
+    license_url: https://www.openssl.org/source/license.html
+    purpose: Test certificate generation for DNS over TLS and DNS over HTTPS transport tests.
+    integration_location: tests/network/dns_testkit.py
+    modification_status: unmodified
+    redistribution_requirements: none for test-time usage
+    attribution_requirements: none for test-time usage
+    checksum_manifest: not-applicable-tooling
+  - name: pytz-iana-canonical-list-of-zone-names
+    source: https://data.iana.org/time-zones/tzdb/zone1970.tab
+    version: not-bundled
+    license: public-domain
+    license_url: https://data.iana.org/time-zones/tzdb/
+    purpose: Reference for validating zone identifiers used by the timezone engine.
+    integration_location: timezone/engine.py
+    modification_status: reference-only
+    redistribution_requirements: none
+    attribution_requirements: none
+    checksum_manifest: not-applicable-reference-only

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LA Brow</string>
+    <string name="action_new_tab">New tab</string>
+    <string name="action_close_tab">Close tab</string>
+    <string name="action_reload">Reload</string>
+    <string name="action_back">Back</string>
+    <string name="action_forward">Forward</string>
+    <string name="action_private_mode">Private browsing</string>
+    <string name="label_environment">Environment</string>
+    <string name="label_location">Location</string>
+    <string name="label_timezone">Timezone</string>
+    <string name="label_locale">Locale</string>
+    <string name="label_language">Language</string>
+    <string name="label_network">Network</string>
+    <string name="label_dns">DNS</string>
+    <string name="label_privacy">Privacy</string>
+    <string name="label_webrtc">WebRTC</string>
+    <string name="label_profiles">Profiles</string>
+    <string name="label_diagnostics">Diagnostics</string>
+    <string name="label_dev_mode">Developer mode</string>
+    <string name="label_active_profile">Active profile</string>
+    <string name="label_confidence">Confidence</string>
+    <string name="label_source">Source</string>
+    <string name="label_conflicts">Conflicts</string>
+    <string name="notice_no_anonymity_guarantee">Environment controls do not guarantee anonymity and do not change the public IP address observed by websites.</string>
+    <string name="notice_no_system_dns_change">Browser DNS configuration never modifies device or network DNS settings.</string>
+    <string name="notice_virtual_mode_no_fallback">When virtual location mode is active the browser never falls back to the device location provider.</string>
+    <string name="action_export_redacted">Export redacted diagnostics</string>
+    <string name="error_profile_invalid">The selected profile failed validation and was not activated.</string>
+    <string name="about_product">LA Brow browser platform</string>
+    <string name="legal_notice">License information is available in the project LICENSE file and the licenses documentation directory.</string>
+</resources>
