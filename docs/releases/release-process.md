@@ -16,7 +16,7 @@ Semantic versioning is used. The current version is `0.2.0`, which is the first 
 
 ## Release Automation
 
-The release workflow builds the signed packages when a tag matching `v` followed by the semantic version is pushed, and it can also be started manually with a version input. The workflow runs the repository policy gate, assembles the release variant, verifies every package with the Android build tools, writes checksums and publishes a GitHub release with the packages attached. The signing material is provided through repository secrets and is never stored in the repository.
+The release workflow builds the signed packages when a tag matching `v` followed by the semantic version is pushed. The version name comes from the tag and the version code is derived from it as major times one hundred thousand plus minor times one hundred plus patch, and it can also be started manually with a version input. The workflow runs the repository policy gate, assembles the release variant, verifies every package with the Android build tools, writes checksums and publishes a GitHub release with the packages attached. The signing material is provided through repository secrets and is never stored in the repository.
 
 ## Release Checklist
 

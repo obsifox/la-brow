@@ -68,9 +68,16 @@ jobs:
           else
             VERSION="${{ inputs.version }}"
           fi
+          MAJOR="$(echo "${VERSION}" | cut -d. -f1)"
+          MINOR="$(echo "${VERSION}" | cut -d. -f2)"
+          PATCH="$(echo "${VERSION}" | cut -d. -f3)"
+          MINOR="${MINOR:-0}"
+          PATCH="${PATCH:-0}"
+          VERSION_CODE=$((MAJOR * 10000 + MINOR * 100 + PATCH))
           echo "value=${VERSION}" >> "${GITHUB_OUTPUT}"
           echo "LABROW_VERSION_NAME=${VERSION}" >> "${GITHUB_ENV}"
-          echo "LABROW_VERSION_CODE=$(git rev-list --count HEAD)" >> "${GITHUB_ENV}"
+          echo "LABROW_VERSION_CODE=${VERSION_CODE}" >> "${GITHUB_ENV}"
+          echo "resolved version ${VERSION} with version code ${VERSION_CODE}"
 
       - name: Assemble the signed release build
         working-directory: android
