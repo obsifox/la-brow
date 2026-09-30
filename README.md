@@ -1,77 +1,110 @@
 # LA Brow
 
-LA Brow is a browser platform project that pairs a Gecko based browser with a browser scoped environment system. The environment system controls what the browser itself exposes to web content: geographic location, radius based location randomization, timezone surfaces, locale and language negotiation, browser scoped DNS, DNS over HTTPS, DNS over TLS, WebRTC candidate policy and per site environment policies.
+A browser platform with browser scoped environment virtualization: virtual location, timezone, locale, resolver and policy are resolved by one deterministic pipeline and shared by every client. The desktop control center, the web client and the Android application all read the same interface.
 
-The project is organized so that each capability belongs to a named subsystem with an explicit interface, a deterministic failure mode and observable diagnostics.
+```text
+client surface          interface                engine core
+  web control center  ->  GET /api/environment  ->  environment pipeline
+  android application ->  GET /api/profiles     ->  profile engine and store
+  command line tool   ->  POST /api/dns/probe   ->  resolver engine
+                          GET /api/extensions   ->  desktop add-on compatibility
+```
 
-## What This Repository Contains Today
+## What It Does
 
-Executable and tested in this repository:
+| Area | Behaviour |
+| --- | --- |
+| Location | virtual mode only, radius bounded sampling, seeded and reproducible, never falls back to the device provider |
+| Timezone | browser scoped, applied to JavaScript and formatting surfaces, operating system clock untouched |
+| Locale | browser locale, language preference, HTTP preference and JavaScript surface resolved separately |
+| Resolver | browser scoped DNS over HTTPS and DNS over TLS, system resolver configuration read and hashed, never written |
+| Policy | site scoped overrides with origin over subdomain over domain over browsing mode over global precedence |
+| Privacy | presets, per surface tri state controls and WebRTC policies with an explicit limitation statement |
+| Diagnostics | redaction levels, consistency findings across surfaces and structured pipeline events |
+| Add-ons | desktop Firefox theme manifests translated into the application gradient, with a compatibility report and a required notice before installation |
 
-- Environment resolution pipeline with eleven ordered stages and recorded stage status
-- Geo engine with manual, automatic, hybrid and disabled providers
-- Radius based coordinate sampling with deterministic seeds and verified containment
-- Environment state machine with deterministic transitions
-- Timezone resolution using the IANA time zone database, including daylight saving transitions
-- Locale and language negotiation with five explicitly separated surfaces
-- DNS message encoding and decoding for the record types the resolver returns
-- Browser scoped DNS engine with system, DNS over HTTPS and DNS over TLS transports, explicit fallback policy and cache
-- Profile storage with schema validation, version migrations, checksum and signature integrity, safe import, export and rollback
-- Per site policy engine with documented precedence
-- Privacy policy engine expressed as preferences rather than engine duplication
-- WebRTC policy presets with a documented limitation statement
-- Consistency diagnostics and redacted diagnostic export
-- Gecko integration artifact generation for preferences and enterprise policy
-- Browser shell model for tabs, navigation, private browsing, permissions and recovery
-- Android application scaffold using GeckoView with control center interface, storage layout and resolver configuration
-- Policy scanners for emoji, source comments, non English scripts and restricted branding
-- Identity system: vector assets for every surface plus raster legibility validation from 16 to 1024 pixels
+## Desktop Add-On Compatibility
 
-Scaffolded but not built in this environment:
+Desktop themes are translated, not emulated:
 
-- The Gecko engine build itself. The measured environment has no Rust, Clang, CMake, Ninja or Android SDK, so a full Gecko and Android build cannot run here. The repository produces the preference artifacts, policy files and integration descriptors that a capable build host consumes. See `docs/architecture/environment-report.md` and `docs/architecture/gecko-integration.md`.
+| Input | Translation |
+| --- | --- |
+| `theme.colors.frame`, `toolbar`, `tab_selected` | gradient stops of the application shell |
+| `theme.colors.button_background_hover` | glow colour behind interactive elements |
+| `theme.properties` | colour scheme hints for content surfaces |
+| `theme.images.theme_frame` | reported as pending because the packaged theme is required |
+
+Sections and permissions are scored against a reviewable matrix. Unsupported surfaces are refused, partially supported surfaces are reported, and the install flow stops until the user confirms this notice:
+
+> This add-on targets desktop Firefox. Parts of it may not display or behave correctly in the mobile application, and the theme or interface changes it declares are applied on a best effort basis.
+
+## Design Language
+
+The interface is dark first with a gaming gradient system: a drifting backdrop over a grid, gradient framed panels, neon status chips, ring gauges for confidence and compatibility scores, and a bottom rail whose selected item carries the active theme gradient. The palette derives from the identity system and is replaced by the active theme when a desktop theme is installed.
+
+| Token | Value |
+| --- | --- |
+| void | #05060A |
+| obsidian | #0B0C0E |
+| neon red | #FF2D3F |
+| neon violet | #A855F7 |
+| neon cyan | #22D3EE |
 
 ## Quick Start
 
 ```bash
-python3 tools/agent/bootstrap.sh
-python3 -m pytest tests -q
-python3 tools/scanners/run_all_scans.py --repo .
-python3 -m application.cli environment --url https://example.com --summary
-python3 -m application.cli dns --list-profiles
-python3 -m application.cli diagnostics --level redacted --out diagnostics-report.json
+python3 -m api.server --host 0.0.0.0 --port 8000 --repo .
 ```
 
-## Engineering Rules In Force
+| Surface | Address |
+| --- | --- |
+| web control center | the server root, six tabs including Add-ons |
+| interface | /api/health, /api/environment, /api/profiles, /api/dns/probe, /api/diagnostics, /api/extensions, /api/themes, /api/compat/firefox-desktop |
+| command line | `python3 -m application.cli --help` |
 
-- English only across source, resources, documentation and logs
-- No emoji anywhere in the repository
-- No traditional source comments; documentation lives in documentation files
-- Restricted branding never appears in user facing resources outside permitted about and legal surfaces
-- Every external resource is recorded in `docs/licenses/THIRD_PARTY_RESOURCES.md` with license, purpose and integration location
-- Every dependency must justify itself; existing Gecko capability and the standard library come first
-- No silent operating system DNS modification
-- No silent fallback to physical geolocation while virtual mode is active
-- No anonymity claims and no fingerprint guarantee claims
+## Android Application
 
-All of the above are enforced by executable checks in `tools/scanners/` and by the continuous integration workflow in `ci/`.
+| Item | Value |
+| --- | --- |
+| package | com.labrow.browser |
+| engine | GeckoView 130.0.20240904133848 |
+| screens | Browser, Environment, Add-ons, Network, Profiles, Settings |
+| server default | the emulator loopback alias for the host machine on port 8000 |
+| build | `gradle --no-daemon assembleDebug` with JDK 17 and the Android platform 35 |
 
-## Documentation Map
+The debug package is assembled by the `android-build` workflow and published as a build artifact on every change that touches the Android tree. The release variant keeps cleartext traffic disabled and trusts system certificate authorities only.
 
-- `docs/architecture/system-architecture.md`
-- `docs/architecture/environment-report.md`
-- `docs/architecture/gecko-integration.md`
-- `docs/architecture/geo-architecture.md`
-- `docs/architecture/network-architecture.md`
-- `docs/architecture/dns-architecture.md`
-- `docs/architecture/profile-architecture.md`
-- `docs/architecture/android-architecture.md`
-- `docs/architecture/desktop-architecture.md`
-- `docs/security/threat-model.md`
-- `docs/testing/test-strategy.md`
-- `docs/releases/release-process.md`
-- `docs/operations/troubleshooting.md`
+## Verification
+
+| Suite | Coverage |
+| --- | --- |
+| unit | environment pipeline, profiles, resolver engine, privacy, diagnostics, add-on compatibility and theme translation |
+| interface | every endpoint against a live in-process server |
+| android contract | endpoints and payload fields parsed from the Kotlin sources and exercised against the live server |
+| network | resolver transports, truncation handling and certificate validation against a local test kit |
+| policy | comment, emoji, english and branding scanners plus the license manifest |
+
+The pipeline fails on any policy violation, on a missing license record, on a silent location fallback and on any attempt to modify operating system level resolver settings.
+
+## Repository Layout
+
+```text
+api/         interface server and route handlers
+ui/          web control center
+extensions/  desktop add-on and theme compatibility layer
+environment/ deterministic pipeline
+geo/ timezone/ locale_engine/ dns/ doh/ dot/ privacy/ webrtc/ profiles/ policy/ diagnostics/
+android/     Android application, gradient design system and add-on surfaces
+config/      matrix, policy, resolver and browser configuration
+docs/        architecture, security, testing, operations and license records
+tools/       scanners, validators, identity generator and the engineering control plane
+tests/       unit, interface, network, security, integration and android contract suites
+```
+
+## Statements
+
+Environment controls do not guarantee anonymity and do not change the public address observed by websites. Resolver configuration never modifies device or network settings. While virtual location mode is active the browser never falls back to the device location provider. Timezone control covers JavaScript and formatting surfaces inside the browser only.
 
 ## License
 
-MIT. See `LICENSE`. Third party resources are recorded in `docs/licenses/THIRD_PARTY_RESOURCES.md`.
+Released under the MIT license. Third party resources are recorded in `docs/licenses/THIRD_PARTY_RESOURCES.md`.

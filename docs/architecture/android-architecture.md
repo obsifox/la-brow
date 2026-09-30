@@ -95,3 +95,30 @@ tests/android/test_client_contract.py reads the Kotlin sources for the endpoints
 ## Build Host Requirements
 
 A build host needs JDK 17, Android SDK platform 35 with build tools, and Gradle 8 with the Kotlin Android plugin. The GeckoView artifact is resolved from the Mozilla Maven repository. The repository does not vendor Gradle binaries; the build host provides them. android/build-debug.sh checks the toolchain and reports exactly what is missing before it runs a debug assembly.
+
+## Design System
+
+The interface is dark first with a gradient and gaming treatment. The design system lives in the theme package and is applied by every screen.
+
+| Element | Implementation |
+| --- | --- |
+| backdrop | drifting radial gradients over a masked grid drawn on a canvas |
+| panels | gradient frame, glass body and a per group accent colour |
+| status chips | tone colour with a paired indicator dot for pipeline and consistency states |
+| scores | ring gauges for location confidence and add-on compatibility |
+| navigation | bottom rail of destinations, the selected item carries the active theme gradient |
+| theme source | the product palette by default, replaced by a translated desktop theme when one is active |
+
+Every colour and gradient is derived from the identity palette, so a translated desktop theme changes the shell without touching screen code.
+
+## Desktop Add-On Surfaces
+
+The add-on screen shows the runtime matrix, inspects a pasted desktop manifest, requires the acknowledgement toggle before an installation is recorded, lists recorded add-ons with their compatibility level and signature state, and activates a recorded theme.
+
+| Surface | Behaviour |
+| --- | --- |
+| inspect | compatibility report with per surface levels and the mandatory notice |
+| install | refused until the notice is acknowledged, prohibited permissions are refused regardless |
+| registry | recorded add-ons with level, score, signature state and the acknowledged notice text |
+| theme | activation stores the translated gradient and applies it across the shell |
+| offline | the last active theme is persisted so the shell keeps its gradient without the server |

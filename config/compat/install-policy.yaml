@@ -1,0 +1,28 @@
+schema_version: 1
+acknowledgement:
+  required: true
+  field: acknowledged
+  message: the user must confirm the compatibility notice before an installation is recorded
+limits:
+  max_manifest_bytes: 262144
+  max_name_length: 128
+  max_permissions: 64
+prohibited_permissions:
+  - nativeMessaging
+  - management
+  - experiments
+  - devtools
+  - geckoProfiler
+  - mozAddonManager
+prohibited_sections:
+  - devtools_page
+  - experiment_apis
+allowed_manifest_versions:
+  - 2
+  - 3
+signature:
+  required: false
+  note: unverified packages are accepted after the compatibility notice is confirmed and are always listed as unverified
+network_origin:
+  required_for: desktop-packaged-addons
+  note: add-ons that expect a desktop store installation flow are installed from a local manifest only

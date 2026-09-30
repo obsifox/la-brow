@@ -18,6 +18,7 @@
     <button class="tab active" data-view="environment">Environment</button>
     <button class="tab" data-view="profiles">Profiles</button>
     <button class="tab" data-view="dns">DNS</button>
+    <button class="tab" data-view="addons">Add-ons</button>
     <button class="tab" data-view="diagnostics">Diagnostics</button>
     <button class="tab" data-view="settings">Settings</button>
     <button class="tab" data-view="platform">Platform</button>
@@ -168,6 +169,45 @@
     </div>
     <div class="panel"><h3>Declared resolver profiles</h3><div id="dns-profiles"></div></div>
     <div class="panel"><h3>Operating system isolation</h3><div class="kv" id="dns-integrity"></div></div>
+  </section>
+
+
+  <section class="view" id="view-addons">
+    <div class="panel">
+      <h2>Desktop themes and add-ons</h2>
+      <p class="muted">Desktop Firefox theme manifests are translated into the application gradient palette. Add-ons stay subject to the install policy and every installation records the compatibility notice.</p>
+      <div id="addons-summary" class="summary"></div>
+      <div class="theme-strip" id="addons-active-theme"></div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>Inspect a manifest</h3>
+        <p class="muted">Paste a manifest.json from a desktop theme or add-on package to receive a compatibility report before anything is stored.</p>
+        <textarea id="addons-manifest" rows="12" spellcheck="false" placeholder='{"manifest_version": 2, "name": "Neon Grid", "version": "1.0.0", "type": "theme", "theme": {"colors": {"frame": "#05060A", "toolbar": "#12142B", "tab_selected": "#FF2D3F"}}}'></textarea>
+        <div class="row">
+          <button id="addons-sample">Load sample theme</button>
+          <button id="addons-inspect">Inspect</button>
+          <label class="check">I understand the compatibility notice<input id="addons-ack" type="checkbox"></label>
+          <button class="primary" id="addons-install">Install</button>
+        </div>
+        <div id="addons-result" class="result"></div>
+      </div>
+      <div class="panel">
+        <h3>Runtime matrix</h3>
+        <div id="addons-matrix"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Recorded add-ons</h3>
+      <div id="addons-list"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Theme palette translation</h3>
+      <div id="addons-theme-detail" class="kv"></div>
+    </div>
   </section>
 
   <section class="view" id="view-diagnostics">

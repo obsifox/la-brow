@@ -18,6 +18,16 @@
     <string name="label_webrtc">WebRTC</string>
     <string name="label_profiles">Profiles</string>
     <string name="label_diagnostics">Diagnostics</string>
+    <string name="label_addons">Add-ons</string>
+    <string name="label_browser">Browser</string>
+    <string name="label_network">Network</string>
+    <string name="action_inspect">Inspect manifest</string>
+    <string name="action_install_addon">Install add-on</string>
+    <string name="action_activate_theme">Activate theme</string>
+    <string name="notice_desktop_compatibility">This add-on targets desktop Firefox. Parts of it may not display or behave correctly in the mobile application.</string>
+    <string name="notice_notice_acknowledgement">The compatibility notice must be acknowledged before an installation is recorded.</string>
+    <string name="label_theme">Theme</string>
+    <string name="label_server_address">Server base address</string>
     <string name="label_dev_mode">Developer mode</string>
     <string name="label_active_profile">Active profile</string>
     <string name="label_confidence">Confidence</string>

@@ -33,6 +33,7 @@ QUERY_LITERAL = re.compile(r"\.append\(\"(&?)([a-z_]+)=\"\)")
 CALL_SITE = re.compile(r"request\(\s*([^;]*?),\s*\"(GET|POST|PUT|DELETE)\"", re.S)
 STATIC_ROUTE = re.compile(r'if path == "(/api/[^"]+)" and method == "([A-Z]+)"')
 PROFILE_ROUTE_MARKER = "match = PROFILE_ROUTE.match(path)"
+EXTENSION_ROUTE_MARKER = "extension_match = EXTENSION_ROUTE.match(path)"
 
 MISSING_VALUE = object()
 
@@ -90,12 +91,19 @@ def normalize_client_path(value: str) -> str:
     return path
 
 
+def client_extension_endpoints() -> set[str]:
+    return {path for path, _ in client_endpoints()}
+
+
 def server_routes() -> set[tuple[str, str]]:
     source = read(REPO_ROOT / "api/server.py")
     routes = set(STATIC_ROUTE.findall(source))
-    dynamic = source.split(PROFILE_ROUTE_MARKER, 1)[1].split("raise ApiError(404", 1)[0]
+    dynamic = source.split(PROFILE_ROUTE_MARKER, 1)[1].split(EXTENSION_ROUTE_MARKER, 1)[0]
     for method in re.findall(r'method == "([A-Z]+)"', dynamic):
         routes.add(("/api/profiles/{id}", method))
+    extension_block = source.split(EXTENSION_ROUTE_MARKER, 1)[1].split("raise ApiError(404", 1)[0]
+    for method in re.findall(r'method == "([A-Z]+)"', extension_block):
+        routes.add(("/api/extensions/{id}", method))
     return routes
 
 
@@ -124,6 +132,13 @@ def test_client_endpoints_are_registered_on_the_server():
     assert ("/api/environment", "GET") in endpoints
     assert ("/api/profiles/{id}", "PUT") in endpoints
     assert ("/api/dns/probe", "POST") in endpoints
+    assert ("/api/extensions", "GET") in endpoints
+    assert ("/api/extensions/inspect", "POST") in endpoints
+    assert ("/api/extensions/install", "POST") in endpoints
+    assert ("/api/extensions/{id}", "DELETE") in endpoints
+    assert ("/api/themes", "GET") in endpoints
+    assert ("/api/themes/active", "PUT") in endpoints
+    assert ("/api/compat/firefox-desktop", "GET") in endpoints
 
 
 def test_client_environment_request_round_trips_through_the_live_server(live_server):
@@ -258,3 +273,42 @@ def test_client_debug_profile_keeps_cleartext_limited_to_the_development_host():
         assert host in debug_config
     assert "cleartextTrafficPermitted=\"true\"" not in release_config
     assert "10.0.2.2" not in release_config
+
+
+def test_client_addon_install_requires_the_acknowledgement(live_server):
+    theme = {
+        "manifest_version": 2,
+        "name": "Contract Probe Theme",
+        "version": "1.0.0",
+        "type": "theme",
+        "theme": {"colors": {"frame": "#05060A", "toolbar": "#12142B", "tab_selected": "#FF2D3F", "toolbar_text": "#F5F7FF"}},
+    }
+    status, payload = request(live_server, "/api/extensions/inspect", "POST", {"manifest": theme})
+    assert status == 200
+    assert payload["compatibility"]["notice"], "the client always receives the compatibility notice"
+    assert payload["theme"]["gradient"]["stops"][0] == "#05060A"
+    status, refused = request(live_server, "/api/extensions/install", "POST", {"manifest": theme, "acknowledged": False})
+    assert status == 409
+    assert refused["error"]["code"] == "notice_not_acknowledged"
+    status, accepted = request(live_server, "/api/extensions/install", "POST", {"manifest": theme, "acknowledged": True})
+    assert status == 201
+    identifier = accepted["installed"]["id"]
+    status, matrix = request(live_server, "/api/compat/firefox-desktop")
+    assert status == 200
+    assert matrix["runtime"]["engine"] == "geckoview"
+    status, activated = request(live_server, "/api/themes/active", "PUT", {"id": identifier})
+    assert status == 200
+    assert activated["theme"]["gradient"]["accent"] == "#FF2D3F"
+    status, removed = request(live_server, "/api/extensions/" + identifier, "DELETE")
+    assert status == 200
+    assert removed["removed"] is True
+
+
+def test_client_settings_round_trip(live_server):
+    status, payload = request(live_server, "/api/settings")
+    assert status == 200
+    assert "privacy_preset" in payload["settings"]
+    status, saved = request(live_server, "/api/settings", "PUT", {"settings": {"default_url": "https://example.com/", "privacy_preset": "strict"}})
+    assert status == 200
+    assert saved["settings"]["privacy_preset"] == "strict"
+    request(live_server, "/api/settings", "PUT", {"settings": {"default_url": "https://example.com/", "privacy_preset": "balanced"}})

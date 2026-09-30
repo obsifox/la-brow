@@ -16,6 +16,54 @@ Every external resource used by the project is recorded here. The machine readab
 | attribution requirements | copyright notice retained in LICENSE |
 | checksum manifest | tools/eng-orchestrator/INSTALL_MANIFEST.sha256 |
 | --- | --- |
+| Resource | github-actions-checkout |
+| source | https://github.com/actions/checkout |
+| version | v4 |
+| license | MIT |
+| license url | https://github.com/actions/checkout/blob/main/LICENSE |
+| purpose | Repository checkout step used by the continuous integration and Android build workflows. |
+| integration location | .github/workflows/android-build.yml |
+| modification status | unmodified |
+| redistribution requirements | none, the action runs on hosted runners at build time |
+| attribution requirements | license reference retained in the license documentation |
+| checksum manifest | not-applicable-remote-action |
+| --- | --- |
+| Resource | github-actions-setup-java |
+| source | https://github.com/actions/setup-java |
+| version | v4 |
+| license | MIT |
+| license url | https://github.com/actions/setup-java/blob/main/LICENSE |
+| purpose | Java runtime installation for the Android build workflow. |
+| integration location | .github/workflows/android-build.yml |
+| modification status | unmodified |
+| redistribution requirements | none, the action runs on hosted runners at build time |
+| attribution requirements | license reference retained in the license documentation |
+| checksum manifest | not-applicable-remote-action |
+| --- | --- |
+| Resource | github-actions-upload-artifact |
+| source | https://github.com/actions/upload-artifact |
+| version | v4 |
+| license | MIT |
+| license url | https://github.com/actions/upload-artifact/blob/main/LICENSE |
+| purpose | Publication of the assembled debug package as a build artifact. |
+| integration location | .github/workflows/android-build.yml |
+| modification status | unmodified |
+| redistribution requirements | none, the action runs on hosted runners at build time |
+| attribution requirements | license reference retained in the license documentation |
+| checksum manifest | not-applicable-remote-action |
+| --- | --- |
+| Resource | android-actions-setup-android |
+| source | https://github.com/android-actions/setup-android |
+| version | v3 |
+| license | MIT |
+| license url | https://github.com/android-actions/setup-android/blob/main/LICENSE |
+| purpose | Android command line tools installation for the Android build workflow. |
+| integration location | .github/workflows/android-build.yml |
+| modification status | unmodified |
+| redistribution requirements | none, the action runs on hosted runners at build time |
+| attribution requirements | license reference retained in the license documentation |
+| checksum manifest | not-applicable-remote-action |
+| --- | --- |
 | Resource | mozilla-geckoview |
 | source | https://maven.mozilla.org/maven2/org/mozilla/geckoview/ |
 | version | 130.0.20240904133848 |

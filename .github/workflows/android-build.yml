@@ -1,0 +1,47 @@
+name: android-build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "android/**"
+      - ".github/workflows/android-build.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Install the java runtime
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install android command line tools
+        uses: android-actions/setup-android@v3
+
+      - name: Install the required android platform
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Assemble the debug build
+        working-directory: android
+        run: gradle --no-daemon --stacktrace assembleDebug
+
+      - name: Collect build output
+        run: find android/app/build/outputs -name "*.apk" -type f
+
+      - name: Upload the debug package
+        uses: actions/upload-artifact@v4
+        with:
+          name: la-brow-debug
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error

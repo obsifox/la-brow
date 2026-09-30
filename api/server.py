@@ -28,6 +28,7 @@ STATIC_ROOTS = {
 }
 SAFE_SEGMENT = re.compile(r"^[A-Za-z0-9._-]+$")
 PROFILE_ROUTE = re.compile(r"^/api/profiles/(?P<profile>[A-Za-z0-9-]{1,64})(?:/(?P<action>export|rollback))?$")
+EXTENSION_ROUTE = re.compile(r"^/api/extensions/(?P<extension>[a-z0-9][a-z0-9-]{0,62})$")
 
 MIME_OVERRIDES = {
     ".js": "text/javascript; charset=utf-8",
@@ -164,6 +165,21 @@ class ApplicationHandler(BaseHTTPRequestHandler):
             return self._send_json(200, api.dns_probe(query, self._read_body()))
         if path == "/api/dns/diagnostics" and method == "GET":
             return self._send_json(200, api.dns_diagnostics(query))
+        if path == "/api/extensions" and method == "GET":
+            return self._send_json(200, api.extensions_list(query))
+        if path == "/api/extensions/inspect" and method == "POST":
+            return self._send_json(200, api.extensions_inspect(query, self._read_body()))
+        if path == "/api/extensions/install" and method == "POST":
+            return self._send_json(201, api.extensions_install(query, self._read_body()))
+        if path == "/api/themes" and method == "GET":
+            return self._send_json(200, api.themes(query))
+        if path == "/api/themes/active" and method == "PUT":
+            return self._send_json(200, api.themes_activate(query, self._read_body()))
+        if path == "/api/compat/firefox-desktop" and method == "GET":
+            return self._send_json(200, api.compat_matrix(query))
+        extension_match = EXTENSION_ROUTE.match(path)
+        if extension_match and method == "DELETE":
+            return self._send_json(200, api.extensions_remove(extension_match.group("extension"), query))
         if path == "/api/profiles" and method == "GET":
             return self._send_json(200, api.profiles_list(query))
         if path == "/api/profiles" and method == "POST":

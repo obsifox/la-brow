@@ -44,6 +44,8 @@ class ApiClient(private val context: Context) {
 
     fun profiles(): JSONObject = request("/api/profiles", "GET", null)
 
+    fun profile(profileId: String): JSONObject = request("/api/profiles/" + encode(profileId), "GET", null)
+
     fun saveProfile(profileId: String, profile: JSONObject): JSONObject {
         return request("/api/profiles/" + encode(profileId), "PUT", JSONObject().put("profile", profile))
     }
@@ -63,6 +65,29 @@ class ApiClient(private val context: Context) {
     }
 
     fun scanState(): JSONObject = request("/api/scans", "GET", null)
+
+    fun settings(): JSONObject = request("/api/settings", "GET", null)
+
+    fun saveSettings(settings: JSONObject): JSONObject = request("/api/settings", "PUT", JSONObject().put("settings", settings))
+
+    fun extensions(): JSONObject = request("/api/extensions", "GET", null)
+
+    fun themes(): JSONObject = request("/api/themes", "GET", null)
+
+    fun compatibilityMatrix(): JSONObject = request("/api/compat/firefox-desktop", "GET", null)
+
+    fun inspectManifest(manifest: JSONObject): JSONObject = request("/api/extensions/inspect", "POST", JSONObject().put("manifest", manifest))
+
+    fun installAddon(manifest: JSONObject, acknowledged: Boolean): JSONObject =
+        request(
+            "/api/extensions/install",
+            "POST",
+            JSONObject().put("manifest", manifest).put("acknowledged", acknowledged),
+        )
+
+    fun removeAddon(identifier: String): JSONObject = request("/api/extensions/" + encode(identifier), "DELETE", null)
+
+    fun activateTheme(identifier: String): JSONObject = request("/api/themes/active", "PUT", JSONObject().put("id", identifier))
 
     private fun encode(value: String): String = URLEncoder.encode(value, "UTF-8")
 

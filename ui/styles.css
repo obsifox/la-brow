@@ -143,3 +143,36 @@ pre.json {
 .size-strip figure { margin: 0; text-align: center; }
 .size-strip img { display: block; border: 1px solid var(--line); border-radius: 6px; background: #ffffff; padding: 3px; }
 .size-strip figcaption { font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+.gradient-preview {
+  height: 72px;
+  border-radius: 12px;
+  border: 1px solid #262B34;
+  margin-bottom: 10px;
+}
+
+.theme-strip .gradient-preview {
+  height: 88px;
+}
+
+.notice-block {
+  border: 1px solid #4A3A12;
+  background: #1B1707;
+  color: #F4D589;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 10px 0;
+  font-size: 13px;
+}
+
+textarea {
+  width: 100%;
+  background: #0D0F13;
+  color: #E7E9EE;
+  border: 1px solid #262B34;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  margin: 10px 0;
+}

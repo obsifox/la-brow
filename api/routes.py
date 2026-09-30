@@ -13,6 +13,10 @@ from application.service import DEFAULT_PROFILE, EnvironmentService
 from diagnostics.redaction import RedactionLevel
 from dns.diagnostics import DnsDiagnosticCenter
 from dns.engine import DnsEngine
+from extensions.compat import CompatibilityEngine
+from extensions.manifest import ManifestError
+from extensions.store import ExtensionStore, ExtensionStoreError
+from extensions.themes import ThemeSpecError
 from profiles.errors import ProfileError
 from profiles.schema import CURRENT_PROFILE_VERSION, normalize, validate
 from profiles.store import ProfileStore
@@ -47,6 +51,8 @@ class Api:
         self.scan_cache: list[dict] = []
         self.scan_cache_at = 0.0
         self.scan_cache_stamp = utc_stamp()
+        self.extensions = ExtensionStore(self.repo)
+        self.compatibility = CompatibilityEngine(self.repo)
 
     def health(self, query: dict) -> dict:
         return {
@@ -62,6 +68,8 @@ class Api:
                 "dns_probe",
                 "diagnostics",
                 "identity",
+                "desktop_theme_compatibility",
+                "desktop_addon_compatibility",
             ],
         }
 
@@ -262,6 +270,72 @@ class Api:
         self.scan_cache_at = time.time()
         self.scan_cache_stamp = utc_stamp()
         return {"scans": results, "cached": False, "generated_at": self.scan_cache_stamp}
+
+    def extensions_list(self, query: dict) -> dict:
+        listing = self.extensions.list_records()
+        listing["runtime"] = self.compatibility.runtime()
+        listing["notice"] = self.compatibility.notice()
+        return listing
+
+    def extensions_inspect(self, query: dict, body: dict) -> dict:
+        manifest = body.get("manifest", body)
+        if not isinstance(manifest, dict):
+            raise ApiError(400, "invalid_body", "manifest payload must be an object")
+        try:
+            return self.extensions.inspect(manifest)
+        except ManifestError as error:
+            raise ApiError(400, error.code, error.message, error.context) from error
+        except ThemeSpecError as error:
+            raise ApiError(400, error.code, error.message, error.context) from error
+
+    def extensions_install(self, query: dict, body: dict) -> dict:
+        manifest = body.get("manifest", body)
+        if not isinstance(manifest, dict):
+            raise ApiError(400, "invalid_body", "manifest payload must be an object")
+        identifier = body.get("id")
+        acknowledged = bool(body.get("acknowledged", False))
+        try:
+            record = self.extensions.install(manifest, identifier=str(identifier) if identifier else None, acknowledged=acknowledged)
+        except ExtensionStoreError as error:
+            status = 409 if error.code in {"notice_not_acknowledged", "prohibited_permission", "prohibited_section"} else 400
+            raise ApiError(status, error.code, error.message, error.context) from error
+        except ManifestError as error:
+            raise ApiError(400, error.code, error.message, error.context) from error
+        return {"installed": record, "notice": record["notice_text"]}
+
+    def extensions_remove(self, identifier: str, query: dict) -> dict:
+        try:
+            return self.extensions.remove(identifier)
+        except ExtensionStoreError as error:
+            raise ApiError(404, "extension_not_found", error.message, error.context) from error
+
+    def themes(self, query: dict) -> dict:
+        listing = self.extensions.list_records()
+        return {
+            "themes": [entry["theme"] for entry in listing["themes"]],
+            "active_theme": self.extensions.active_theme_spec(),
+            "notice": listing["notice"],
+        }
+
+    def themes_activate(self, query: dict, body: dict) -> dict:
+        identifier = body.get("id") or body.get("theme_id")
+        if not identifier:
+            raise ApiError(400, "invalid_body", "an identifier is required to activate a theme")
+        try:
+            return self.extensions.activate_theme(str(identifier))
+        except ExtensionStoreError as error:
+            status = 404 if error.code == "extension_store_error" and "not found" in error.message else 400
+            raise ApiError(status, error.code, error.message, error.context) from error
+
+    def compat_matrix(self, query: dict) -> dict:
+        summary = self.compatibility.matrix_summary()
+        listing = self.extensions.list_records()
+        summary["installed"] = {
+            "count": listing["count"],
+            "active_theme": listing["active_theme"],
+            "signature_state": listing["signature_state"],
+        }
+        return summary
 
     def webrtc(self, query: dict) -> dict:
         entries = [describe_webrtc(policy) for policy in WebRtcPolicy]

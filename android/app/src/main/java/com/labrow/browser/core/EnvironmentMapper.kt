@@ -15,6 +15,8 @@ object EnvironmentMapper {
         val dnsPayload = snapshot.optJSONObject("dns")
         val privacyPayload = snapshot.optJSONObject("privacy")
         val consistency = snapshot.optJSONObject("consistency")
+        val geoEngine = snapshot.optJSONObject("geo_engine")
+        val stages = snapshot.optJSONArray("stages") ?: JSONArray()
         val conflicts = mutableListOf<EnvironmentConflict>()
         consistency?.optJSONArray("findings")?.let { findings ->
             for (position in 0 until findings.length()) {
@@ -27,6 +29,14 @@ object EnvironmentMapper {
                     ),
                 )
             }
+        }
+        val stageList = (0 until stages.length()).map { index ->
+            val stage = stages.optJSONObject(index) ?: JSONObject()
+            EnvironmentStage(
+                name = stage.optString("stage"),
+                status = stage.optString("status"),
+                detail = stage.optString("detail"),
+            )
         }
         return EnvironmentDocument(
             schemaVersion = 1,
@@ -86,6 +96,9 @@ object EnvironmentMapper {
             privateBrowsing = privacyPayload?.optBoolean("private_browsing", false)
                 ?: snapshot.optBoolean("private_browsing", false),
             conflicts = conflicts,
+            stages = stageList,
+            invariantCount = stageList.count { stage -> stage.name == "web_content_ready" },
+            geoSeed = geoEngine?.optJSONObject("state")?.optString("state") ?: snapshot.optString("state", "UNKNOWN"),
             notices = listOf(
                 "Environment controls do not guarantee anonymity and do not change the public IP address observed by websites.",
                 "Browser DNS configuration never modifies device or network DNS settings.",

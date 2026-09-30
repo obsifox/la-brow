@@ -227,3 +227,119 @@ def test_path_traversal_on_static_is_refused(live_server):
     status, payload = request(live_server, "/../../etc/passwd")
     assert status == 404
     assert payload["error"]["code"] == "not_found"
+
+
+THEME_MANIFEST = {
+    "manifest_version": 2,
+    "name": "Neon Grid",
+    "version": "1.2.0",
+    "type": "theme",
+    "theme": {
+        "colors": {
+            "frame": "#05060A",
+            "toolbar": "#12142B",
+            "tab_selected": ["#FF2D3F", "#A855F7"],
+            "toolbar_text": "#F5F7FF",
+        },
+        "images": {"theme_frame": "header.png"},
+    },
+}
+
+ADDON_MANIFEST = {
+    "manifest_version": 3,
+    "name": "Reader Helper",
+    "version": "1.0.0",
+    "permissions": ["storage", "tabs"],
+    "action": {"default_title": "Reader"},
+}
+
+
+@pytest.fixture()
+def clean_extensions(live_server):
+    import shutil
+
+    extensions_root = REPO_ROOT / "var/extensions"
+    shutil.rmtree(extensions_root, ignore_errors=True)
+    yield live_server
+    shutil.rmtree(extensions_root, ignore_errors=True)
+
+
+def test_compat_matrix_lists_runtime_surfaces(live_server):
+    status, payload = request(live_server, "/api/compat/firefox-desktop")
+    assert status == 200
+    assert payload["runtime"]["engine"] == "geckoview"
+    assert len(payload["sections"]) >= 10
+    assert payload["install_notice"].startswith("This add-on targets desktop Firefox")
+    assert payload["installed"]["count"] == 0
+
+
+def test_theme_manifest_is_inspected_and_translated(clean_extensions):
+    status, payload = request(clean_extensions, "/api/extensions/inspect", "POST", {"manifest": THEME_MANIFEST})
+    assert status == 200
+    assert payload["compatibility"]["level"] == "PARTIAL"
+    assert payload["theme"]["gradient"]["stops"][0] == "#05060A"
+    assert payload["theme"]["gradient"]["accent"] == "#FF2D3F"
+    assert payload["install_preview"]["code"] == "notice_not_acknowledged"
+
+
+def test_install_requires_the_compatibility_notice(clean_extensions):
+    status, payload = request(clean_extensions, "/api/extensions/install", "POST", {"manifest": ADDON_MANIFEST})
+    assert status == 409
+    assert payload["error"]["code"] == "notice_not_acknowledged"
+    status, payload = request(
+        clean_extensions,
+        "/api/extensions/install",
+        "POST",
+        {"manifest": ADDON_MANIFEST, "acknowledged": True},
+    )
+    assert status == 201
+    record = payload["installed"]
+    assert record["notice_acknowledged"] is True
+    assert payload["notice"].startswith("This add-on targets desktop Firefox")
+    status, listing = request(clean_extensions, "/api/extensions")
+    assert status == 200
+    assert listing["count"] == 1
+    assert listing["extensions"][0]["name"] == "Reader Helper"
+
+
+def test_theme_activation_and_removal(clean_extensions):
+    status, payload = request(
+        clean_extensions,
+        "/api/extensions/install",
+        "POST",
+        {"manifest": THEME_MANIFEST, "acknowledged": True},
+    )
+    assert status == 201
+    identifier = payload["installed"]["id"]
+    assert identifier == "neon-grid-1-2-0"
+    status, themes = request(clean_extensions, "/api/themes")
+    assert status == 200
+    assert themes["active_theme"]["id"] == identifier
+    assert themes["active_theme"]["gradient"]["stops"][2] == "#FF2D3F"
+    status, activated = request(clean_extensions, "/api/themes/active", "PUT", {"id": identifier})
+    assert status == 200
+    assert activated["active_theme"] == identifier
+    status, removed = request(clean_extensions, "/api/extensions/" + identifier, "DELETE")
+    assert status == 200
+    assert removed["removed"] is True
+    status, listing = request(clean_extensions, "/api/extensions")
+    assert listing["count"] == 0
+
+
+def test_prohibited_permission_is_refused(clean_extensions):
+    manifest = {**ADDON_MANIFEST, "permissions": ["storage", "nativeMessaging"]}
+    status, payload = request(
+        clean_extensions,
+        "/api/extensions/install",
+        "POST",
+        {"manifest": manifest, "acknowledged": True},
+    )
+    assert status == 409
+    assert payload["error"]["code"] == "prohibited_permission"
+    assert "nativeMessaging" in payload["error"]["detail"]["permissions"]
+
+
+def test_invalid_manifest_is_reported(clean_extensions):
+    status, payload = request(clean_extensions, "/api/extensions/inspect", "POST", {"manifest": {"name": "Broken"}})
+    assert status == 400
+    assert payload["error"]["code"] == "manifest_invalid"

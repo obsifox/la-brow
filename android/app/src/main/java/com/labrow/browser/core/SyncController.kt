@@ -72,6 +72,13 @@ class SyncController(private val context: Context) {
         payload.put("webrtc_policy", document.webrtcPolicy)
         payload.put("privacy_preset", document.privacyPreset)
         payload.put("private_browsing", document.privateBrowsing)
+        payload.put("invariant_count", document.invariantCount)
+        payload.put("geo_state", document.geoSeed)
+        val stages = org.json.JSONArray()
+        document.stages.forEach { stage ->
+            stages.put(JSONObject().put("stage", stage.name).put("status", stage.status).put("detail", stage.detail))
+        }
+        payload.put("stages", stages)
         payload.put(
             "privacy",
             JSONObject().put("preset", document.privacyPreset).put("private_browsing", document.privateBrowsing),

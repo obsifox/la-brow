@@ -28,6 +28,18 @@ class EnvironmentRepository(private val context: Context) {
                 ),
             )
         }
+        val stages = mutableListOf<EnvironmentStage>()
+        val stageArray = payload.optJSONArray("stages") ?: JSONArray()
+        for (position in 0 until stageArray.length()) {
+            val entry = stageArray.getJSONObject(position)
+            stages.add(
+                EnvironmentStage(
+                    name = entry.optString("stage"),
+                    status = entry.optString("status"),
+                    detail = entry.optString("detail"),
+                ),
+            )
+        }
         val locationPayload = payload.optJSONObject("location")
         val coordinatePayload = locationPayload?.optJSONObject("coordinate")
         return EnvironmentDocument(
@@ -88,6 +100,9 @@ class EnvironmentRepository(private val context: Context) {
                 ?: payload.optString("privacy_preset", "balanced"),
             privateBrowsing = payload.optBoolean("private_browsing", false),
             conflicts = conflicts,
+            stages = stages,
+            invariantCount = payload.optInt("invariant_count", 0),
+            geoSeed = payload.optString("geo_state", "UNKNOWN"),
             notices = payload.optJSONArray("notices")?.let { array -> (0 until array.length()).map { index -> array.getString(index) } } ?: emptyList(),
         )
     }

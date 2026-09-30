@@ -29,7 +29,14 @@ const endpoints = [
   ["GET", "/api/settings", "read settings"],
   ["PUT", "/api/settings", "write settings"],
   ["GET", "/api/requests", "recent request log"],
-  ["GET", "/api/events", "structured events from the last resolution"]
+  ["GET", "/api/events", "structured events from the last resolution"],
+  ["GET", "/api/extensions", "recorded desktop add-ons and themes"],
+  ["POST", "/api/extensions/inspect", "compatibility report for a desktop manifest"],
+  ["POST", "/api/extensions/install", "record an add-on after the notice is acknowledged"],
+  ["DELETE", "/api/extensions/{id}", "remove an add-on or theme"],
+  ["GET", "/api/themes", "recorded themes and the active gradient"],
+  ["PUT", "/api/themes/active", "activate a recorded theme"],
+  ["GET", "/api/compat/firefox-desktop", "desktop compatibility matrix"]
 ];
 
 function escapeHtml(value) {
@@ -476,6 +483,121 @@ async function loadWebrtc() {
   }));
 }
 
+const SAMPLE_THEME = {
+  manifest_version: 2,
+  name: "Neon Grid",
+  version: "1.2.0",
+  type: "theme",
+  theme: {
+    colors: {
+      frame: "#05060A",
+      toolbar: "#12142B",
+      tab_selected: ["#FF2D3F", "#A855F7"],
+      toolbar_text: "#F5F7FF",
+      popup: "#12142B",
+      popup_text: "#F5F7FF"
+    },
+    images: { theme_frame: "header.png" }
+  }
+};
+
+function gradientCss(gradient) {
+  if (!gradient || !gradient.stops || gradient.stops.length < 2) { return "linear-gradient(135deg, #0B0C0E, #1B0B2E)"; }
+  return "linear-gradient(" + (gradient.angle_degrees || 135) + "deg, " + gradient.stops.join(", ") + ")";
+}
+
+async function loadAddons() {
+  const listing = await api("/api/extensions");
+  element("addons-summary").innerHTML =
+    badge("recorded", listing.count, "OK") +
+    badge("active theme", listing.active_theme || "none", listing.active_theme ? "OK" : "WARN") +
+    badge("signature state", listing.signature_state, "WARN") +
+    badge("engine", listing.runtime.engine_version, "OK");
+  element("addons-list").innerHTML = listing.extensions.length === 0
+    ? '<div class="v muted">No add-on has been recorded yet.</div>'
+    : table(["Identifier", "Name", "Type", "Compatibility", "Signature", "Notice acknowledged"], listing.extensions.map(function (entry) {
+        return [entry.id, entry.name, entry.type, entry.compatibility_level + " " + entry.compatibility_score, entry.signature, String(entry.notice_acknowledged)];
+      }));
+  const themes = await api("/api/themes");
+  const active = themes.active_theme;
+  element("addons-active-theme").innerHTML =
+    '<div class="gradient-preview" style="background:' + gradientCss(active.gradient) + '"></div>' +
+    '<div class="v">' + escapeHtml(active.name || active.id) + ' | source ' + escapeHtml(active.source) + ' | stops ' +
+    escapeHtml(active.gradient ? active.gradient.stops.join(" ") : "product default") + '</div>';
+  if (!themes.themes.length) {
+    element("addons-theme-detail").innerHTML = '<div class="v muted">No theme recorded. Inspect a desktop theme manifest to see the palette translation.</div>';
+    return;
+  }
+  element("addons-theme-detail").innerHTML = table(["Theme", "Palette keys", "Gradient", "Findings"], themes.themes.map(function (theme) {
+    return [theme.name, String(theme.declared_color_keys.length), theme.gradient.stops.join(" "), theme.findings.map(function (item) { return item.code; }).join(", ")];
+  })) + '<div class="row">' + themes.themes.map(function (theme) {
+    return '<button data-theme="' + escapeHtml(theme.id) + '" class="theme-activate">Activate ' + escapeHtml(theme.name) + '</button>';
+  }).join("") + '</div>';
+  Array.prototype.forEach.call(document.querySelectorAll(".theme-activate"), function (button) {
+    button.addEventListener("click", async function () {
+      await api("/api/themes/active", { method: "PUT", body: { id: button.getAttribute("data-theme") } });
+      setStatus("theme activated", "ok");
+      await loadAddons();
+    });
+  });
+}
+
+async function loadCompatMatrix() {
+  const payload = await api("/api/compat/firefox-desktop");
+  element("addons-matrix").innerHTML = table(["Surface", "Level", "Note"], payload.sections.map(function (entry) {
+    return [entry.section, entry.level, entry.note || ""];
+  })) + '<p class="muted">' + escapeHtml(payload.install_notice) + '</p>';
+}
+
+function manifestFromEditor() {
+  return JSON.parse(element("addons-manifest").value);
+}
+
+function renderCompatibility(payload) {
+  const compatibility = payload.compatibility;
+  element("addons-result").innerHTML =
+    badge("level", compatibility.level, compatibility.level === "COMPATIBLE" ? "OK" : "WARN") +
+    badge("score", compatibility.score, "WARN") +
+    '<div class="notice-block">' + escapeHtml(payload.notice) + '</div>' +
+    table(["Surface", "Level", "Note"], compatibility.sections.concat(compatibility.permissions).map(function (entry) {
+      return [entry.section || entry.permission, entry.level, entry.note || ""];
+    }));
+}
+
+async function inspectAddon() {
+  try {
+    const payload = await api("/api/extensions/inspect", { method: "POST", body: { manifest: manifestFromEditor() } });
+    renderCompatibility(payload);
+    if (payload.theme && payload.theme.gradient) {
+      element("addons-active-theme").innerHTML =
+        '<div class="gradient-preview" style="background:' + gradientCss(payload.theme.gradient) + '"></div>' +
+        '<div class="v">preview of ' + escapeHtml(payload.theme.name) + ' | stops ' + escapeHtml(payload.theme.gradient.stops.join(" ")) + '</div>';
+    }
+    setStatus("manifest inspected", "ok");
+  } catch (error) {
+    element("addons-result").innerHTML = badge("error", error.message, "FAIL");
+  }
+}
+
+async function installAddon() {
+  try {
+    const payload = await api("/api/extensions/install", {
+      method: "POST",
+      body: { manifest: manifestFromEditor(), acknowledged: element("addons-ack").checked }
+    });
+    element("addons-result").innerHTML =
+      badge("recorded", payload.installed.id, "OK") +
+      badge("compatibility", payload.installed.compatibility_level, "WARN") +
+      badge("signature", payload.installed.signature, "WARN") +
+      '<div class="notice-block">' + escapeHtml(payload.notice) + '</div>';
+    setStatus("add-on recorded", "ok");
+    await loadAddons();
+  } catch (error) {
+    element("addons-result").innerHTML = badge("refused", error.message, "FAIL") +
+      '<div class="v muted">Installations require the compatibility notice to be acknowledged. Prohibited permissions are refused regardless of acknowledgement.</div>';
+  }
+}
+
 function selectView(view) {
   Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (tab) {
     tab.classList.toggle("active", tab.getAttribute("data-view") === view);
@@ -486,6 +608,7 @@ function selectView(view) {
   if (view === "platform") { loadIdentity(); loadScans(); }
   if (view === "settings") { loadWebrtc(); }
   if (view === "dns") { loadResolvers(); }
+  if (view === "addons") { loadCompatMatrix(); loadAddons(); }
 }
 
 function wire() {
@@ -510,6 +633,11 @@ function wire() {
   element("diag-requests").addEventListener("click", loadRequests);
   element("st-save").addEventListener("click", saveSettings);
   element("st-reload").addEventListener("click", loadSettings);
+  element("addons-sample").addEventListener("click", function () {
+    element("addons-manifest").value = JSON.stringify(SAMPLE_THEME, null, 2);
+  });
+  element("addons-inspect").addEventListener("click", inspectAddon);
+  element("addons-install").addEventListener("click", installAddon);
   element("profile-select").addEventListener("change", function () { element("profile-result").innerHTML = ""; });
 }
 

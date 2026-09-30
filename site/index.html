@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LA Brow | browser scoped environment virtualization</title>
+<style>
+  :root {
+    --void: #05060A;
+    --obsidian: #0B0C0E;
+    --midnight: #101226;
+    --violet: #A855F7;
+    --red: #FF2D3F;
+    --cyan: #22D3EE;
+    --mist: #C7CBD3;
+    --haze: #8A92A3;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--void);
+    color: #F5F7FF;
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+  }
+  .aurora {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(900px 620px at 12% 4%, rgba(168, 85, 247, 0.28), transparent 70%),
+      radial-gradient(760px 560px at 88% 18%, rgba(255, 45, 63, 0.22), transparent 72%),
+      radial-gradient(720px 640px at 60% 96%, rgba(34, 211, 238, 0.16), transparent 70%),
+      linear-gradient(160deg, var(--void), var(--midnight) 48%, var(--obsidian));
+  }
+  .grid {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(circle at 50% 20%, black, transparent 78%);
+  }
+  header, main, footer { max-width: 1120px; margin: 0 auto; padding: 0 22px; }
+  header { padding-top: 34px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .mark {
+    width: 44px; height: 44px; border-radius: 12px; transform: rotate(45deg);
+    background: linear-gradient(135deg, var(--red), var(--violet));
+    box-shadow: 0 0 34px rgba(168, 85, 247, 0.45);
+  }
+  .brand strong { font-size: 19px; letter-spacing: 3px; }
+  .brand span { color: var(--haze); font-size: 12px; display: block; letter-spacing: 1px; }
+  .hero { padding: 58px 0 26px; }
+  .kicker { color: var(--cyan); font-family: ui-monospace, Menlo, monospace; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; }
+  h1 { font-size: clamp(30px, 5.4vw, 54px); line-height: 1.08; margin: 14px 0 10px; letter-spacing: -0.5px; }
+  h1 em { font-style: normal; background: linear-gradient(120deg, var(--red), var(--violet), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lede { color: var(--mist); max-width: 760px; font-size: 16.5px; }
+  .strip { height: 10px; border-radius: 999px; background: linear-gradient(90deg, var(--red), var(--violet), var(--cyan)); margin: 26px 0 8px; }
+  section { padding: 30px 0; }
+  h2 { font-size: 22px; margin: 0 0 6px; }
+  .muted { color: var(--haze); font-size: 14px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 14px; margin-top: 18px; }
+  .card {
+    border-radius: 16px; padding: 16px 18px;
+    background: linear-gradient(160deg, rgba(21,26,34,0.92), rgba(14,16,22,0.92));
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+  .card h3 { margin: 0 0 6px; font-size: 15px; }
+  .card p { margin: 0; color: var(--mist); font-size: 13.5px; }
+  .tag { display: inline-block; font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
+  .phone { display: grid; grid-template-columns: 300px 1fr; gap: 26px; align-items: start; margin-top: 18px; }
+  .frame {
+    border-radius: 30px; padding: 12px; border: 1px solid rgba(255,255,255,0.12);
+    background: linear-gradient(150deg, rgba(168,85,247,0.22), rgba(255,45,63,0.16));
+  }
+  .screen { border-radius: 22px; overflow: hidden; background: linear-gradient(165deg, #0A0A12, #150C26); padding: 14px; }
+  .rail { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .pill { font-family: ui-monospace, Menlo, monospace; font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); color: var(--haze); }
+  .pill.on { background: linear-gradient(135deg, var(--red), var(--violet)); color: #FFFFFF; border-color: transparent; }
+  .panel { border-radius: 14px; padding: 12px; margin-bottom: 10px; background: rgba(10,10,16,0.72); border: 1px solid rgba(168,85,247,0.35); }
+  .panel h4 { margin: 0 0 8px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--cyan); }
+  .row { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--mist); }
+  .row span:last-child { font-family: ui-monospace, Menlo, monospace; color: #FFFFFF; }
+  .gauge { width: 84px; height: 84px; border-radius: 50%; background: conic-gradient(from 135deg, var(--violet), var(--cyan) 70%, rgba(255,255,255,0.08) 70%); display: grid; place-items: center; font-family: ui-monospace, Menlo, monospace; font-size: 15px; }
+  .gauge div { width: 62px; height: 62px; border-radius: 50%; background: #0A0A12; display: grid; place-items: center; }
+  .notice { border-radius: 12px; padding: 12px 14px; border: 1px solid rgba(245,185,66,0.5); background: rgba(27,23,7,0.85); color: #F4D589; font-size: 12.5px; }
+  code, pre { font-family: ui-monospace, Menlo, monospace; }
+  pre { background: rgba(8,9,12,0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 14px 16px; overflow-x: auto; font-size: 12.5px; color: var(--mist); }
+  .swatches { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+  .swatch { width: 118px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+  .swatch .chip { height: 52px; }
+  .swatch .name { padding: 7px 9px; font-size: 11px; color: var(--haze); font-family: ui-monospace, Menlo, monospace; }
+  footer { padding: 34px 22px 54px; color: var(--haze); font-size: 12.5px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  th { color: var(--cyan); font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; }
+  td { color: var(--mist); }
+</style>
+</head>
+<body>
+<div class="aurora"></div>
+<div class="grid"></div>
+
+<header>
+  <div class="brand">
+    <div class="mark"></div>
+    <div>
+      <strong>LA BROW</strong>
+      <span>browser scoped environment virtualization</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="kicker">desktop control center, web client and android application</div>
+    <h1>One deterministic environment pipeline, <em>shared by every client</em>.</h1>
+    <p class="lede">Virtual location, timezone, locale, resolver and privacy policy are resolved once per navigation and reported per stage. Desktop Firefox themes are translated into the application gradient, desktop add-ons are scored against a reviewable matrix, and the install flow stops until the compatibility notice is confirmed.</p>
+    <div class="strip"></div>
+    <p class="muted">location, timezone, locale, resolver, policy, diagnostics and add-on compatibility in a single interface contract</p>
+  </section>
+
+  <section>
+    <h2>Environment Surfaces</h2>
+    <p class="muted">Every surface is resolved, reported and bounded by explicit limitations.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="tag">location</div>
+        <h3>Radius bounded virtual mode</h3>
+        <p>Seeded and reproducible sampling inside the permitted radius. Physical provider fallback is blocked while virtual mode is active.</p>
+      </div>
+      <div class="card">
+        <div class="tag">timezone</div>
+        <h3>Browser scoped offset</h3>
+        <p>JavaScript and formatting surfaces follow the profile zone. The operating system clock is never modified.</p>
+      </div>
+      <div class="card">
+        <div class="tag">locale</div>
+        <h3>Five distinct surfaces</h3>
+        <p>Browser locale, language preference, HTTP preference, JavaScript surface and operating system locale stay separate values.</p>
+      </div>
+      <div class="card">
+        <div class="tag">resolver</div>
+        <h3>Browser scoped DNS</h3>
+        <p>DNS over HTTPS and DNS over TLS profiles with explicit fallback confirmation. System resolver files are read and hashed only.</p>
+      </div>
+      <div class="card">
+        <div class="tag">diagnostics</div>
+        <h3>Consistency findings</h3>
+        <p>Redaction levels, mismatch findings across surfaces and structured pipeline events for every resolution.</p>
+      </div>
+      <div class="card">
+        <div class="tag">add-ons</div>
+        <h3>Desktop theme translation</h3>
+        <p>Theme colours become the application gradient. Unsupported surfaces are refused and reported, never silently accepted.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Interface Language</h2>
+    <p class="muted">Dark first, gradient driven, built for status reading at a glance. A phone rendering of the same layout follows the design system that ships in the application.</p>
+    <div class="phone">
+      <div class="frame">
+        <div class="screen">
+          <div class="rail">
+            <div class="pill">Browser</div>
+            <div class="pill on">Environment</div>
+            <div class="pill">Add-ons</div>
+            <div class="pill">Network</div>
+            <div class="pill">Profiles</div>
+            <div class="pill">Settings</div>
+          </div>
+          <div class="panel">
+            <h4>Environment</h4>
+            <div class="row"><span>status</span><span>OK</span></div>
+            <div class="row"><span>state</span><span>MANUAL</span></div>
+            <div class="row"><span>latitude</span><span>52.4457</span></div>
+            <div class="row"><span>longitude</span><span>13.4516</span></div>
+            <div class="row"><span>zone</span><span>Europe/Berlin</span></div>
+            <div class="row"><span>locale</span><span>en-GB</span></div>
+            <div class="row"><span>resolver</span><span>doh verified</span></div>
+          </div>
+          <div class="panel">
+            <h4>Pipeline</h4>
+            <div class="row"><span>profile_resolution</span><span>OK</span></div>
+            <div class="row"><span>geo_resolution</span><span>OK</span></div>
+            <div class="row"><span>locale_resolution</span><span>OK</span></div>
+            <div class="row"><span>web_content_ready</span><span>OK</span></div>
+          </div>
+          <div class="panel">
+            <h4>Add-on compatibility</h4>
+            <div class="notice">This add-on targets desktop Firefox. Parts of it may not display or behave correctly in the mobile application.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="swatches">
+          <div class="swatch"><div class="chip" style="background:#05060A"></div><div class="name">void 05060A</div></div>
+          <div class="swatch"><div class="chip" style="background:#0B0C0E"></div><div class="name">obsidian 0B0C0E</div></div>
+          <div class="swatch"><div class="chip" style="background:#FF2D3F"></div><div class="name">neon red FF2D3F</div></div>
+          <div class="swatch"><div class="chip" style="background:#A855F7"></div><div class="name">violet A855F7</div></div>
+          <div class="swatch"><div class="chip" style="background:#22D3EE"></div><div class="name">cyan 22D3EE</div></div>
+        </div>
+        <table>
+          <tr><th>Element</th><th>Treatment</th></tr>
+          <tr><td>backdrop</td><td>drifting gradients over a masked grid</td></tr>
+          <tr><td>panels</td><td>gradient frame, glass body, accent per surface group</td></tr>
+          <tr><td>status chips</td><td>tone colour with a paired indicator dot</td></tr>
+          <tr><td>scores</td><td>ring gauges for confidence and compatibility</td></tr>
+          <tr><td>navigation</td><td>bottom rail, selected item carries the active theme gradient</td></tr>
+          <tr><td>theme source</td><td>desktop theme manifest colours replace the product palette</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Run It</h2>
+    <pre>python3 -m api.server --host 0.0.0.0 --port 8000 --repo .</pre>
+    <p class="muted">The web control center is served at the root. The interface exposes environment resolution, profiles, resolver probes, diagnostics, recorded add-ons and themes. The Android application reads the same interface and assembles through the android-build workflow with the Android platform 35.</p>
+  </section>
+
+  <section>
+    <h2>Statements</h2>
+    <div class="notice">Environment controls do not guarantee anonymity and do not change the public address observed by websites. Resolver configuration never modifies device or network settings. While virtual location mode is active the browser never falls back to the device location provider.</div>
+  </section>
+</main>
+
+<footer>
+  LA Brow. Released under the MIT license. Third party resources are recorded in the license manifest of the repository.
+</footer>
+</body>
+</html>

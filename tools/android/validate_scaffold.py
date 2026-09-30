@@ -43,6 +43,22 @@ REQUIRED_FILES = (
     "app/src/main/java/com/labrow/browser/core/EnvironmentMapper.kt",
     "app/src/main/java/com/labrow/browser/core/SyncController.kt",
     "app/src/main/java/com/labrow/browser/ui/ControlCenterScreen.kt",
+    "app/src/main/java/com/labrow/browser/ui/AppState.kt",
+    "app/src/main/java/com/labrow/browser/ui/AppShell.kt",
+    "app/src/main/java/com/labrow/browser/ui/theme/AppTheme.kt",
+    "app/src/main/java/com/labrow/browser/ui/theme/BrandColors.kt",
+    "app/src/main/java/com/labrow/browser/ui/theme/Gradients.kt",
+    "app/src/main/java/com/labrow/browser/ui/theme/Components.kt",
+    "app/src/main/java/com/labrow/browser/ui/screens/BrowserScreen.kt",
+    "app/src/main/java/com/labrow/browser/ui/screens/EnvironmentScreen.kt",
+    "app/src/main/java/com/labrow/browser/ui/screens/AddonsScreen.kt",
+    "app/src/main/java/com/labrow/browser/ui/screens/NetworkScreen.kt",
+    "app/src/main/java/com/labrow/browser/ui/screens/ProfilesScreen.kt",
+    "app/src/main/java/com/labrow/browser/ui/screens/SettingsScreen.kt",
+    "app/src/main/java/com/labrow/browser/core/ExtensionModels.kt",
+    "app/src/main/java/com/labrow/browser/core/ExtensionRepository.kt",
+    "app/src/main/java/com/labrow/browser/core/EnvironmentApiRepository.kt",
+    "app/src/main/java/com/labrow/browser/core/ThemeEngine.kt",
     "app/src/debug/res/xml/network_security_config.xml",
 )
 ALLOWED_PERMISSIONS = {
@@ -58,6 +74,9 @@ REQUIRED_STRINGS = (
     "notice_virtual_mode_no_fallback",
     "label_diagnostics",
     "label_profiles",
+    "label_addons",
+    "label_theme",
+    "notice_desktop_compatibility",
 )
 REQUIRED_KOTLIN_PACKAGE = "com.labrow.browser"
 NON_ASCII_ALLOWED = set()
@@ -140,7 +159,7 @@ def validate(repo: Path) -> dict:
         record("adaptive-icon-layers", {"background", "foreground", "monochrome"} <= children, ", ".join(sorted(children)))
 
     kotlin_files = sorted((android_root / "app/src/main/java").rglob("*.kt"))
-    record("kotlin-file-count", len(kotlin_files) >= 9, str(len(kotlin_files)))
+    record("kotlin-file-count", len(kotlin_files) >= 25, str(len(kotlin_files)))
     comment_violations = []
     package_violations = []
     for path in kotlin_files:
@@ -185,6 +204,18 @@ def validate(repo: Path) -> dict:
 
     sync_source = (android_root / "app/src/main/java/com/labrow/browser/core/SyncController.kt").read_text(encoding="utf-8")
     record("client-persists-environment", 'EnvironmentRepository.ENVIRONMENT_FILE' in sync_source and 'document.privateBrowsing' in sync_source)
+
+    addon_source = (android_root / "app/src/main/java/com/labrow/browser/ui/screens/AddonsScreen.kt").read_text(encoding="utf-8")
+    record("addon-install-acknowledgement", "I understand the compatibility notice" in addon_source)
+    record("addon-notice-surface", "NeonNotice" in addon_source and "report.notice" in addon_source)
+    record("theme-gradient-applied", "BrandGradients.forStops" in addon_source)
+
+    shell_source = (android_root / "app/src/main/java/com/labrow/browser/ui/AppShell.kt").read_text(encoding="utf-8")
+    record("gaming-shell-destinations", all(token in shell_source for token in ('Browser(', 'Environment(', 'Add-ons', 'Network', 'Profiles', 'Settings')))
+
+    gradle_source = (android_root / "app/build.gradle.kts").read_text(encoding="utf-8")
+    record("compose-compiler-plugin", "org.jetbrains.kotlin.plugin.compose" in gradle_source)
+    record("compose-design-dependencies", "material3" in gradle_source and "compose-bom" in gradle_source)
 
     storage_source = (android_root / "app/src/main/java/com/labrow/browser/core/StorageLayout.kt").read_text(encoding="utf-8")
     record("storage-layout-directories", all(token in storage_source for token in ('"profiles"', '"settings"', '"diagnostics"', '"cache"')))

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-30T17:18:59Z",
-  "duration_seconds": 12.13,
+  "generated_at": "2026-09-30T17:28:57Z",
+  "duration_seconds": 13.28,
   "status": "PASS",
   "stages": [
     {
@@ -9,7 +9,7 @@
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "render_manifest status=PASS docs/licenses/THIRD_PARTY_RESOURCES.md is current with 7 resources"
+        "render_manifest status=PASS docs/licenses/THIRD_PARTY_RESOURCES.md is current with 11 resources"
       ],
       "stderr_tail": []
     },
@@ -27,7 +27,7 @@
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "license_manifest status=PASS resources=7 problems=0"
+        "license_manifest status=PASS resources=11 problems=0"
       ],
       "stderr_tail": []
     },
@@ -57,7 +57,7 @@
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "comment_scan status=PASS scanned=257 violations=0 exempted_files=45"
+        "comment_scan status=PASS scanned=284 violations=0 exempted_files=45"
       ],
       "stderr_tail": []
     },
@@ -77,7 +77,7 @@
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "android_scaffold status=PASS checks=32 problems=0"
+        "android_scaffold status=PASS checks=38 problems=0"
       ],
       "stderr_tail": []
     },
@@ -107,10 +107,10 @@
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "........................................................................ [ 42%]",
-        "........................................................................ [ 84%]",
-        "..........................                                               [100%]",
-        "170 passed in 0.42s"
+        "........................................................................ [ 39%]",
+        "........................................................................ [ 78%]",
+        ".......................................                                  [100%]",
+        "183 passed in 0.48s"
       ],
       "stderr_tail": []
     },
@@ -121,7 +121,7 @@
       "status": "PASS",
       "stdout_tail": [
         "..................                                                       [100%]",
-        "18 passed in 2.73s"
+        "18 passed in 2.74s"
       ],
       "stderr_tail": []
     },
@@ -142,8 +142,8 @@
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "...................                                                      [100%]",
-        "19 passed in 2.28s"
+        ".........................                                                [100%]",
+        "25 passed in 2.56s"
       ],
       "stderr_tail": []
     },
@@ -154,7 +154,7 @@
       "status": "PASS",
       "stdout_tail": [
         "..........                                                               [100%]",
-        "10 passed in 0.18s"
+        "10 passed in 0.19s"
       ],
       "stderr_tail": []
     },
@@ -164,8 +164,8 @@
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "................                                                         [100%]",
-        "16 passed in 2.38s"
+        "..................                                                       [100%]",
+        "18 passed in 2.76s"
       ],
       "stderr_tail": []
     },

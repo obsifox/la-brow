@@ -1,0 +1,107 @@
+schema_version: 1
+description: Compatibility matrix between desktop Firefox extension surfaces and the mobile runtime used by the product.
+runtime:
+  engine: geckoview
+  engine_version: 130.0.20240904133848
+  extension_support: built-in-and-reviewed
+  theme_support: manifest-theme-colors
+levels:
+  supported: the surface is honoured by the mobile runtime
+  partial: the surface is accepted but can behave differently or render incompletely
+  unsupported: the surface is refused because the mobile runtime cannot honour it
+sections:
+  - section: manifest_version
+    level: supported
+    note: manifest version 2 and version 3 descriptions are both parsed
+  - section: permissions
+    level: supported
+    note: granted permissions are evaluated by the install policy
+  - section: theme
+    level: partial
+    note: colours and properties are applied, background images from the package are reported as pending
+  - section: browser_action
+    level: supported
+    note: toolbar action surfaces are mapped to the in-app toolbar
+  - section: action
+    level: supported
+    note: manifest version 3 action entries are mapped to the in-app toolbar
+  - section: browser_specific_settings
+    level: partial
+    note: gecko identifiers are recorded, desktop minimum versions are not enforced
+  - section: content_scripts
+    level: partial
+    note: matching runs, page layout of desktop only extensions can differ
+  - section: background
+    level: partial
+    note: persistent background pages are not provided, event pages only
+  - section: options_ui
+    level: supported
+    note: option pages open inside the application surface
+  - section: commands
+    level: partial
+    note: keyboard shortcuts without an assigned key are unreachable on touch only devices
+  - section: sidebar_action
+    level: unsupported
+    note: desktop sidebars have no mobile equivalent
+  - section: chrome_url_overrides
+    level: unsupported
+    note: internal page replacement is not available on the mobile runtime
+  - section: devtools_page
+    level: unsupported
+    note: desktop developer tools pages are not available
+  - section: userChrome
+    level: unsupported
+    note: user interface styling outside the theme manifest is not loaded
+  - section: experiments
+    level: unsupported
+    note: privileged experiment APIs are never granted
+permissions:
+  - permission: storage
+    level: supported
+  - permission: tabs
+    level: supported
+  - permission: activeTab
+    level: supported
+  - permission: bookmarks
+    level: partial
+    note: bookmark organisation surface is reduced
+  - permission: history
+    level: partial
+    note: private sessions never expose history
+  - permission: downloads
+    level: partial
+    note: downloads are stored by the application download manager
+  - permission: cookies
+    level: partial
+    note: private browsing mode keeps cookies session scoped
+  - permission: webRequest
+    level: partial
+    note: filtering is applied without blocking desktop only filters
+  - permission: webRequestBlocking
+    level: partial
+  - permission: proxy
+    level: unsupported
+    note: proxy configuration is owned by the environment core
+  - permission: nativeMessaging
+    level: unsupported
+    note: native messaging is refused by policy
+  - permission: management
+    level: unsupported
+    note: extension management from inside an extension is refused by policy
+  - permission: experiments
+    level: unsupported
+    note: privileged experiment APIs are refused by policy
+  - permission: devtools
+    level: unsupported
+  - permission: geckoProfiler
+    level: unsupported
+  - permission: <all_urls>
+    level: partial
+    note: host access is granted but every install is reported to the user
+counters:
+  supported_weight: 1.0
+  partial_weight: 0.5
+  unsupported_weight: 0.0
+  compatible_threshold: 0.85
+  partial_threshold: 0.4
+install_notice: This add-on targets desktop Firefox. Parts of it may not display or behave correctly in the mobile application, and the theme or interface changes it declares are applied on a best effort basis.

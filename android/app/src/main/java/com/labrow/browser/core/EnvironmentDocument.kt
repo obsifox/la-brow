@@ -42,6 +42,12 @@ data class EnvironmentDns(
     val systemResolverUnchanged: Boolean,
 )
 
+data class EnvironmentStage(
+    val name: String,
+    val status: String,
+    val detail: String,
+)
+
 data class EnvironmentConflict(
     val identifier: String,
     val severity: String,

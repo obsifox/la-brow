@@ -1,0 +1,111 @@
+{
+  "active_theme": "neon-grid-1-2-0",
+  "extensions": [
+    {
+      "compatibility_findings": [
+        {
+          "code": "partial-section",
+          "detail": "colours and properties are applied, background images from the package are reported as pending",
+          "message": "the manifest declares theme, which is applied on a best effort basis",
+          "severity": "NOTICE"
+        }
+      ],
+      "compatibility_level": "PARTIAL",
+      "compatibility_score": 0.75,
+      "description": "",
+      "id": "neon-grid-1-2-0",
+      "installed_at": "2026-09-30T17:29:20Z",
+      "manifest": {
+        "manifest_version": 2,
+        "name": "Neon Grid",
+        "theme": {
+          "colors": {
+            "frame": "#05060A",
+            "tab_selected": "#FF2D3F",
+            "toolbar": "#12142B",
+            "toolbar_text": "#F5F7FF"
+          }
+        },
+        "type": "theme",
+        "version": "1.2.0"
+      },
+      "manifest_sha256": "dfeb85210f507ceb50bc442544a2bd9154af9998e9956653ddad3e037e23bc2d",
+      "manifest_version": 2,
+      "name": "Neon Grid",
+      "notice_acknowledged": true,
+      "notice_text": "This add-on targets desktop Firefox. Parts of it may not display or behave correctly in the mobile application, and the theme or interface changes it declares are applied on a best effort basis.",
+      "signature": "unverified",
+      "theme": {
+        "declared_color_keys": [
+          "frame",
+          "tab_selected",
+          "toolbar",
+          "toolbar_text"
+        ],
+        "findings": [
+          {
+            "code": "theme-contrast-advisory",
+            "message": "contrast between tab_text and tab_selected is 3.68, below the recommended reading ratio",
+            "severity": "NOTICE"
+          },
+          {
+            "code": "desktop-theme-applied",
+            "message": "colours are translated from a desktop Firefox theme, layout level styling is not applied",
+            "severity": "NOTICE"
+          }
+        ],
+        "gradient": {
+          "accent": "#FF2D3F",
+          "accent_glow": "rgba(255, 45, 63, 0.35)",
+          "angle_degrees": 135,
+          "average": "#5D1827",
+          "glow": "#A81F2C",
+          "stops": [
+            "#05060A",
+            "#12142B",
+            "#FF2D3F"
+          ]
+        },
+        "id": "neon-grid-1-2-0",
+        "images": {
+          "status": "none",
+          "theme_frame": null
+        },
+        "name": "Neon Grid",
+        "origin": "firefox-desktop-theme-manifest",
+        "palette": {
+          "button_background_hover": "#A855F7",
+          "button_color": "#FFFFFF",
+          "frame": "#05060A",
+          "frame_inactive": "#0B0C0E",
+          "icons": "#FFFFFF",
+          "ntp_background": "#0B0C0E",
+          "ntp_text": "#FFFFFF",
+          "popup": "#14161A",
+          "popup_border": "#2A2F38",
+          "popup_text": "#FFFFFF",
+          "sidebar": "#0F1115",
+          "sidebar_text": "#E7E9EE",
+          "tab_background_text": "#C7CBD3",
+          "tab_selected": "#FF2D3F",
+          "tab_text": "#FFFFFF",
+          "toolbar": "#12142B",
+          "toolbar_field": "#1B1E24",
+          "toolbar_field_border": "#2A2F38",
+          "toolbar_field_text": "#FFFFFF",
+          "toolbar_text": "#F5F7FF"
+        },
+        "properties": {
+          "color_scheme": "dark",
+          "content_color_scheme": "dark"
+        },
+        "runtime_compatibility": "PARTIAL",
+        "source": "desktop-firefox-theme",
+        "version": "1.2.0"
+      },
+      "type": "theme",
+      "version": "1.2.0"
+    }
+  ],
+  "schema_version": 1
+}
