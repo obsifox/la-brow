@@ -2,7 +2,7 @@ schema_version: 1
 description: Compatibility matrix between desktop Firefox extension surfaces and the mobile runtime used by the product.
 runtime:
   engine: geckoview
-  engine_version: 130.0.20240904133848
+  engine_version: 153.0.20260810162159
   extension_support: built-in-and-reviewed
   theme_support: manifest-theme-colors
 levels:

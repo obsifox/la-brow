@@ -30,8 +30,19 @@ object EnvironmentMapper {
                 )
             }
         }
+        var satisfiedInvariants = 0
         val stageList = (0 until stages.length()).map { index ->
             val stage = stages.optJSONObject(index) ?: JSONObject()
+            if (stage.optString("stage") == ENVIRONMENT_VALIDATION_STAGE) {
+                val invariants = stage.optJSONObject("output")?.optJSONArray("invariants")
+                if (invariants != null) {
+                    for (position in 0 until invariants.length()) {
+                        if (invariants.optJSONObject(position)?.optBoolean("satisfied", false) == true) {
+                            satisfiedInvariants += 1
+                        }
+                    }
+                }
+            }
             EnvironmentStage(
                 name = stage.optString("stage"),
                 status = stage.optString("status"),
@@ -97,14 +108,16 @@ object EnvironmentMapper {
                 ?: snapshot.optBoolean("private_browsing", false),
             conflicts = conflicts,
             stages = stageList,
-            invariantCount = stageList.count { stage -> stage.name == "web_content_ready" },
-            geoSeed = geoEngine?.optJSONObject("state")?.optString("state") ?: snapshot.optString("state", "UNKNOWN"),
+            invariantCount = satisfiedInvariants,
+            geoState = geoEngine?.optJSONObject("state")?.optString("state", "UNKNOWN") ?: "UNKNOWN",
             notices = listOf(
                 "Environment controls do not guarantee anonymity and do not change the public IP address observed by websites.",
                 "Browser DNS configuration never modifies device or network DNS settings.",
             ),
         )
     }
+
+    private const val ENVIRONMENT_VALIDATION_STAGE = "environment_validation"
 
     private fun stringList(array: JSONArray?): List<String> {
         if (array == null) {

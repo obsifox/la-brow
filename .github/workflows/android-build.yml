@@ -26,10 +26,8 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Install the pinned gradle version
+      - name: Prepare the gradle cache
         uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "8.10.2"
 
       - name: Inspect the installed android toolchain
         run: |
@@ -43,11 +41,11 @@ jobs:
         run: |
           CMDLINE_TOOLS="$(ls -d "${ANDROID_SDK_ROOT}"/cmdline-tools/*/bin | head -1)"
           yes | "${CMDLINE_TOOLS}/sdkmanager" --licenses > /dev/null 2>&1 || true
-          "${CMDLINE_TOOLS}/sdkmanager" --install "platforms;android-35" "build-tools;35.0.0"
+          "${CMDLINE_TOOLS}/sdkmanager" --install "platforms;android-36" "build-tools;36.0.0"
 
       - name: Assemble the debug build
         working-directory: android
-        run: gradle --no-daemon --stacktrace assembleDebug
+        run: ./gradlew --no-daemon --stacktrace assembleDebug
 
       - name: Collect build output
         run: find android/app/build/outputs -name "*.apk" -type f

@@ -4,7 +4,7 @@
     "schema": 1,
     "version": "0.1.0"
   },
-  "generated_at": "2026-09-30T14:51:56Z",
+  "generated_at": "2026-09-30T18:26:10Z",
   "identity": {
     "eye_visibility": [
       {
@@ -121,11 +121,11 @@
     "symbol": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\" width=\"512\" height=\"512\" role=\"img\">\n<title>Product identity symbol</title>\n<path d=\"M256,128 L196,152 L96,72 L60,208 L74,320 L152,404 L256,464 Z\" fill=\"#FFFFFF\"/>\n<path d=\"M256,128 L316,152 L416,72 L452,208 L438,320 L360,404 L256,464 Z\" fill=\"#0B0C0E\"/>\n<circle cx=\"176\" cy=\"244\" r=\"52\" fill=\"#FF2D3F\"/>\n<circle cx=\"336\" cy=\"244\" r=\"52\" fill=\"#A855F7\"/>\n<path d=\"M96,72 L196,152 L256,128 L316,152 L416,72 L452,208 L438,320 L360,404 L256,464 L152,404 L74,320 L60,208 Z\" fill=\"none\" stroke=\"#0B0C0E\" stroke-width=\"14\" stroke-linejoin=\"round\"/>\n</svg>\n",
     "viewbox": 512
   },
-  "licenses": "# Third Party Resources\n\nEvery external resource used by the project is recorded here. The machine readable source of truth is `docs/licenses/third-party-resources.yaml`.\n\n| Field | Value |\n| --- | --- |\n| Resource | eng-orchestrator |\n| source | https://github.com/obsifox/eng-orchestrator |\n| version | 2.1.0 |\n| license | MIT |\n| license url | https://github.com/obsifox/eng-orchestrator/blob/main/LICENSE |\n| purpose | Engineering orchestration control plane used for run management, gates, receipts and policy scanning integration. |\n| integration location | tools/eng-orchestrator |\n| modification status | unmodified |\n| redistribution requirements | license text retained in the vendored tree |\n| attribution requirements | copyright notice retained in LICENSE |\n| checksum manifest | tools/eng-orchestrator/INSTALL_MANIFEST.sha256 |\n| --- | --- |\n| Resource | mozilla-geckoview |\n| source | https://maven.mozilla.org/maven2/org/mozilla/geckoview/ |\n| version | 130.0.20240904133848 |\n| license | MPL-2.0 |\n| license url | https://www.mozilla.org/MPL/2.0/ |\n| purpose | Browser engine for the Android application. |\n| integration location | android/app/build.gradle.kts |\n| modification status | dependency-not-vendored |\n| redistribution requirements | MPL-2.0 notice retention for redistributed binaries |\n| attribution requirements | source availability statement in release notes |\n| checksum manifest | not-applicable-dependency-resolution |\n| --- | --- |\n| Resource | gecko-platform-source |\n| source | https://hg.mozilla.org/mozilla-central |\n| version | to-be-pinned-at-build-time |\n| license | MPL-2.0 |\n| license url | https://www.mozilla.org/MPL/2.0/ |\n| purpose | Desktop browser engine baseline for the planned Gecko build integration. |\n| integration location | gecko |\n| modification status | not-yet-fetched |\n| redistribution requirements | MPL-2.0 source availability for modified files |\n| attribution requirements | license attribution in about and legal surfaces |\n| checksum manifest | not-applicable-until-fetch |\n| --- | --- |\n| Resource | iana-time-zone-database |\n| source | https://www.iana.org/time-zones |\n| version | system-provided |\n| license | public-domain |\n| license url | https://www.iana.org/time-zones |\n| purpose | Timezone offsets, daylight saving transitions and zone validation. |\n| integration location | timezone/engine.py |\n| modification status | unmodified |\n| redistribution requirements | none |\n| attribution requirements | none |\n| checksum manifest | not-applicable-system-data |\n| --- | --- |\n| Resource | python-standard-library |\n| source | https://docs.python.org/3/library/ |\n| version | 3.13 |\n| license | PSF-2.0 |\n| license url | https://docs.python.org/3/license.html |\n| purpose | Runtime, network transport, TLS and test infrastructure for the environment core. |\n| integration location | repository-wide |\n| modification status | unmodified |\n| redistribution requirements | PSF license retention when redistributing the interpreter |\n| attribution requirements | PSF notice retention |\n| checksum manifest | not-applicable-runtime |\n| --- | --- |\n| Resource | openssl-command-line |\n| source | https://www.openssl.org/ |\n| version | 3.5.6 |\n| license | Apache-2.0 |\n| license url | https://www.openssl.org/source/license.html |\n| purpose | Test certificate generation for DNS over TLS and DNS over HTTPS transport tests. |\n| integration location | tests/network/dns_testkit.py |\n| modification status | unmodified |\n| redistribution requirements | none for test-time usage |\n| attribution requirements | none for test-time usage |\n| checksum manifest | not-applicable-tooling |\n| --- | --- |\n| Resource | pytz-iana-canonical-list-of-zone-names |\n| source | https://data.iana.org/time-zones/tzdb/zone1970.tab |\n| version | not-bundled |\n| license | public-domain |\n| license url | https://data.iana.org/time-zones/tzdb/ |\n| purpose | Reference for validating zone identifiers used by the timezone engine. |\n| integration location | timezone/engine.py |\n| modification status | reference-only |\n| redistribution requirements | none |\n| attribution requirements | none |\n| checksum manifest | not-applicable-reference-only |\n| --- | --- |\n\nGenerated by tools/license/render_manifest.py. Do not edit manually.\n",
+  "licenses": "# Third Party Resources\n\nEvery external resource used by the project is recorded here. The machine readable source of truth is `docs/licenses/third-party-resources.yaml`.\n\n| Field | Value |\n| --- | --- |\n| Resource | eng-orchestrator |\n| source | https://github.com/obsifox/eng-orchestrator |\n| version | 2.1.0 |\n| license | MIT |\n| license url | https://github.com/obsifox/eng-orchestrator/blob/main/LICENSE |\n| purpose | Engineering orchestration control plane used for run management, gates, receipts and policy scanning integration. |\n| integration location | tools/eng-orchestrator |\n| modification status | unmodified |\n| redistribution requirements | license text retained in the vendored tree |\n| attribution requirements | copyright notice retained in LICENSE |\n| checksum manifest | tools/eng-orchestrator/INSTALL_MANIFEST.sha256 |\n| --- | --- |\n| Resource | github-actions-checkout |\n| source | https://github.com/actions/checkout |\n| version | v4 |\n| license | MIT |\n| license url | https://github.com/actions/checkout/blob/main/LICENSE |\n| purpose | Repository checkout step used by the continuous integration and Android build workflows. |\n| integration location | .github/workflows/android-build.yml |\n| modification status | unmodified |\n| redistribution requirements | none, the action runs on hosted runners at build time |\n| attribution requirements | license reference retained in the license documentation |\n| checksum manifest | not-applicable-remote-action |\n| --- | --- |\n| Resource | github-actions-setup-java |\n| source | https://github.com/actions/setup-java |\n| version | v4 |\n| license | MIT |\n| license url | https://github.com/actions/setup-java/blob/main/LICENSE |\n| purpose | Java runtime installation for the Android build workflow. |\n| integration location | .github/workflows/android-build.yml |\n| modification status | unmodified |\n| redistribution requirements | none, the action runs on hosted runners at build time |\n| attribution requirements | license reference retained in the license documentation |\n| checksum manifest | not-applicable-remote-action |\n| --- | --- |\n| Resource | github-actions-upload-artifact |\n| source | https://github.com/actions/upload-artifact |\n| version | v4 |\n| license | MIT |\n| license url | https://github.com/actions/upload-artifact/blob/main/LICENSE |\n| purpose | Publication of the assembled debug package as a build artifact. |\n| integration location | .github/workflows/android-build.yml |\n| modification status | unmodified |\n| redistribution requirements | none, the action runs on hosted runners at build time |\n| attribution requirements | license reference retained in the license documentation |\n| checksum manifest | not-applicable-remote-action |\n| --- | --- |\n| Resource | gradle-actions-setup-gradle |\n| source | https://github.com/gradle/actions |\n| version | v4 |\n| license | Apache-2.0 |\n| license url | https://github.com/gradle/actions/blob/main/LICENSE |\n| purpose | Pinned Gradle installation for the Android build workflow, because the runner image ships a Gradle version newer than the Android plugin supports. |\n| integration location | .github/workflows/android-build.yml |\n| modification status | unmodified |\n| redistribution requirements | none, the action runs on hosted runners at build time |\n| attribution requirements | license reference retained in the license documentation |\n| checksum manifest | not-applicable-remote-action |\n| --- | --- |\n| Resource | gradle-build-tool |\n| source | https://github.com/gradle/gradle |\n| version | 8.10.2 |\n| license | Apache-2.0 |\n| license url | https://github.com/gradle/gradle/blob/master/LICENSE |\n| purpose | Build system for the Android application, installed on the build host and pinned by the workflow. |\n| integration location | .github/workflows/android-build.yml |\n| modification status | unmodified |\n| redistribution requirements | none, the tool runs at build time |\n| attribution requirements | license reference retained in the license documentation |\n| checksum manifest | not-applicable-build-tool |\n| --- | --- |\n| Resource | mozilla-geckoview |\n| source | https://maven.mozilla.org/maven2/org/mozilla/geckoview/ |\n| version | 153.0.20260810162159 |\n| license | MPL-2.0 |\n| license url | https://www.mozilla.org/MPL/2.0/ |\n| purpose | Browser engine for the Android application. |\n| integration location | android/app/build.gradle.kts |\n| modification status | dependency-not-vendored |\n| redistribution requirements | MPL-2.0 notice retention for redistributed binaries |\n| attribution requirements | source availability statement in release notes |\n| checksum manifest | not-applicable-dependency-resolution |\n| --- | --- |\n| Resource | gecko-platform-source |\n| source | https://hg.mozilla.org/mozilla-central |\n| version | to-be-pinned-at-build-time |\n| license | MPL-2.0 |\n| license url | https://www.mozilla.org/MPL/2.0/ |\n| purpose | Desktop browser engine baseline for the planned Gecko build integration. |\n| integration location | gecko |\n| modification status | not-yet-fetched |\n| redistribution requirements | MPL-2.0 source availability for modified files |\n| attribution requirements | license attribution in about and legal surfaces |\n| checksum manifest | not-applicable-until-fetch |\n| --- | --- |\n| Resource | iana-time-zone-database |\n| source | https://www.iana.org/time-zones |\n| version | system-provided |\n| license | public-domain |\n| license url | https://www.iana.org/time-zones |\n| purpose | Timezone offsets, daylight saving transitions and zone validation. |\n| integration location | timezone/engine.py |\n| modification status | unmodified |\n| redistribution requirements | none |\n| attribution requirements | none |\n| checksum manifest | not-applicable-system-data |\n| --- | --- |\n| Resource | python-standard-library |\n| source | https://docs.python.org/3/library/ |\n| version | 3.13 |\n| license | PSF-2.0 |\n| license url | https://docs.python.org/3/license.html |\n| purpose | Runtime, network transport, TLS and test infrastructure for the environment core. |\n| integration location | repository-wide |\n| modification status | unmodified |\n| redistribution requirements | PSF license retention when redistributing the interpreter |\n| attribution requirements | PSF notice retention |\n| checksum manifest | not-applicable-runtime |\n| --- | --- |\n| Resource | openssl-command-line |\n| source | https://www.openssl.org/ |\n| version | 3.5.6 |\n| license | Apache-2.0 |\n| license url | https://www.openssl.org/source/license.html |\n| purpose | Test certificate generation for DNS over TLS and DNS over HTTPS transport tests. |\n| integration location | tests/network/dns_testkit.py |\n| modification status | unmodified |\n| redistribution requirements | none for test-time usage |\n| attribution requirements | none for test-time usage |\n| checksum manifest | not-applicable-tooling |\n| --- | --- |\n| Resource | pytz-iana-canonical-list-of-zone-names |\n| source | https://data.iana.org/time-zones/tzdb/zone1970.tab |\n| version | not-bundled |\n| license | public-domain |\n| license url | https://data.iana.org/time-zones/tzdb/ |\n| purpose | Reference for validating zone identifiers used by the timezone engine. |\n| integration location | timezone/engine.py |\n| modification status | reference-only |\n| redistribution requirements | none |\n| attribution requirements | none |\n| checksum manifest | not-applicable-reference-only |\n| --- | --- |\n\nGenerated by tools/license/render_manifest.py. Do not edit manually.\n",
   "orchestration": {
     "ci": {
-      "duration_seconds": 5.74,
-      "stages": 16,
+      "duration_seconds": 13.25,
+      "stages": 17,
       "status": "PASS"
     },
     "gates": {
@@ -296,19 +296,19 @@
   "scans": {
     "branding": {
       "status": "PASS",
-      "summary": "branding_scan status=PASS scanned=21 violations=0"
+      "summary": "branding_scan status=PASS scanned=24 violations=0"
     },
     "comment": {
-      "status": "PASS",
-      "summary": "comment_scan status=PASS scanned=242 violations=0 exempted_files=45"
+      "status": "FAIL",
+      "summary": "comment_scan status=FAIL scanned=391 violations=13 exempted_files=45"
     },
     "emoji": {
-      "status": "PASS",
-      "summary": "emoji_scan status=PASS violations=0 exempted_files=17"
+      "status": "FAIL",
+      "summary": "emoji_scan status=FAIL violations=53 exempted_files=17"
     },
     "english": {
-      "status": "PASS",
-      "summary": "english_scan status=PASS violations=0 exempted_files=6"
+      "status": "FAIL",
+      "summary": "english_scan status=FAIL violations=1032 exempted_files=6"
     }
   },
   "scenarios": [
@@ -339,7 +339,7 @@
             "status": "POTENTIAL_MISMATCH"
           },
           "dns": null,
-          "duration_ms": 6.38,
+          "duration_ms": 7.29,
           "effective_profile": {
             "accuracy_m": 5000,
             "block_physical_fallback": true,
@@ -370,7 +370,7 @@
                 "url": "none"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -380,7 +380,7 @@
                 "provider": "virtual-provider"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -393,7 +393,7 @@
                 "source": "virtual"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -403,7 +403,7 @@
                 "zone": "Europe/Berlin"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -413,10 +413,10 @@
                 "mode": "profile"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             }
           ],
-          "generated_at": "2026-09-30T14:51:56Z",
+          "generated_at": "2026-09-30T18:26:10Z",
           "geo": {
             "confidence": 1.0,
             "coordinate": {
@@ -438,7 +438,7 @@
               "per-session-stable"
             ],
             "source": "virtual",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           "geo_engine": {
             "failures": [],
@@ -463,7 +463,7 @@
                 "per-session-stable"
               ],
               "source": "virtual",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             "providers": [
               "automatic",
@@ -569,7 +569,9 @@
               "permissions.default.geo": 0,
               "privacy.resistFingerprinting": false,
               "privacy.trackingprotection.enabled": false
-            }
+            },
+            "preset": "balanced",
+            "private_browsing": false
           },
           "private_browsing": false,
           "stage_order": [
@@ -649,7 +651,7 @@
                   "per-session-stable"
                 ],
                 "source": "virtual",
-                "timestamp": "2026-09-30T14:51:56Z"
+                "timestamp": "2026-09-30T18:26:10Z"
               },
               "stage": "geo_resolution",
               "status": "OK"
@@ -979,7 +981,7 @@
           },
           "url": null
         },
-        "generated_at": "2026-09-30T14:51:56Z",
+        "generated_at": "2026-09-30T18:26:10Z",
         "platform": {},
         "privacy_notice": "diagnostic export is redacted by default and contains no authentication material",
         "redaction": {
@@ -1019,7 +1021,7 @@
             "status": "POTENTIAL_MISMATCH"
           },
           "dns": null,
-          "duration_ms": 7.38,
+          "duration_ms": 7.73,
           "effective_profile": {
             "accuracy_m": 5000,
             "block_physical_fallback": true,
@@ -1050,7 +1052,7 @@
                 "url": "none"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -1060,7 +1062,7 @@
                 "provider": "virtual-provider"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -1073,7 +1075,7 @@
                 "source": "virtual"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -1083,7 +1085,7 @@
                 "zone": "Europe/Berlin"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -1093,10 +1095,10 @@
                 "mode": "profile"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             }
           ],
-          "generated_at": "2026-09-30T14:51:56Z",
+          "generated_at": "2026-09-30T18:26:10Z",
           "geo": {
             "confidence": 1.0,
             "coordinate": {
@@ -1118,7 +1120,7 @@
               "per-session-stable"
             ],
             "source": "virtual",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           "geo_engine": {
             "failures": [],
@@ -1143,7 +1145,7 @@
                 "per-session-stable"
               ],
               "source": "virtual",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             "providers": [
               "automatic",
@@ -1249,7 +1251,9 @@
               "permissions.default.geo": 0,
               "privacy.resistFingerprinting": false,
               "privacy.trackingprotection.enabled": false
-            }
+            },
+            "preset": "balanced",
+            "private_browsing": false
           },
           "private_browsing": false,
           "stage_order": [
@@ -1329,7 +1333,7 @@
                   "per-session-stable"
                 ],
                 "source": "virtual",
-                "timestamp": "2026-09-30T14:51:56Z"
+                "timestamp": "2026-09-30T18:26:10Z"
               },
               "stage": "geo_resolution",
               "status": "OK"
@@ -1659,7 +1663,7 @@
           },
           "url": null
         },
-        "generated_at": "2026-09-30T14:51:56Z",
+        "generated_at": "2026-09-30T18:26:10Z",
         "platform": {},
         "privacy_notice": "diagnostic export is redacted by default and contains no authentication material",
         "redaction": {
@@ -1698,7 +1702,7 @@
           "status": "POTENTIAL_MISMATCH"
         },
         "dns": null,
-        "duration_ms": 12.07,
+        "duration_ms": 50.1,
         "effective_profile": {
           "accuracy_m": 5000,
           "block_physical_fallback": true,
@@ -1729,7 +1733,7 @@
               "url": "https://example.com/page"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "geo-engine",
@@ -1739,7 +1743,7 @@
               "provider": "virtual-provider"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "geo-engine",
@@ -1752,7 +1756,7 @@
               "source": "virtual"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "environment-core",
@@ -1762,7 +1766,7 @@
               "zone": "Europe/Berlin"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "environment-core",
@@ -1772,10 +1776,10 @@
               "mode": "profile"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           }
         ],
-        "generated_at": "2026-09-30T14:51:56Z",
+        "generated_at": "2026-09-30T18:26:10Z",
         "geo": {
           "confidence": 1.0,
           "coordinate": {
@@ -1797,7 +1801,7 @@
             "per-session-stable"
           ],
           "source": "virtual",
-          "timestamp": "2026-09-30T14:51:56Z"
+          "timestamp": "2026-09-30T18:26:10Z"
         },
         "geo_engine": {
           "failures": [],
@@ -1822,7 +1826,7 @@
               "per-session-stable"
             ],
             "source": "virtual",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           "providers": [
             "automatic",
@@ -1987,7 +1991,9 @@
             "permissions.default.geo": 0,
             "privacy.resistFingerprinting": false,
             "privacy.trackingprotection.enabled": false
-          }
+          },
+          "preset": "balanced",
+          "private_browsing": false
         },
         "private_browsing": false,
         "stage_order": [
@@ -2101,7 +2107,7 @@
                 "per-session-stable"
               ],
               "source": "virtual",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             "stage": "geo_resolution",
             "status": "OK"
@@ -2450,7 +2456,7 @@
             "status": "CONSISTENT"
           },
           "dns": null,
-          "duration_ms": 6.04,
+          "duration_ms": 7.0,
           "effective_profile": {
             "accuracy_m": 8000,
             "block_physical_fallback": true,
@@ -2481,7 +2487,7 @@
                 "url": "none"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -2491,7 +2497,7 @@
                 "provider": "virtual-provider"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -2504,7 +2510,7 @@
                 "source": "virtual"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -2514,7 +2520,7 @@
                 "zone": "Asia/Tokyo"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -2524,10 +2530,10 @@
                 "mode": "profile"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             }
           ],
-          "generated_at": "2026-09-30T14:51:56Z",
+          "generated_at": "2026-09-30T18:26:10Z",
           "geo": {
             "confidence": 1.0,
             "coordinate": {
@@ -2549,7 +2555,7 @@
               "per-query-seeded"
             ],
             "source": "virtual",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           "geo_engine": {
             "failures": [],
@@ -2574,7 +2580,7 @@
                 "per-query-seeded"
               ],
               "source": "virtual",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             "providers": [
               "automatic",
@@ -2681,7 +2687,9 @@
               "permissions.default.geo": 0,
               "privacy.resistFingerprinting": false,
               "privacy.trackingprotection.enabled": false
-            }
+            },
+            "preset": "balanced",
+            "private_browsing": false
           },
           "private_browsing": false,
           "stage_order": [
@@ -2761,7 +2769,7 @@
                   "per-query-seeded"
                 ],
                 "source": "virtual",
-                "timestamp": "2026-09-30T14:51:56Z"
+                "timestamp": "2026-09-30T18:26:10Z"
               },
               "stage": "geo_resolution",
               "status": "OK"
@@ -3088,7 +3096,7 @@
           },
           "url": null
         },
-        "generated_at": "2026-09-30T14:51:56Z",
+        "generated_at": "2026-09-30T18:26:10Z",
         "platform": {},
         "privacy_notice": "diagnostic export is redacted by default and contains no authentication material",
         "redaction": {
@@ -3117,7 +3125,7 @@
             "status": "CONSISTENT"
           },
           "dns": null,
-          "duration_ms": 6.28,
+          "duration_ms": 7.6,
           "effective_profile": {
             "accuracy_m": 8000,
             "block_physical_fallback": true,
@@ -3148,7 +3156,7 @@
                 "url": "none"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -3158,7 +3166,7 @@
                 "provider": "virtual-provider"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -3171,7 +3179,7 @@
                 "source": "virtual"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -3181,7 +3189,7 @@
                 "zone": "Asia/Tokyo"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -3191,10 +3199,10 @@
                 "mode": "profile"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             }
           ],
-          "generated_at": "2026-09-30T14:51:56Z",
+          "generated_at": "2026-09-30T18:26:10Z",
           "geo": {
             "confidence": 1.0,
             "coordinate": {
@@ -3216,7 +3224,7 @@
               "per-query-seeded"
             ],
             "source": "virtual",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           "geo_engine": {
             "failures": [],
@@ -3241,7 +3249,7 @@
                 "per-query-seeded"
               ],
               "source": "virtual",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             "providers": [
               "automatic",
@@ -3348,7 +3356,9 @@
               "permissions.default.geo": 0,
               "privacy.resistFingerprinting": false,
               "privacy.trackingprotection.enabled": false
-            }
+            },
+            "preset": "balanced",
+            "private_browsing": false
           },
           "private_browsing": false,
           "stage_order": [
@@ -3428,7 +3438,7 @@
                   "per-query-seeded"
                 ],
                 "source": "virtual",
-                "timestamp": "2026-09-30T14:51:56Z"
+                "timestamp": "2026-09-30T18:26:10Z"
               },
               "stage": "geo_resolution",
               "status": "OK"
@@ -3755,7 +3765,7 @@
           },
           "url": null
         },
-        "generated_at": "2026-09-30T14:51:56Z",
+        "generated_at": "2026-09-30T18:26:10Z",
         "platform": {},
         "privacy_notice": "diagnostic export is redacted by default and contains no authentication material",
         "redaction": {
@@ -3804,7 +3814,7 @@
           "status": "POTENTIAL_MISMATCH"
         },
         "dns": null,
-        "duration_ms": 6.55,
+        "duration_ms": 7.2,
         "effective_profile": {
           "accuracy_m": 8000,
           "block_physical_fallback": true,
@@ -3835,7 +3845,7 @@
               "url": "https://example.com/page"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "geo-engine",
@@ -3845,7 +3855,7 @@
               "provider": "virtual-provider"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "geo-engine",
@@ -3858,7 +3868,7 @@
               "source": "virtual"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "environment-core",
@@ -3868,7 +3878,7 @@
               "zone": "Europe/Berlin"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "environment-core",
@@ -3878,10 +3888,10 @@
               "mode": "profile"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           }
         ],
-        "generated_at": "2026-09-30T14:51:56Z",
+        "generated_at": "2026-09-30T18:26:10Z",
         "geo": {
           "confidence": 1.0,
           "coordinate": {
@@ -3903,7 +3913,7 @@
             "per-query-seeded"
           ],
           "source": "virtual",
-          "timestamp": "2026-09-30T14:51:56Z"
+          "timestamp": "2026-09-30T18:26:10Z"
         },
         "geo_engine": {
           "failures": [],
@@ -3928,7 +3938,7 @@
               "per-query-seeded"
             ],
             "source": "virtual",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           "providers": [
             "automatic",
@@ -4116,7 +4126,9 @@
             "permissions.default.geo": 0,
             "privacy.resistFingerprinting": true,
             "privacy.trackingprotection.enabled": true
-          }
+          },
+          "preset": "strict",
+          "private_browsing": true
         },
         "private_browsing": true,
         "stage_order": [
@@ -4241,7 +4253,7 @@
                 "per-query-seeded"
               ],
               "source": "virtual",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             "stage": "geo_resolution",
             "status": "OK"
@@ -4592,7 +4604,7 @@
             "status": "CONSISTENT"
           },
           "dns": null,
-          "duration_ms": 6.43,
+          "duration_ms": 7.05,
           "effective_profile": {
             "accuracy_m": 12000,
             "block_physical_fallback": true,
@@ -4623,7 +4635,7 @@
                 "url": "none"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -4633,7 +4645,7 @@
                 "provider": "hybrid-provider"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -4646,7 +4658,7 @@
                 "source": "hybrid"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -4656,7 +4668,7 @@
                 "zone": "Europe/Berlin"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -4666,10 +4678,10 @@
                 "mode": "profile"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             }
           ],
-          "generated_at": "2026-09-30T14:51:56Z",
+          "generated_at": "2026-09-30T18:26:10Z",
           "geo": {
             "confidence": 0.9,
             "coordinate": {
@@ -4698,7 +4710,7 @@
               "manual-city-override:Hamburg"
             ],
             "source": "hybrid",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           "geo_engine": {
             "failures": [],
@@ -4730,7 +4742,7 @@
                 "manual-city-override:Hamburg"
               ],
               "source": "hybrid",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             "providers": [
               "automatic",
@@ -4836,7 +4848,9 @@
               "permissions.default.geo": 0,
               "privacy.resistFingerprinting": false,
               "privacy.trackingprotection.enabled": false
-            }
+            },
+            "preset": "balanced",
+            "private_browsing": false
           },
           "private_browsing": false,
           "stage_order": [
@@ -4923,7 +4937,7 @@
                   "manual-city-override:Hamburg"
                 ],
                 "source": "hybrid",
-                "timestamp": "2026-09-30T14:51:56Z"
+                "timestamp": "2026-09-30T18:26:10Z"
               },
               "stage": "geo_resolution",
               "status": "OK"
@@ -5248,7 +5262,7 @@
           },
           "url": null
         },
-        "generated_at": "2026-09-30T14:51:56Z",
+        "generated_at": "2026-09-30T18:26:10Z",
         "platform": {},
         "privacy_notice": "diagnostic export is redacted by default and contains no authentication material",
         "redaction": {
@@ -5277,7 +5291,7 @@
             "status": "CONSISTENT"
           },
           "dns": null,
-          "duration_ms": 5.88,
+          "duration_ms": 6.94,
           "effective_profile": {
             "accuracy_m": 12000,
             "block_physical_fallback": true,
@@ -5308,7 +5322,7 @@
                 "url": "none"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -5318,7 +5332,7 @@
                 "provider": "hybrid-provider"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "geo-engine",
@@ -5331,7 +5345,7 @@
                 "source": "hybrid"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -5341,7 +5355,7 @@
                 "zone": "Europe/Berlin"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             {
               "actor": "environment-core",
@@ -5351,10 +5365,10 @@
                 "mode": "profile"
               },
               "severity": "INFO",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             }
           ],
-          "generated_at": "2026-09-30T14:51:56Z",
+          "generated_at": "2026-09-30T18:26:10Z",
           "geo": {
             "confidence": 0.9,
             "coordinate": {
@@ -5383,7 +5397,7 @@
               "manual-city-override:Hamburg"
             ],
             "source": "hybrid",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           "geo_engine": {
             "failures": [],
@@ -5415,7 +5429,7 @@
                 "manual-city-override:Hamburg"
               ],
               "source": "hybrid",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             "providers": [
               "automatic",
@@ -5521,7 +5535,9 @@
               "permissions.default.geo": 0,
               "privacy.resistFingerprinting": false,
               "privacy.trackingprotection.enabled": false
-            }
+            },
+            "preset": "balanced",
+            "private_browsing": false
           },
           "private_browsing": false,
           "stage_order": [
@@ -5608,7 +5624,7 @@
                   "manual-city-override:Hamburg"
                 ],
                 "source": "hybrid",
-                "timestamp": "2026-09-30T14:51:56Z"
+                "timestamp": "2026-09-30T18:26:10Z"
               },
               "stage": "geo_resolution",
               "status": "OK"
@@ -5933,7 +5949,7 @@
           },
           "url": null
         },
-        "generated_at": "2026-09-30T14:51:56Z",
+        "generated_at": "2026-09-30T18:26:10Z",
         "platform": {},
         "privacy_notice": "diagnostic export is redacted by default and contains no authentication material",
         "redaction": {
@@ -5975,7 +5991,7 @@
           "system_resolver_unchanged": true,
           "tls_status": "VERIFIED"
         },
-        "duration_ms": 6.07,
+        "duration_ms": 7.15,
         "effective_profile": {
           "accuracy_m": 12000,
           "block_physical_fallback": true,
@@ -6006,7 +6022,7 @@
               "url": "https://example.org/portal"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "geo-engine",
@@ -6016,7 +6032,7 @@
               "provider": "hybrid-provider"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "geo-engine",
@@ -6029,7 +6045,7 @@
               "source": "hybrid"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "environment-core",
@@ -6039,7 +6055,7 @@
               "zone": "Europe/Berlin"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           {
             "actor": "environment-core",
@@ -6049,10 +6065,10 @@
               "mode": "profile"
             },
             "severity": "INFO",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           }
         ],
-        "generated_at": "2026-09-30T14:51:56Z",
+        "generated_at": "2026-09-30T18:26:10Z",
         "geo": {
           "confidence": 0.9,
           "coordinate": {
@@ -6081,7 +6097,7 @@
             "manual-city-override:Hamburg"
           ],
           "source": "hybrid",
-          "timestamp": "2026-09-30T14:51:56Z"
+          "timestamp": "2026-09-30T18:26:10Z"
         },
         "geo_engine": {
           "failures": [],
@@ -6113,7 +6129,7 @@
               "manual-city-override:Hamburg"
             ],
             "source": "hybrid",
-            "timestamp": "2026-09-30T14:51:56Z"
+            "timestamp": "2026-09-30T18:26:10Z"
           },
           "providers": [
             "automatic",
@@ -6219,7 +6235,9 @@
             "permissions.default.geo": 0,
             "privacy.resistFingerprinting": false,
             "privacy.trackingprotection.enabled": false
-          }
+          },
+          "preset": "balanced",
+          "private_browsing": false
         },
         "private_browsing": false,
         "stage_order": [
@@ -6306,7 +6324,7 @@
                 "manual-city-override:Hamburg"
               ],
               "source": "hybrid",
-              "timestamp": "2026-09-30T14:51:56Z"
+              "timestamp": "2026-09-30T18:26:10Z"
             },
             "stage": "geo_resolution",
             "status": "OK"
@@ -6660,10 +6678,10 @@
   "tests": {
     "counts": {
       "failed": 0,
-      "passed": 223,
-      "skipped": 1
+      "passed": 274,
+      "skipped": 0
     },
     "status": "PASS",
-    "summary": "223 passed, 1 skipped in 2.67s"
+    "summary": "274 passed in 13.45s"
   }
 }

@@ -67,7 +67,7 @@ python3 -m api.server --host 0.0.0.0 --port 8000 --repo .
 | Item | Value |
 | --- | --- |
 | package | com.labrow.browser |
-| engine | GeckoView 130.0.20240904133848 |
+| engine | GeckoView 153.0.20260810162159 |
 | screens | Browser, Environment, Add-ons, Network, Profiles, Settings |
 | server default | the emulator loopback alias for the host machine on port 8000 |
 | build | `gradle --no-daemon assembleDebug` with JDK 17 and the Android platform 35 |

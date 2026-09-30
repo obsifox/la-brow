@@ -1,0 +1,29 @@
+{
+  "integrity": {
+    "algorithm": "sha256",
+    "checksum": "febca2b318a48c9f07388643d2aacd679fabd21ef5ff6fae7257f98f96daa7a4"
+  },
+  "profile": {
+    "accuracy_m": 12000,
+    "block_physical_fallback": true,
+    "city": "Hamburg",
+    "conflict_detection": true,
+    "country": "DE",
+    "geolocation_mode": "hybrid",
+    "languages": [
+      "de-DE",
+      "en-US"
+    ],
+    "latitude": 53.5511,
+    "locale": "de-DE",
+    "longitude": 9.9937,
+    "name": "hamburg",
+    "profile_version": 2,
+    "radius": 12000,
+    "randomization": "per_session",
+    "randomization_seed": 77,
+    "timezone": "Europe/Berlin",
+    "webrtc_policy": "privacy_enhanced"
+  },
+  "updated_at": "2026-09-30T14:51:56Z"
+}

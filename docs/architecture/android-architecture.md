@@ -24,7 +24,7 @@ GeckoView runtime and session
 
 ## Engine Integration
 
-The engine is GeckoView, pinned to version 130.0.20240904133848 from the Mozilla Maven repository. Session settings enable private mode when requested, tracking protection and media suspension when inactive. Remote debugging is disabled. DNS over HTTPS settings are applied through the runtime settings API when a resolver profile is selected.
+The engine is GeckoView, pinned to version 153.0.20260810162159 from the Mozilla Maven repository. Session settings enable private mode when requested, tracking protection and media suspension when inactive. Remote debugging is disabled. DNS over HTTPS settings are applied through the runtime settings API when a resolver profile is selected.
 
 ## Storage Contract
 

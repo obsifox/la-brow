@@ -20,7 +20,6 @@
     <string name="label_diagnostics">Diagnostics</string>
     <string name="label_addons">Add-ons</string>
     <string name="label_browser">Browser</string>
-    <string name="label_network">Network</string>
     <string name="action_inspect">Inspect manifest</string>
     <string name="action_install_addon">Install add-on</string>
     <string name="action_activate_theme">Activate theme</string>

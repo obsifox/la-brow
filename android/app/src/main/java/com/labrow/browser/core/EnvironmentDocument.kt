@@ -68,5 +68,8 @@ data class EnvironmentDocument(
     val privacyPreset: String,
     val privateBrowsing: Boolean,
     val conflicts: List<EnvironmentConflict>,
+    val stages: List<EnvironmentStage>,
+    val invariantCount: Int,
+    val geoState: String,
     val notices: List<String>,
 )

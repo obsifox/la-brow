@@ -1,0 +1,75 @@
+{
+  "status": "PASS",
+  "scanners": [
+    {
+      "scanner": "emoji",
+      "script": "tools/scanners/emoji_scan.py",
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": [
+        "emoji_scan status=PASS violations=0 exempted_files=17"
+      ],
+      "stderr": []
+    },
+    {
+      "scanner": "comment",
+      "script": "tools/scanners/comment_scan.py",
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": [
+        "comment_scan status=PASS scanned=286 violations=0 exempted_files=45"
+      ],
+      "stderr": []
+    },
+    {
+      "scanner": "english",
+      "script": "tools/scanners/english_scan.py",
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": [
+        "english_scan status=PASS violations=0 exempted_files=6"
+      ],
+      "stderr": []
+    },
+    {
+      "scanner": "branding",
+      "script": "tools/scanners/branding_scan.py",
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": [
+        "branding_scan status=PASS scanned=24 violations=0"
+      ],
+      "stderr": []
+    },
+    {
+      "scanner": "license",
+      "script": "tools/license/verify_manifest.py",
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": [
+        "license_manifest status=PASS resources=12 problems=0"
+      ],
+      "stderr": []
+    },
+    {
+      "scanner": "android",
+      "script": "tools/android/validate_scaffold.py",
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": [
+        "android_scaffold status=PASS checks=38 problems=0"
+      ],
+      "stderr": []
+    },
+    {
+      "scanner": "skill",
+      "script": "tools/agent/verify_skill.py",
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": [
+        "skill engineering-orchestration status=VERIFIED version=2.1.0"
+      ],
+      "stderr": []
+    }
+  ]
+}

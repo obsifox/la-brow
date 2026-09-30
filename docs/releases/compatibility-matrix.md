@@ -21,7 +21,7 @@
 
 | Component | Version | Status |
 | --- | --- | --- |
-| GeckoView | 130.0.20240904133848 | Dependency declared and scaffold validated; application not assembled |
+| GeckoView | 153.0.20260810162159 | Dependency declared and scaffold validated; application not assembled |
 | Gecko platform source | to be pinned | Not fetched in this environment |
 
 ## Statement Discipline

@@ -16,3 +16,4 @@ ui/generated/
 var/extensions/
 .eng/artifacts/*.log
 .eng/runs/*/checkpoints/
+android/.kotlin/

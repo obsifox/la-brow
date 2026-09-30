@@ -1,6 +1,8 @@
 package com.labrow.browser.core
 
 import android.content.Context
+import org.mozilla.geckoview.GeckoPreferenceController
+import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoRuntimeSettings
 import org.mozilla.geckoview.GeckoSession
@@ -32,26 +34,38 @@ class GeckoRuntimeHolder(private val context: Context) {
     }
 
     fun applyEnvironmentPreferences(preferences: Map<String, Any>) {
-        val runtime = runtime()
+        runtime()
         preferences.forEach { entry ->
-            when (entry.value) {
-                is Boolean -> runtime.settings.setPref(entry.key, entry.value as Boolean)
-                is Int -> runtime.settings.setPref(entry.key, entry.value as Int)
-                is String -> runtime.settings.setPref(entry.key, entry.value as String)
+            val result: GeckoResult<Void>? = when (val value = entry.value) {
+                is Boolean -> GeckoPreferenceController.setGeckoPref(entry.key, value, GeckoPreferenceController.PREF_BRANCH_USER)
+                is Int -> GeckoPreferenceController.setGeckoPref(entry.key, value, GeckoPreferenceController.PREF_BRANCH_USER)
+                is String -> GeckoPreferenceController.setGeckoPref(entry.key, value, GeckoPreferenceController.PREF_BRANCH_USER)
+                else -> null
+            }
+            if (result != null) {
+                pendingPreferences.add(result)
             }
         }
     }
 
     fun applyDohSettings(enabled: Boolean, endpoint: String?) {
-        val builder = runtime().settings
-        builder.dnsOverHttpsEnabled = enabled
+        val settings = runtime().settings
+        if (!enabled) {
+            settings.setTrustedRecursiveResolverMode(GeckoRuntimeSettings.TRR_MODE_OFF)
+            settings.setDohAutoselectEnabled(false)
+            return
+        }
+        settings.setTrustedRecursiveResolverMode(GeckoRuntimeSettings.TRR_MODE_FIRST)
+        settings.setDohAutoselectEnabled(false)
         if (endpoint != null) {
-            builder.dnsOverHttpsUri = endpoint
+            settings.setTrustedRecursiveResolverUri(endpoint)
         }
     }
 
+    private val pendingPreferences = mutableListOf<GeckoResult<Void>>()
+
     companion object {
         private var runtimeInstance: GeckoRuntime? = null
-        const val GECKOVIEW_VERSION = "130.0.20240904133848"
+        const val GECKOVIEW_VERSION = "153.0.20260810162159"
     }
 }

@@ -78,7 +78,7 @@ Every external resource used by the project is recorded here. The machine readab
 | --- | --- |
 | Resource | mozilla-geckoview |
 | source | https://maven.mozilla.org/maven2/org/mozilla/geckoview/ |
-| version | 130.0.20240904133848 |
+| version | 153.0.20260810162159 |
 | license | MPL-2.0 |
 | license url | https://www.mozilla.org/MPL/2.0/ |
 | purpose | Browser engine for the Android application. |

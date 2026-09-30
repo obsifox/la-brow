@@ -102,7 +102,7 @@ class EnvironmentRepository(private val context: Context) {
             conflicts = conflicts,
             stages = stages,
             invariantCount = payload.optInt("invariant_count", 0),
-            geoSeed = payload.optString("geo_state", "UNKNOWN"),
+            geoState = payload.optString("geo_state", "UNKNOWN"),
             notices = payload.optJSONArray("notices")?.let { array -> (0 until array.length()).map { index -> array.getString(index) } } ?: emptyList(),
         )
     }

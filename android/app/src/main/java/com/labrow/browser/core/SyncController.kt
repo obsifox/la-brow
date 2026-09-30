@@ -1,5 +1,6 @@
 package com.labrow.browser.core
 
+import android.content.Context
 import org.json.JSONObject
 
 class SyncResult(
@@ -73,7 +74,7 @@ class SyncController(private val context: Context) {
         payload.put("privacy_preset", document.privacyPreset)
         payload.put("private_browsing", document.privateBrowsing)
         payload.put("invariant_count", document.invariantCount)
-        payload.put("geo_state", document.geoSeed)
+        payload.put("geo_state", document.geoState)
         val stages = org.json.JSONArray()
         document.stages.forEach { stage ->
             stages.put(JSONObject().put("stage", stage.name).put("status", stage.status).put("detail", stage.detail))

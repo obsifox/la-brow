@@ -44,6 +44,8 @@ class ApiClient(private val context: Context) {
 
     fun profiles(): JSONObject = request("/api/profiles", "GET", null)
 
+    fun resolvers(): JSONObject = request("/api/resolvers", "GET", null)
+
     fun profile(profileId: String): JSONObject = request("/api/profiles/" + encode(profileId), "GET", null)
 
     fun saveProfile(profileId: String, profile: JSONObject): JSONObject {
