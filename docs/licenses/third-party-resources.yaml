@@ -49,18 +49,31 @@ resources:
     redistribution_requirements: none, the action runs on hosted runners at build time
     attribution_requirements: license reference retained in the license documentation
     checksum_manifest: not-applicable-remote-action
-  - name: android-actions-setup-android
-    source: https://github.com/android-actions/setup-android
-    version: v3
+  - name: gradle-actions-setup-gradle
+    source: https://github.com/gradle/actions
+    version: v4
     revision: release-tag
-    license: MIT
-    license_url: https://github.com/android-actions/setup-android/blob/main/LICENSE
-    purpose: Android command line tools installation for the Android build workflow.
+    license: Apache-2.0
+    license_url: https://github.com/gradle/actions/blob/main/LICENSE
+    purpose: Pinned Gradle installation for the Android build workflow, because the runner image ships a Gradle version newer than the Android plugin supports.
     integration_location: .github/workflows/android-build.yml
     modification_status: unmodified
     redistribution_requirements: none, the action runs on hosted runners at build time
     attribution_requirements: license reference retained in the license documentation
     checksum_manifest: not-applicable-remote-action
+
+  - name: gradle-build-tool
+    source: https://github.com/gradle/gradle
+    version: 8.10.2
+    revision: release-tag
+    license: Apache-2.0
+    license_url: https://github.com/gradle/gradle/blob/master/LICENSE
+    purpose: Build system for the Android application, installed on the build host and pinned by the workflow.
+    integration_location: .github/workflows/android-build.yml
+    modification_status: unmodified
+    redistribution_requirements: none, the tool runs at build time
+    attribution_requirements: license reference retained in the license documentation
+    checksum_manifest: not-applicable-build-tool
   - name: mozilla-geckoview
     source: https://maven.mozilla.org/maven2/org/mozilla/geckoview/
     version: 130.0.20240904133848

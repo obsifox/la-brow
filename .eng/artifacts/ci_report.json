@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-30T17:28:57Z",
-  "duration_seconds": 13.28,
+  "generated_at": "2026-09-30T17:42:43Z",
+  "duration_seconds": 13.25,
   "status": "PASS",
   "stages": [
     {
@@ -9,7 +9,7 @@
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "render_manifest status=PASS docs/licenses/THIRD_PARTY_RESOURCES.md is current with 11 resources"
+        "render_manifest status=PASS docs/licenses/THIRD_PARTY_RESOURCES.md is current with 12 resources"
       ],
       "stderr_tail": []
     },
@@ -27,7 +27,7 @@
       "exit_code": 0,
       "status": "PASS",
       "stdout_tail": [
-        "license_manifest status=PASS resources=11 problems=0"
+        "license_manifest status=PASS resources=12 problems=0"
       ],
       "stderr_tail": []
     },
@@ -143,7 +143,7 @@
       "status": "PASS",
       "stdout_tail": [
         ".........................                                                [100%]",
-        "25 passed in 2.56s"
+        "25 passed in 2.57s"
       ],
       "stderr_tail": []
     },
@@ -154,7 +154,7 @@
       "status": "PASS",
       "stdout_tail": [
         "..........                                                               [100%]",
-        "10 passed in 0.19s"
+        "10 passed in 0.18s"
       ],
       "stderr_tail": []
     },
@@ -165,7 +165,7 @@
       "status": "PASS",
       "stdout_tail": [
         "..................                                                       [100%]",
-        "18 passed in 2.76s"
+        "18 passed in 2.79s"
       ],
       "stderr_tail": []
     },
