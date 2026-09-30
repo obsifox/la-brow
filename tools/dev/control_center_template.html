@@ -498,6 +498,31 @@ function panelLimits() {
     '</div>';
 }
 
+function gateTable() {
+  const orchestration = DATA.orchestration;
+  const rows = Object.keys(orchestration.gates).map(function (key) {
+    const value = orchestration.gates[key];
+    const status = value === "PASS" ? "ok" : (value === "FAIL" ? "fail" : "warn");
+    return '<tr><td>' + escapeHtml(key) + '</td><td><span class="badge ' + status + '">' + escapeHtml(value) + '</span></td></tr>';
+  }).join("");
+  const findings = orchestration.review_findings.map(function (item) {
+    return '<li>' + escapeHtml(item) + '</li>';
+  }).join("");
+  const skill = orchestration.skill;
+  return '<div class="grid" style="margin-top:14px">' +
+    '<div class="card"><h3>Orchestration gates for ' + escapeHtml(orchestration.run_id) + '</h3><table><thead><tr><th>Gate</th><th>Result</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+    '<div class="footnote">Local pipeline ' + escapeHtml(orchestration.ci.status) + ' with ' + orchestration.ci.stages + ' stages in ' + orchestration.ci.duration_seconds + ' seconds.</div></div>' +
+    '<div class="card"><h3>Pinned orchestration skill</h3>' + kv([
+      ["skill", escapeHtml(skill.id)],
+      ["version", escapeHtml(skill.version)],
+      ["revision", escapeHtml(skill.revision)],
+      ["verification", escapeHtml(skill.status)],
+      ["hashed files", String(skill.manifest_entries)]
+    ]) + '</div>' +
+    '<div class="card"><h3>Review findings</h3><ul style="margin:0;color:var(--muted)">' + findings + '</ul></div>' +
+    '</div>';
+}
+
 function panelRoadmap() {
   const rows = DATA.roadmap.map(function (item) {
     const status = item.status === "DONE" ? "ok" : (item.status === "PARTIAL" ? "warn" : "warn");
@@ -506,6 +531,7 @@ function panelRoadmap() {
   }).join("");
   return '<h2>Milestones</h2><p class="sub">Status is written from what the repository can prove: executed tests and recorded evidence. Scaffolded work is never reported as complete.</p>' +
     '<div class="card"><table><thead><tr><th>Milestone</th><th>Status</th><th>Note</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+    gateTable() +
     '<div class="card" style="margin-top:14px"><h3>Why the engine build is not claimed</h3><p style="color:var(--muted);margin:0">The measured engineering environment records no Rust toolchain, no Clang, no CMake, no Ninja and no Android SDK. The repository therefore generates the preference and policy artifacts a Gecko build consumes, documents the patch surfaces, and reports the build status as scaffolded. See docs/architecture/environment-report.md.</p></div>';
 }
 

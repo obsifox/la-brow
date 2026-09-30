@@ -178,6 +178,43 @@ def collect(repo: Path) -> dict:
         "licenses": licenses,
         "stage_order": scenarios[0]["snapshot"]["stage_order"],
         "roadmap": roadmap(repo),
+        "orchestration": orchestration(repo),
+    }
+
+
+def orchestration(repo: Path) -> dict:
+    state_path = repo / ".eng/state.json"
+    gates = {}
+    if state_path.is_file():
+        gates = json.loads(state_path.read_text(encoding="utf-8")).get("gates", {})
+    ci_path = repo / ".eng/artifacts/ci_report.json"
+    ci = {}
+    if ci_path.is_file():
+        ci = json.loads(ci_path.read_text(encoding="utf-8"))
+    review_path = repo / ".eng/artifacts/code_review.md"
+    findings = []
+    if review_path.is_file():
+        for line in review_path.read_text(encoding="utf-8").splitlines():
+            if line.startswith("### "):
+                findings.append(line[4:])
+    skill_state_path = repo / ".eng/bootstrap-state.json"
+    skill = {}
+    if skill_state_path.is_file():
+        payload = json.loads(skill_state_path.read_text(encoding="utf-8"))
+        if payload.get("skills"):
+            skill = payload["skills"][0]
+    return {
+        "gates": gates,
+        "ci": {"status": ci.get("status"), "duration_seconds": ci.get("duration_seconds"), "stages": len(ci.get("stages", []))},
+        "review_findings": findings,
+        "skill": {
+            "id": skill.get("id"),
+            "revision": skill.get("revision"),
+            "version": skill.get("detected_version"),
+            "status": skill.get("status"),
+            "manifest_entries": skill.get("manifest_entries"),
+        },
+        "run_id": "RUN-2026-000001",
     }
 
 
