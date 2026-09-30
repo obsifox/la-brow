@@ -68,8 +68,8 @@ resources:
     revision: release-tag
     license: Apache-2.0
     license_url: https://github.com/gradle/gradle/blob/master/LICENSE
-    purpose: Build system for the Android application, installed on the build host and pinned by the workflow.
-    integration_location: .github/workflows/android-build.yml
+    purpose: Build system for the Android application. The wrapper pins the distribution for local and continuous integration builds, and the workflow installs the same version before assembling.
+    integration_location: android/gradle/wrapper/gradle-wrapper.properties
     modification_status: unmodified
     redistribution_requirements: none, the tool runs at build time
     attribution_requirements: license reference retained in the license documentation

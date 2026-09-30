@@ -33,7 +33,7 @@ object EnvironmentMapper {
         var satisfiedInvariants = 0
         val stageList = (0 until stages.length()).map { index ->
             val stage = stages.optJSONObject(index) ?: JSONObject()
-            if (stage.optString("stage") == ENVIRONMENT_VALIDATION_STAGE) {
+            if (stage.optString("stage") == INVARIANTS_STAGE) {
                 val invariants = stage.optJSONObject("output")?.optJSONArray("invariants")
                 if (invariants != null) {
                     for (position in 0 until invariants.length()) {
@@ -117,7 +117,7 @@ object EnvironmentMapper {
         )
     }
 
-    private const val ENVIRONMENT_VALIDATION_STAGE = "environment_validation"
+    private const val INVARIANTS_STAGE = "web_content_ready"
 
     private fun stringList(array: JSONArray?): List<String> {
         if (array == null) {

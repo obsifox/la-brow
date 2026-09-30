@@ -24,7 +24,7 @@ GeckoView runtime and session
 
 ## Engine Integration
 
-The engine is GeckoView, pinned to version 153.0.20260810162159 from the Mozilla Maven repository. Session settings enable private mode when requested, tracking protection and media suspension when inactive. Remote debugging is disabled. DNS over HTTPS settings are applied through the runtime settings API when a resolver profile is selected.
+The engine is GeckoView, pinned to version 153.0.20260810162159 from the Mozilla Maven repository. Session settings enable private mode when requested, tracking protection and media suspension when inactive. Remote debugging is disabled. Browser scoped DNS over HTTPS uses the trusted recursive resolver mode and trusted recursive resolver URI runtime settings when a resolver profile is selected, and the trusted recursive resolver is switched off when the selected profile is the system resolver. Arbitrary browser preferences are applied through the Gecko preference controller on the user branch, which is the supported replacement for direct preference writes.
 
 ## Storage Contract
 
@@ -57,12 +57,12 @@ The manifest declares only `INTERNET` and `ACCESS_NETWORK_STATE`. The scaffold v
 
 ## What Remains
 
-- Assembling the application requires an Android SDK, a Gradle distribution and network access to the Mozilla Maven repository. None of these exist in the measured environment, so the correct status is validated scaffold.
+- Assembly runs on a host with JDK 17, the Gradle wrapper pinned to 8.14.3, Android Gradle plugin 8.13.2 and Android platform 36 with build tools 36. The continuous integration workflow installs exactly those components and publishes the debug packages as build artifacts. The debug output is split per application binary interface for arm64-v8a, armeabi-v7a and x86_64, and a universal package is produced as well.
 - The environment document is consumed read only by the control center. Generating it on device requires the environment core to be embedded, which is planned as a follow up task with its own acceptance criteria.
 
 ## Validator
 
-`tools/android/validate_scaffold.py` enforces twenty structural checks including required files, minimal permissions, cleartext prohibition, backup exclusion, single activity with launcher and browsable intents, English only user strings with the required notices, adaptive icon layers, absence of source comments in Kotlin files, engine dependency, Compose enablement, release minification, bundled resolver profiles, resolver policy, and the storage directory contract.
+`tools/android/validate_scaffold.py` enforces thirty-eight structural checks including required files, minimal permissions, cleartext prohibition, backup exclusion, single activity with launcher and browsable intents, English only user strings with the required notices, adaptive icon layers, absence of source comments in Kotlin files, engine dependency, Compose enablement, release minification, bundled resolver profiles, resolver policy, and the storage directory contract.
 
 ## Application Interface Client
 
@@ -94,7 +94,7 @@ tests/android/test_client_contract.py reads the Kotlin sources for the endpoints
 
 ## Build Host Requirements
 
-A build host needs JDK 17, Android SDK platform 35 with build tools, and Gradle 8 with the Kotlin Android plugin. The GeckoView artifact is resolved from the Mozilla Maven repository. The repository does not vendor Gradle binaries; the build host provides them. android/build-debug.sh checks the toolchain and reports exactly what is missing before it runs a debug assembly.
+A build host needs JDK 17 and Android SDK platform 36 with build tools 36. The Gradle 8.14.3 distribution is pinned by the wrapper in android/gradle/wrapper, so `./gradlew assembleDebug` reproduces the same build everywhere. The GeckoView artifact is resolved from the Mozilla Maven repository. android/build-debug.sh checks the toolchain and reports exactly what is missing before it runs a debug assembly.
 
 ## Design System
 

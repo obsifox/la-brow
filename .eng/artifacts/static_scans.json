@@ -17,7 +17,7 @@
       "status": "PASS",
       "exit_code": 0,
       "stdout": [
-        "comment_scan status=PASS scanned=286 violations=0 exempted_files=45"
+        "comment_scan status=PASS scanned=287 violations=0 exempted_files=45"
       ],
       "stderr": []
     },

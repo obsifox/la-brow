@@ -7,8 +7,8 @@
 | Linux x86_64 | scaffolded, not built | Requires the engine toolchain |
 | Windows x86_64 | scaffolded, not built | Requires the engine toolchain |
 | macOS universal | scaffolded, not built | Requires the engine toolchain |
-| Android arm64-v8a | scaffolded, not built | Requires Android SDK and Gradle |
-| Android x86_64 | scaffolded, not built | Requires Android SDK and Gradle |
+| Android arm64-v8a debug | built | Assembles in continuous integration and is published as a build artifact |
+| Android x86_64 debug | built | Assembles in continuous integration and is published as a build artifact |
 
 ## Library Compatibility
 
@@ -21,7 +21,7 @@
 
 | Component | Version | Status |
 | --- | --- | --- |
-| GeckoView | 153.0.20260810162159 | Dependency declared and scaffold validated; application not assembled |
+| GeckoView | 153.0.20260810162159 | Resolved from the Mozilla Maven repository during the continuous integration assembly |
 | Gecko platform source | to be pinned | Not fetched in this environment |
 
 ## Statement Discipline

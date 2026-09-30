@@ -69,8 +69,8 @@ Every external resource used by the project is recorded here. The machine readab
 | version | 8.10.2 |
 | license | Apache-2.0 |
 | license url | https://github.com/gradle/gradle/blob/master/LICENSE |
-| purpose | Build system for the Android application, installed on the build host and pinned by the workflow. |
-| integration location | .github/workflows/android-build.yml |
+| purpose | Build system for the Android application. The wrapper pins the distribution for local and continuous integration builds, and the workflow installs the same version before assembling. |
+| integration location | android/gradle/wrapper/gradle-wrapper.properties |
 | modification status | unmodified |
 | redistribution requirements | none, the tool runs at build time |
 | attribution requirements | license reference retained in the license documentation |
